@@ -7,13 +7,14 @@
        <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sistemas <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          
+
           <?php
           while($a_user = mysql_fetch_array($que_user)){
             $id_sis = $a_user['uss_sistema'];
             $data_sis = mysql_fetch_array(mysql_query("select * from tb_sistemas where sis_id = '$id_sis'"))
             ?>
-            <li><a href="../change_sis.php?sis_id=<?php echo $data_sis['sis_id']; ?>"><?php echo utf8_encode($data_sis['sis_name']); ?></a></li>
+            <!-- *sk01* Quito utf8_encode(); -->
+            <li><a href="../change_sis.php?sis_id=<?php echo $data_sis['sis_id']; ?>"><?php echo $data_sis['sis_name']; ?></a></li>
             <?php
           }
           ?>

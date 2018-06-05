@@ -1,6 +1,6 @@
 <?php
-error_reporting(0);
-include("conecta.php");
+/*sk01** error_reporting(0); */
+include ("conecta.php");
 include ("funciones/funciones_generales.php");
 $usuario=$_POST['usuario'];
 $clave=  md5 ($_POST['clave']);
@@ -23,10 +23,10 @@ exit();
 		$sector=$dat1['uss_tipo'];
 		$us_sistema=$dat1['uss_sistema'];
 		session_start();
-		$_SESSION["autenticado"] = 'si'; 
-		$_SESSION["usuario"] = $usuario; 
-		$_SESSION["sector"] = $sector; 
-		$_SESSION["id_us"] = $id_us; 
+		$_SESSION["autenticado"] = 'si';
+		$_SESSION["usuario"] = $usuario;
+		$_SESSION["sector"] = $sector;
+		$_SESSION["id_us"] = $id_us;
 		$_SESSION["sistema"] = $us_sistema;
 
 		$motivo = "Inicio Sesion en ".BuscaRegistro ("tb_sistemas", "sis_id", $us_sistema, "sis_name");

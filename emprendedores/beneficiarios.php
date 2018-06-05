@@ -22,10 +22,10 @@ include ("../funciones/funciones_generales.php");
 
       <h3>Listado de Beneficiarios</h3>
 <!-- aca comienza el calendario -->
-          
+
 <table id="list_emprendedores" class="display" cellspacing="0" width="100%">
         <thead>
-          <tr>       
+          <tr>
           <th>Nombre</th>
           <th>DNI</th>
           <th>Dirección</th>
@@ -34,24 +34,25 @@ include ("../funciones/funciones_generales.php");
           <th>Celular</th>
           </tr>
         </thead>
-            
+
             <tbody>
       <?php
-    
+
       $qe=mysql_query("select * from tb_datos_personales INNER JOIN tb_beneficiarios_sistema ON tb_datos_personales.dp_id = tb_beneficiarios_sistema.bs_dp_id where tb_beneficiarios_sistema.bs_sis = '".$_SESSION["sistema"]."'");
         while($row = mysql_fetch_array($qe)){
   echo '<tr>';
-  echo '<td><a href="detalle_beneficiario.php?dp_id='.$row['dp_id'].'" title="Ver detalles">'.utf8_encode($row['dp_name']).'</a></td>';
+/*sk01** echo '<td><a href="detalle_beneficiario.php?dp_id='.$row['dp_id'].'" title="Ver detalles">'.utf8_encode($row['dp_name']).'</a></td>'; */
+/*sk01*/ echo '<td><a href="detalle_beneficiario.php?dp_id='.$row['dp_id'].'" title="Ver detalles">'.$row['dp_name'].'</a></td>';
   echo '<td align="right">'.BuscaRegistro ("tb_docs", "do_id", $row['dp_tipo_doc'], "do_name").' '.$row['dp_nro_doc'].'</td>';
- echo '<td>'.TirameDomicilio($row['dp_id']).'</td>';
+  echo '<td>'.TirameDomicilio($row['dp_id']).'</td>';
   echo '<td>'.$row['dp_mail'].'</td>';
-   echo '<td>'.$row['dp_telefono'].'</td>';
-    echo '<td>'.$row['dp_movil'].'</td>';
+  echo '<td>'.$row['dp_telefono'].'</td>';
+  echo '<td>'.$row['dp_movil'].'</td>';
   echo '</tr>';
   }
-               ?> 
-               
-               
+               ?>
+
+
             </tbody>
         </table>
         <br><br><br><br>
@@ -62,12 +63,12 @@ include ("../funciones/funciones_generales.php");
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" language="javascript" src="../js/jquery.dataTables.js"></script>
-  
+
   <script type="text/javascript" language="javascript" class="init">
   $(document).ready(function() {
   $('#list_emprendedores').DataTable();
 });
-  </script> 
+  </script>
   <script type="text/javascript" language="javascript">
     $('#list_emprendedores').DataTable( {
         responsive: true

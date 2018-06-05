@@ -9,15 +9,17 @@
 	function InputGeneralVal($tipo, $name, $clase, $id, $previo, $etiqueta, $valor){
 	$dato =	'<label for="'.$id.'">'.$etiqueta.'</label>
     <input type="'.$tipo.'" class="'.$clase.'" id="'.$id.'" name="'.$name.'"
-           placeholder="'.$previo.'" value="'.$valor.'">';
+/*sk01*/   placeholder="'.$previo.'" value="'.$valor.'">';
+/*sk01**   placeholder="'.$previo.'" value="'.utf8_decode($valor).'">';  */
            return $dato;
 	}
-	
+
+
 	function ListadoOptionsTabla ($tabla, $campo_id, $campo){
-		
+
 		$txt_q = "select ".$campo_id.",".$campo." from ".$tabla." order by '".$campo."'";
 		$result = mysql_query ($txt_q);
-		 $lista .= "<option></option>"; 
+		 $lista .= "<option></option>";
 		while ($ddat = mysql_fetch_array ($result)){
 			$lista .= '<option value="'.$ddat[$campo_id].'">'.$ddat[$campo].'</option>';
 		}
@@ -29,9 +31,10 @@
 		<select class="'.$clase.'" name="'.$name.'" id="'.$id.'">';
 		$txt_q = "select ".$campo_id.",".$campo." from ".$tabla." order by '".$campo."'";
 		$result = mysql_query ($txt_q);
-		 $dato .= "<option></option>"; 
+		 $dato .= "<option></option>";
 		while ($ddat = mysql_fetch_array ($result)){
-			$dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>';
+/*sk01** $dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>'; */
+/*sk01*/ $dato .= '<option value="'.$ddat[$campo_id].'">'.$ddat[$campo].'</option>';
 		}
 
   $dato .= '</select>';
@@ -45,7 +48,8 @@
 		$txt_q = "select ".$campo_id.",".$campo." from ".$tabla." order by '".$campo."'";
 		$result = mysql_query ($txt_q);
 		while ($ddat = mysql_fetch_array ($result)){
-			$dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>';
+/*sk01** $dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>'; */
+/*sk01*/ $dato .= '<option value="'.$ddat[$campo_id].'">'.$ddat[$campo].'</option>';
 		}
 
   $dato .= '</select>';
@@ -58,12 +62,13 @@
 		<select class="'.$clase.'" name="'.$name.'" id="'.$id.'">';
 		$txt_q = "select ".$campo_id.",".$campo." from ".$tabla." order by '".$campo."'";
 		$result = mysql_query ($txt_q);
-		 $dato .= "<option></option>"; 
+		 $dato .= "<option></option>";
 		 $dato .= '<optgroup label="Accion">';
 			$dato .= '<option>Agregar</option>';
 			$dato .= '<optgroup label="'.$titulo.'">';
 		while ($ddat = mysql_fetch_array ($result)){
-			$dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>';
+/*sk01** $dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>'; */
+/*sk01*/ $dato .= '<option value="'.$ddat[$campo_id].'">'.$ddat[$campo].'</option>';
 		}
 
   $dato .= '</select>';
@@ -76,12 +81,13 @@
 		<select class="'.$clase.'" name="'.$name.'" id="'.$id.'">';
 		$txt_q = "select ".$campo_id.",".$campo.",".$campo1." from ".$tabla." order by '".$campo."'";
 		$result = mysql_query ($txt_q);
-		 $dato .= "<option></option>"; 
+		 $dato .= "<option></option>";
 		 $dato .= '<optgroup label="Accion">';
 			$dato .= '<option>Agregar</option>';
 			$dato .= '<optgroup label="'.$titulo.'">';
 		while ($ddat = mysql_fetch_array ($result)){
-			$dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).' | '.utf8_encode($ddat[$campo1]).'</option>';
+/*sk01** $dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).' | '.utf8_encode($ddat[$campo1]).'</option>'; */
+/*sk01*/ $dato .= '<option value="'.$ddat[$campo_id].'">'.$ddat[$campo].' | '.$ddat[$campo1].'</option>';
 		}
 
   $dato .= '</select>';
@@ -94,7 +100,7 @@
 		<select class="'.$clase.'" name="'.$name.'" id="'.$id.'">';
 		$txt_q = "select ".$campo_id.",".$campo." from ".$tabla." order by '".$campo."'";
 		$result = mysql_query ($txt_q);
-		 $dato .= "<option></option>"; 
+		 $dato .= "<option></option>";
 		while ($ddat = mysql_fetch_array ($result)){
 			$dato .= '<option value="'.$ddat[$campo_id].'">'.$ddat[$campo].'</option>';
 		}
@@ -109,9 +115,10 @@
 		<select class="'.$clase.'" name="'.$name.'" id="'.$id.'">';
 		$txt_q = "select ".$campo_id.",".$campo." from ".$tabla." where ".$campo_fil." = '".$valor_fil."' order by '".$campo."'";
 		$result = mysql_query ($txt_q);
-		 $dato .= "<option></option>"; 
+		 $dato .= "<option></option>";
 		while ($ddat = mysql_fetch_array ($result)){
-			$dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>';
+/*sk01** $dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>'; */
+/*sk01*/ $dato .= '<option value="'.$ddat[$campo_id].'">'.$ddat[$campo].'</option>';
 		}
 
   $dato .= '</select>';
@@ -124,13 +131,15 @@
 		<select class="'.$clase.'" name="'.$name.'" id="'.$id.'">';
 		$txt_q = "select ".$campo_id.",".$campo." from ".$tabla." where ".$campo_fil." = '".$valor_fil."' order by '".$campo."'";
 		$result = mysql_query ($txt_q);
-		 
+
 		while ($ddat = mysql_fetch_array ($result)){
-			$dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>';
+/*sk01** $dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>'; */
+/*sk01*/ $dato .= '<option value="'.$ddat[$campo_id].'">'.$ddat[$campo].'</option>';
 		}
 		$txt_q1 = "select ".$campo_id.",".$campo." from ".$tabla." where ".$campo_fil." = '".$valor_fil."' and ".$campo_id." = '".$val."'";
 		$dat = mysql_fetch_array(mysql_query ($txt_q1));
-		$dato .= '<option value="'.$dat[$campo_id].'" selected = "selected">'.utf8_encode($dat[$campo]).'</option>'; 
+/*sk01** $dato .= '<option value="'.$dat[$campo_id].'" selected = "selected">'.utf8_encode($dat[$campo]).'</option>'; */
+/*sk01*/ $dato .= '<option value="'.$dat[$campo_id].'" selected = "selected">'.$dat[$campo].'</option>';
   $dato .= '</select>';
            return $dato;
 	}
@@ -141,12 +150,13 @@
 		<select class="'.$clase.'" name="'.$name.'" id="'.$id.'">';
 		$txt_q = "select ".$campo_id.",".$campo." from ".$tabla." where ".$campo_fil." = '".$valor_fil."' order by '".$campo."'";
 		$result = mysql_query ($txt_q);
-		 $dato .= "<option></option>"; 
+		 $dato .= "<option></option>";
 		 $dato .= '<optgroup label="Accion">';
 			$dato .= '<option>Agregar</option>';
 			$dato .= '<optgroup label="'.$titulo.'">';
 		while ($ddat = mysql_fetch_array ($result)){
-			$dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>';
+/*sk01** $dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>'; */
+/*sk01*/ $dato .= '<option value="'.$ddat[$campo_id].'">'.$ddat[$campo].'</option>';
 		}
 
   $dato .= '</select>';
@@ -159,9 +169,10 @@
 		<select class="'.$clase.'" name="'.$name.'" id="'.$id.'">';
 		$txt_q = "select ".$campo_id.",".$campo." from ".$tabla." where ".$campo_id." > '".$nro."'";
 		$result = mysql_query ($txt_q);
-		 $dato .= "<option></option>"; 
+		 $dato .= "<option></option>";
 		while ($ddat = mysql_fetch_array ($result)){
-			$dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>';
+/*sk01** $dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>'; */
+/*sk01*/ $dato .= '<option value="'.$ddat[$campo_id].'">'.$ddat[$campo].'</option>';
 		}
 
   $dato .= '</select>';
@@ -174,9 +185,10 @@
 		<select class="'.$clase.'" name="'.$name.'" id="'.$id.'">';
 		$txt_q = "select ".$campo_id.",".$campo." from ".$tabla." where ".$campo_id." < '".$nro."'";
 		$result = mysql_query ($txt_q);
-		 $dato .= "<option></option>"; 
+		 $dato .= "<option></option>";
 		while ($ddat = mysql_fetch_array ($result)){
-			$dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>';
+/*sk01** $dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>';
+/*sk01*/ $dato .= '<option value="'.$ddat[$campo_id].'">'.$ddat[$campo].'</option>';
 		}
 
   $dato .= '</select>';
@@ -189,13 +201,15 @@
 		<select class="'.$clase.'" name="'.$name.'" id="'.$id.'">';
 		$txt_q = "select ".$campo_id.",".$campo." from ".$tabla." order by '".$campo."'";
 		$result = mysql_query ($txt_q);
-		 
+
 		while ($ddat = mysql_fetch_array ($result)){
-			$dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>';
+/*sk01** $dato .= '<option value="'.$ddat[$campo_id].'">'.utf8_encode($ddat[$campo]).'</option>'; */
+/*sk01*/ $dato .= '<option value="'.$ddat[$campo_id].'">'.$ddat[$campo].'</option>';
 		}
 	$txt_r = "select ".$campo_id.",".$campo." from ".$tabla." where ".$campo_id." = '".$valor."'";
 	$dat_r = mysql_fetch_array(mysql_query($txt_r));
-	$dato .= '<option value="'.$valor.'" selected = "selected">'.utf8_encode($dat_r[$campo]).'</option>';
+/*sk01**	$dato .= '<option value="'.$valor.'" selected = "selected">'.utf8_encode($dat_r[$campo]).'</option>'; */
+/*sk01*/  $dato .= '<option value="'.$valor.'" selected = "selected">'.$dat_r[$campo].'</option>';
   $dato .= '</select>';
            return $dato;
 	}

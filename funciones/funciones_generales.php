@@ -3,7 +3,8 @@
 		$txt_q = "select ".$campo." from ".$tabla." where ".$valor_id."='".$valor."' LIMIT 1";
 		$result = mysql_query ($txt_q);
 		$ddat = mysql_fetch_array ($result);
-		return utf8_encode ($ddat[$campo]);
+/*SK01**	return utf8_encode ($ddat[$campo]); */
+/*SK01*/	return ($ddat[$campo]);
 	}
 
 	function BuscaRegistroSu ($tabla, $valor_id, $valor, $campo){
@@ -17,14 +18,16 @@
 		$txt_q = "select ".$campo." from ".$tabla." where ".$valor_id."='".$valor."' LIMIT 1";
 		$result = mysql_query ($txt_q);
 		$ddat = mysql_fetch_array ($result);
-		return strtoupper(utf8_encode ($ddat[$campo]));
+/*sk01**	return strtoupper(utf8_encode ($ddat[$campo])); */
+/*sk01*/	return strtoupper($ddat[$campo]);
 	}
 
 	function BuscaRegistroDoble ($tabla, $valor_id, $valor, $valor_id1, $valor1, $campo){
 		$txt_q = "select ".$campo." from ".$tabla." where ".$valor_id."='".$valor."' and ".$valor_id1."='".$valor1."' LIMIT 1";
 		$result = mysql_query ($txt_q);
 		$ddat = mysql_fetch_array ($result);
-		return utf8_encode ($ddat[$campo]);
+/*sk01** return utf8_encode ($ddat[$campo]); */
+/*sk01*/ return $ddat[$campo];
 	}
 
 	function NroRegistroDoble ($tabla, $valor1, $valorN1, $valor2, $valorN2){
@@ -33,7 +36,7 @@
 		$nro = mysql_num_rows ($result);
 		return $nro;
 	}
-	
+
 	function NroRegistroTriple ($tabla, $valor1, $valorN1, $valor2, $valorN2, $valor3, $valorN3){
 		$txt_q = "select * from ".$tabla." where ".$valor1."='".$valorN1."' and ".$valor2."='".$valorN2."' and ".$valor3."='".$valorN3."'";
 		$result = mysql_query ($txt_q);
@@ -54,13 +57,13 @@
 		$nro = mysql_num_rows ($result);
 		return $nro;
 	}
-	
+
 	function ElUltimo ($tabla, $campo_muestra, $criterio, $conn){
 	$texto = "select ".$campo_muestra." from ".$tabla." order by ".$criterio." desc LIMIT 1";
 	$pul =mysqli_fetch_array(mysqli_query($conn, $texto));
 	return $pul[$campo_muestra];
 	}
-	
+
 	function fecha_dev1 ($fecha){
 	$fecha = substr($fecha,5,4).'/'.substr($fecha,3,2).'/'.substr($fecha,0,2);
 	return $fecha;
@@ -73,7 +76,8 @@ function fecha_dev ($fecha){
 function DatoRegistro ($tabla, $campo_muestra, $campo_id, $id){
 	$texto = "select ".$campo_muestra." from ".$tabla." where  ".$campo_id."=".$id;
 	$pul =mysql_fetch_array(mysql_query($texto));
-	return utf8_encode ($pul[$campo_muestra]);
+/*sk01** return utf8_encode ($pul[$campo_muestra]); */
+/*sk01*/ return $pul[$campo_muestra];
 	}
 
 	function DatoRegistroSU ($tabla, $campo_muestra, $campo_id, $id){
@@ -81,7 +85,7 @@ function DatoRegistro ($tabla, $campo_muestra, $campo_id, $id){
 	$pul =mysql_fetch_array(mysql_query($texto));
 	return $pul[$campo_muestra];
 	}
-	
+
 	function BuscaAgregaComercio ($co_name, $co_calle, $co_nro, $co_tipo){
 	$texto = "insert into tb_comercios (co_name, co_calle, co_nro, co_tipo) values ( '".$co_name."', '".$co_calle."', '".$co_nro."', '".$co_tipo."')";
 	mysql_query($texto);

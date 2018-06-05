@@ -1,5 +1,5 @@
 <?php
-include("secure.php");
+include ("secure.php");
 include ("../conecta.php");
 include ("../funciones/funciones_generales.php");
 include ("../funciones/funciones_form.php");
@@ -7,7 +7,7 @@ include ("../funciones/funciones_form.php");
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<title><?php echo BuscaRegistro ("tb_sistemas", "sis_id", $_SESSION["sistema"], "sis_name"); ?>	</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../css/bootstrap.min.css">
@@ -22,10 +22,10 @@ include ("../funciones/funciones_form.php");
 </div>
 <div class="container">
 
-      
+
 <!-- aca comienza el calendario -->
-          
-<div class="paso_in"><div class="numb1">2</div><div class="numb2">1</div> Datos del Emprendimiento de 
+
+<div class="paso_in"><div class="numb1">2</div><div class="numb2">1</div> Datos del Emprendimiento de
 <span class="nombre_emp">
 <?php
 echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
@@ -36,7 +36,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <div class="panel panel-info">
   <div class="panel-heading">
   <h3 class="panel-title">
-  <span class="glyphicon glyphicon-wrench"></span>  Datos del Emprendimiento</div>
+  <span class="glyphicon glyphicon-wrench"></span>Datos del Emprendimiento</div>
   </h3>
 </div>
 
@@ -54,7 +54,8 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 ?>
 <div class="row">
 <div class="col-xs-12 col-md-12">
-<?php echo 'Rubro anterior: <b>'.utf8_decode(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro_old")).'</b>'; ?>
+<!--*SK01*    <?php /* echo 'Rubro anterior: <b>'.utf8_decode(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro_old")).'</b>'; */ ?> -->
+<!--*SK01*--> <?php echo 'Rubro anterior: <b>'.BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro_old").'</b>'; ?>
 </div>
 </div>
   <?php
@@ -129,7 +130,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <label>Funciona en su Domicilio:</label>
 <div class="radio">
   <label>
-<input name="em_en_donde" type="radio" value="0" <?php if(TirameDomicilioNro($_GET['dp_id'])==BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_domicilio")) echo 'checked'; ?>> Si | 
+<input name="em_en_donde" type="radio" value="0" <?php if(TirameDomicilioNro($_GET['dp_id'])==BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_domicilio")) echo 'checked'; ?>> Si |
 </label>
 <label>
 <input name="em_en_donde" type="radio" value="1" <?php if(TirameDomicilioNro($_GET['dp_id'])!=BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_domicilio")) echo 'checked'; ?>> No
@@ -154,7 +155,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <label>Espacio físico suficiente:</label>
 <div class="radio">
   <label>
-<input name="em_espacio" type="radio" value="1" <?php if(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_espacio")==1) echo 'checked'; ?>> Si | 
+<input name="em_espacio" type="radio" value="1" <?php if(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_espacio")==1) echo 'checked'; ?>> Si |
 </label>
 <label>
 <input name="em_espacio" type="radio" value="0" <?php if(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_espacio")==0) echo 'checked'; ?>> No
@@ -193,7 +194,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <script type="text/javascript" src="../js/validacion_calle.js"></script>
 <script type="text/javascript" src="../js/predictivo_calles.js"></script>
 
- 
+
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
 
@@ -224,55 +225,55 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
       event.preventDefault();
     }
   });
-  
-  $("input[name=em_en_donde]").change(function () {  
+
+  $("input[name=em_en_donde]").change(function () {
       if ($(this).val()==1) {
-      $("#aa1").show(); 
+      $("#aa1").show();
       } else {
-      $("#aa1").hide(); 
+      $("#aa1").hide();
       }
       });
-  $("input[name=em_espacio]").change(function () {   
+  $("input[name=em_espacio]").change(function () {
       if ($(this).val()==0) {
-      $("#aa2").show(); 
+      $("#aa2").show();
       } else {
-      $("#aa2").hide(); 
+      $("#aa2").hide();
       }
       });
 
 
   if ($("input[name=em_en_donde]:checked").val()==1) {
-      $("#aa1").show(); 
+      $("#aa1").show();
       } else {
-      $("#aa1").hide(); 
+      $("#aa1").hide();
       }
   if ($("input[name=em_espacio]:checked").val()==0) {
-      $("#aa2").show(); 
+      $("#aa2").show();
       } else {
-      $("#aa2").hide(); 
+      $("#aa2").hide();
       }
 
-                
+
           $("#rubroid").change(function(){
                   $.get("tools/busca_rubro.php",{busca: $("#rubroid").val()}, function(htmlexterno){
                       $("#subrubroid").html(htmlexterno);
-                  });  
+                  });
           });
 
-     $("#iddepartamento").change(function () {  
+     $("#iddepartamento").change(function () {
                 $("#iddepartamento option:selected").each(function () {
             elegido=$(this).val();
             $.post("tools/localidades.php", { elegido: elegido }, function(data){
             $("#idlocalidad").html(data);
-            });           
-        }); 
+            });
+        });
       });
 
    $("#idlocalidad").on("change",Buscaloc);
    $("#dpcalle").on("change",Buscaloc);
    $("#nrolocac").on("change",Buscaloc);
-               
-            
+
+
    function Buscaloc (){
         var id_loc = $("#idlocalidad").val();
             var es_calle = $("#dpcalle").val();
@@ -280,13 +281,13 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
           //  alert(id_loc+es_calle+es_nro);
             $.post("tools/localidades_str.php", { id_loc: id_loc, es_calle: es_calle, es_nro: es_nro }, function(datos){
               $("#address").attr("value",datos);
-            });           
-         
+            });
+
       };
   });
-  
+
   </script>
   <script src="../js/bootstrap-typeahead.js"></script>
- 
+
 </body>
 </html>
