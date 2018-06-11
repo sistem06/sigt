@@ -1,8 +1,10 @@
 <?php
 /*sk01**	error_reporting(0); */
 /*sk01*/  if ($_SERVER['SERVER_NAME'] == 'localhost') {
-/*sk01*/    error_reporting(E_ALL);
+/*sk01*/    ini_set('display_errors', 'On');
+/*sk01*/    error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 /*sk01*/  } else {
+/*sk01*/    ini_set('display_errors', 'Off');
 /*sk01*/    error_reporting(0);
 /*sk01*/  };
 

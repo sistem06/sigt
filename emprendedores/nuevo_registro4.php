@@ -23,10 +23,10 @@ include ("../funciones/funciones_form.php");
 </div>
 <div class="container">
 
-      
+
 <!-- aca comienza el calendario -->
-          
-<div class="paso_in"><div class="numb1">2</div><div class="numb2">4</div> Datos del Emprendimiento de 
+
+<div class="paso_in"><div class="numb1">2</div><div class="numb2">4</div> Datos del Emprendimiento de
 <span class="nombre_emp">
 <?php
 echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
@@ -46,7 +46,7 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
 
 
           <form id="parte1" action="tools/add_registro.php" method="post" role="form" class="form-inline" style="padding:10px;">
-    
+
 
 <div class="form-group">
 <label>Organización:</label>
@@ -90,7 +90,7 @@ $ttx = "select * from tb_emprendedor_capacitaciones INNER JOIN tb_organizaciones
 $list = mysql_query($ttx);
 while($lis_dat = mysql_fetch_array($list)){
 ?>
-<tr><td><?php echo utf8_encode($lis_dat['or_name']); ?></td><td><?php echo utf8_encode($lis_dat['tc_name']); ?></td><td><?php echo $lis_dat['ec_anio']; ?></td><td><a href="tools/quitar.php?val=<?php echo $lis_dat['ec_id']; ?>&id=ec_id&tabla=tb_emprendedor_capacitaciones"  title="eliminar" class="fancybox fancybox.iframe" id="quita_org"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></a></td>
+<tr><td><?php echo $lis_dat['or_name']; ?></td><td><?php echo $lis_dat['tc_name']; ?></td><td><?php echo $lis_dat['ec_anio']; ?></td><td><a href="tools/quitar.php?val=<?php echo $lis_dat['ec_id']; ?>&id=ec_id&tabla=tb_emprendedor_capacitaciones"  title="eliminar" class="fancybox fancybox.iframe" id="quita_org"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></a></td>
 </tr>
 <?php
 }
@@ -114,7 +114,7 @@ while($lis_dat = mysql_fetch_array($list)){
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 
- 
+
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
      $("#envia1").click(function() {
@@ -126,8 +126,8 @@ while($lis_dat = mysql_fetch_array($list)){
       $("#falta_motivo").show();
       return false;
     }
-    
-    
+
+
   });
       $.post("tools/organizaciones.php",  function(datacurso){
             $("#org").html(datacurso);
@@ -161,28 +161,28 @@ while($lis_dat = mysql_fetch_array($list)){
           type : 'iframe',
           padding : 5
         });
-      }); 
+      });
         $("#agregaorg").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             $.post("tools/organizaciones.php",  function(datacurso){
             $("#org").html(datacurso);
             });
         }
     });
         $("#agregamotivo").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
            $.post("tools/motivo_capacitaciones.php",  function(datamotivo){
             $("#motivo").html(datamotivo);
             });
         }
     });
         $("#quita_org").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
     });
 });
   </script>
-  
+
 </body>
 </html>

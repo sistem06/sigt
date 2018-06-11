@@ -7,7 +7,7 @@ include ("../funciones/funciones_form.php");
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
 	<title><?php echo BuscaRegistro ("tb_sistemas", "sis_id", $_SESSION["sistema"], "sis_name"); ?>	</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../css/bootstrap.min.css">

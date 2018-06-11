@@ -23,10 +23,10 @@ include ("../funciones/funciones_form.php");
 </div>
 <div class="container">
 
-      
+
 <!-- aca comienza el calendario -->
-          
-<div class="paso_in"><div class="numb1">2</div><div class="numb2">4</div> Datos de discapacidad de 
+
+<div class="paso_in"><div class="numb1">2</div><div class="numb2">4</div> Datos de discapacidad de
 <span class="nombre_emp">
 <?php
 echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
@@ -58,7 +58,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <label>Tiene Discapacidad:</label>
 <div class="radio">
   <label>
-<input name="ds_tiene_discapacidad" type="radio" value="1" class="dis" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_tiene_discapacidad")==1) echo 'checked'; ?> > Si | 
+<input name="ds_tiene_discapacidad" type="radio" value="1" class="dis" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_tiene_discapacidad")==1) echo 'checked'; ?> > Si |
 </label>
 <label>
 <input name="ds_tiene_discapacidad" type="radio" value="0"  class="dis" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_tiene_discapacidad")==0 or NroRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'])==0) echo 'checked'; ?> > No
@@ -73,7 +73,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <div class="row">
 <div class="col-xs-12 col-md-6">
 
-    
+
       <div class="form-group">
   <label>Nro de Certificado:</label>
  <input id="nrocer" type="text" class="form-control" placeholder="escriba nro de certificado" autocomplete="off" name="ds_nro_cud" value="<?php echo BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_nro_cud"); ?>" />
@@ -82,12 +82,12 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
   </div>
   <div class="col-xs-12 col-md-6">
 
-    
+
       <div class="form-group">
   <label>Otorgado por ley:</label>
  <select id="otorgaley" class="form-control" name="ds_ley_cud"/>
 
- <?php 
+ <?php
  if(NroRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'])==0){
   echo '<option selected="selected"></option>';
  }
@@ -112,7 +112,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
         <div class="row">
 <div class="col-xs-12 col-md-6">
 
-    
+
       <div class="form-group">
   <label>Ley o disposición Nro:</label>
  <input id="nrocer" type="nro" class="form-control" placeholder="escriba el nro de la ley que certifica" autocomplete="off" name="ds_ley_cud1" value="<?php echo BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_ley_cud"); ?>" />
@@ -121,20 +121,20 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
   </div>
   <div class="col-xs-12 col-md-6">
 
-    
+
       <div class="form-group">
   <label>Descripción:</label>
  <input id="nrocer" type="text" class="form-control" placeholder="descripcion del certificado" autocomplete="off" name="ds_descripcion_cud" value="<?php echo BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_descripcion_cud"); ?>" />
 </div>
 
   </div>
- 
+
   </div>
 </div>
 <div class="row">
  <div class="col-xs-12 col-md-4">
 
-    
+
       <div class="form-group">
   <label>Vigencia Desde:</label>
  <input id="nrocer" type="date" class="form-control" autocomplete="off" name="ds_desde_cud" value="<?php echo BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_desde_cud"); ?>" />
@@ -144,7 +144,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 
    <div class="col-xs-12 col-md-4">
 
-    
+
       <div class="form-group">
   <label>Vigencia Hasta:</label>
  <input id="nrocer" type="date" class="form-control" autocomplete="off" name="ds_vencimiento_cud" value="<?php echo BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_vencimiento_cud"); ?>" />
@@ -154,7 +154,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 
    <div class="col-xs-12 col-md-4">
 
-    
+
       <div class="form-group">
   <label>Ente Certificador:</label>
  <input id="nrocer" type="text" class="form-control" placeholder="escriba el ente que certifica" autocomplete="off" name="ds_ente_cud" value="<?php echo BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_ente_cud"); ?>" />
@@ -194,10 +194,10 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <div class="col-xs-12 col-md-12" id="ayudas">
 </div>
 </div>
-      
+
 <div class="row">
                 <div class="col-xs-12 col-md-12">
-                    <?php echo TextAreaGeneralVal("ds_descripcion_diagnostico", "form-control", "diagnostico", "3", "Descripción del Diagnóstico", utf8_decode(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_descripcion_diagnostico"))); ?>
+                    <?php echo TextAreaGeneralVal("ds_descripcion_diagnostico", "form-control", "diagnostico", "3", "Descripción del Diagnóstico", BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_descripcion_diagnostico")); ?>
                 </div>
 </div>
 <h4 style="color:#fff; background:#79A9D2;  text-align:center; padding:5px;">Datos Adicionales</h4>
@@ -210,7 +210,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <label>Ha realizado proceso de rehabilitación:</label>
 <div class="radio">
   <label>
-<input name="ds_rehabilitacion" type="radio" value="1" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_rehabilitacion")==1) echo 'checked'; ?> > Si | 
+<input name="ds_rehabilitacion" type="radio" value="1" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_rehabilitacion")==1) echo 'checked'; ?> > Si |
 </label>
 <label>
 <input name="ds_rehabilitacion" type="radio" value="0" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_rehabilitacion")==0 or NroRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'])==0) echo 'checked'; ?> > No
@@ -224,7 +224,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <label>Toma medicación?:</label>
 <div class="radio">
   <label>
-<input name="ds_toma_medicacion" type="radio" value="1" class="toma_med" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_toma_medicacion")==1) echo 'checked'; ?> > Si | 
+<input name="ds_toma_medicacion" type="radio" value="1" class="toma_med" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_toma_medicacion")==1) echo 'checked'; ?> > Si |
 </label>
 <label>
 <input name="ds_toma_medicacion" type="radio" value="0" class="toma_med" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_toma_medicacion")==0 or NroRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'])==0) echo 'checked'; ?> > No
@@ -238,7 +238,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <label>Con que frecuencia?:</label>
 <div class="radio">
   <label>
-<input name="ds_frecuencia_medicacion" type="radio" value="1" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_frecuencia_medicacion")==1) echo 'checked'; ?> > Permanente | 
+<input name="ds_frecuencia_medicacion" type="radio" value="1" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_frecuencia_medicacion")==1) echo 'checked'; ?> > Permanente |
 </label>
 <label>
 <input name="ds_frecuencia_medicacion" type="radio" value="2" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_frecuencia_medicacion")==2) echo 'checked'; ?> > Temporal
@@ -266,7 +266,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 
 <div class="row">
         <div class="col-xs-12 col-md-12">
-                    <?php echo TextAreaGeneralVal("ds_tratamientos_medicos", "form-control", "tratamiento_medico", "3", "Tratamientos médicos actuales:", utf8_decode(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_tratamientos_medicos"))); ?>
+                    <?php echo TextAreaGeneralVal("ds_tratamientos_medicos", "form-control", "tratamiento_medico", "3", "Tratamientos médicos actuales:", BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_tratamientos_medicos")); ?>
                 </div>
 </div>
 
@@ -277,7 +277,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <label>Cuenta con seguridad social?:</label>
 <div class="radio">
   <label>
-<input name="ds_tiene_ss" type="radio" value="1" class="tiene_ss" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_tiene_ss")==1) echo 'checked'; ?> > Si | 
+<input name="ds_tiene_ss" type="radio" value="1" class="tiene_ss" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_tiene_ss")==1) echo 'checked'; ?> > Si |
 </label>
 <label>
 <input name="ds_tiene_ss" type="radio" value="0" class="tiene_ss" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_tiene_ss")==0 or NroRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'])==0) echo 'checked'; ?> > No
@@ -298,7 +298,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <label>Cuenta con otros subsidios?:</label>
 <div class="radio">
   <label>
-<input name="ds_tiene_subsidios" type="radio" value="1" class="con_sub" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_tiene_subsidios")==1) echo 'checked'; ?> > Si | 
+<input name="ds_tiene_subsidios" type="radio" value="1" class="con_sub" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_tiene_subsidios")==1) echo 'checked'; ?> > Si |
 </label>
 <label>
 <input name="ds_tiene_subsidios" type="radio" value="0" class="con_sub" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_tiene_subsidios")==0 or NroRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'])==0) echo 'checked'; ?> > No
@@ -318,7 +318,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 
 <div class="row">
         <div class="col-xs-12 col-md-12">
-                    <?php echo TextAreaGeneralVal("ds_informacion_importante", "form-control", "informacion_importante", "3", "Otra información que considere importante", utf8_decode(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_informacion_importante"))); ?>
+                    <?php echo TextAreaGeneralVal("ds_informacion_importante", "form-control", "informacion_importante", "3", "Otra información que considere importante", BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET['dp_id'], "ds_informacion_importante")); ?>
                 </div>
 </div>
 <!-- siguiente div fin oculto -->
@@ -335,7 +335,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 </div>
 
 </div>
-     
+
 
 
 
@@ -347,7 +347,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 
- 
+
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
 
@@ -384,7 +384,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
         } else {
             $("#frecuencia_med").hide();
         }
-    
+
     $(".toma_med").click(function(){
         if($("input:radio[name=ds_toma_medicacion]:checked").val()==1){
             $("#frecuencia_med").show();
@@ -465,7 +465,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
                } else {
                       $("#ayudas").html("");
                }
-      
+
       $("#tipo_disc").change(function(){
           var tipo = $("#tipo_disc").val();
                 if(tipo==""){
@@ -586,7 +586,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
         }
   });
   });
-  
+
   </script>
    <script type="text/javascript" src="../source/jquery.fancybox.js?v=2.1.5"></script>
     <script type="text/javascript">
@@ -598,9 +598,9 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
           type : 'iframe',
           padding : 5
         });
-      }); 
+      });
         $("#agrega_puesto").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
         //     $.post("tools/puestos.php",  function(datapuesto){
             $("#puesto").val("");
         //    });
@@ -609,7 +609,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
     });
 
          $("#agrega_categoria").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
              $.post("tools/categorias.php",  function(datacategoria){
             $("#categoria").html(datacategoria);
             });
@@ -618,7 +618,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
     });
 
          $("#agrega_actividad").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
       //       $.post("tools/actividades.php",  function(datacactividad){
             $("#actividad").val("");
       //      });
@@ -627,31 +627,31 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
     });
 
          $("#quita_dato").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
-    }); 
+    });
 
          $("#quita_curso").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
     });
 
          $("#agrega_curso_propio").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
        //     $.post("tools/curso_propio.php",  function(datacurso){
             $("#cursopropio").val("");
-       //     }); 
+       //     });
 
         }
-    }); 
+    });
 
          $("#modifica_dato").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
-    }); 
+    });
 });
   </script>
 

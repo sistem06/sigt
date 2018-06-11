@@ -23,10 +23,10 @@ include ("../funciones/funciones_form.php");
 </div>
 <div class="container">
 
-      
+
 <!-- aca comienza el calendario -->
-          
-<div class="paso_in"><div class="numb1">2</div><div class="numb2">1</div> Datos Educativos de 
+
+<div class="paso_in"><div class="numb1">2</div><div class="numb2">1</div> Datos Educativos de
 <span class="nombre_emp">
 <?php
 echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
@@ -144,7 +144,7 @@ while($lis_dat = mysql_fetch_array($list)){
             $list = mysql_query($ttx);
             while($lis_dat = mysql_fetch_array($list)){
             ?>
-            <tr><td><?php echo BuscaRegistro ("tb_formacion_profesional", "fp_id", $lis_dat['bfp_fp_id'], "fp_name"); ?></td><td><?php echo (BuscaRegistro ("tb_situaciones_curso", "sc_id", $lis_dat['bfp_situacion'], "sc_name")); ?></td><td><?php echo utf8_encode($lis_dat['bfp_year']); ?></td><td><a href="tools/quitar.php?val=<?php echo $lis_dat['bfp_id']; ?>&id=bfp_id&tabla=tb_beneficiario_formacion_profesional"  title="eliminar" class="fancybox fancybox.iframe" id="quita_curso"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a></td>
+            <tr><td><?php echo BuscaRegistro ("tb_formacion_profesional", "fp_id", $lis_dat['bfp_fp_id'], "fp_name"); ?></td><td><?php echo (BuscaRegistro ("tb_situaciones_curso", "sc_id", $lis_dat['bfp_situacion'], "sc_name")); ?></td><td><?php echo $lis_dat['bfp_year']; ?></td><td><a href="tools/quitar.php?val=<?php echo $lis_dat['bfp_id']; ?>&id=bfp_id&tabla=tb_beneficiario_formacion_profesional"  title="eliminar" class="fancybox fancybox.iframe" id="quita_curso"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a></td>
             </tr>
             <?php
             }
@@ -193,8 +193,8 @@ while($lis_dat = mysql_fetch_array($list)){
                 <input type="hidden" name="valor_curso" id="valor_curso">
                 </form>
                 </div>
-              
-          
+
+
 <a href="tools/cambios_cursos_fp.php"  id="agrega_curso_propio" class="fancybox fancybox.iframe" style="display:none;">nueva carrera</a>
 </div>
 </div>
@@ -223,8 +223,8 @@ while($lis_dat = mysql_fetch_array($list)){
                     $list = mysql_query($ttx);
                     while($lis_dat = mysql_fetch_array($list)){
                     ?>
-                    <tr><td><?php echo 
-                    BuscaRegistro ("tb_idiomas", "idi_id", $lis_dat['bi_idi_id'], "idi_name"); ?></td><td><?php echo utf8_encode(BuscaRegistro ("tb_niveles_idiomas", "ni_id", $lis_dat['bi_nivel'], "ni_name")); ?></td><td><a href="tools/quitar.php?val=<?php echo $lis_dat['bi_id']; ?>&id=bi_id&tabla=tb_beneficiario_idioma"  title="eliminar" class="fancybox fancybox.iframe" id="quita_idiomas"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a></td>
+                    <tr><td><?php echo
+                    BuscaRegistro ("tb_idiomas", "idi_id", $lis_dat['bi_idi_id'], "idi_name"); ?></td><td><?php echo BuscaRegistro ("tb_niveles_idiomas", "ni_id", $lis_dat['bi_nivel'], "ni_name"); ?></td><td><a href="tools/quitar.php?val=<?php echo $lis_dat['bi_id']; ?>&id=bi_id&tabla=tb_beneficiario_idioma"  title="eliminar" class="fancybox fancybox.iframe" id="quita_idiomas"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a></td>
                     </tr>
                     <?php
                     }
@@ -236,12 +236,12 @@ while($lis_dat = mysql_fetch_array($list)){
             <button type="button" class="btn btn-warning" id="muestra_cursos_idiomas"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
 
             <div id="cursos_idiomas" style="background: #E0F0F4; padding: 10px; display: none;">
-               
+
                 <form id="parte5" action="tools/add_registro.php" method="post" role="form">
                      <div class="row">
                       <div class="col-xs-12 col-md-6">
                 <div class="form-group">
-                 <?php echo SelectGeneralAccion("bi_idi_id", "form-control", "idioma_select", "Idioma:", "tb_idiomas", "idi_id", "idi_name", "Idiomas"); ?>                    
+                 <?php echo SelectGeneralAccion("bi_idi_id", "form-control", "idioma_select", "Idioma:", "tb_idiomas", "idi_id", "idi_name", "Idiomas"); ?>
                 <div class="requerido" id="falta_nombre_idioma">Falta completar este campo</div>
                 </div>
                 </div>
@@ -250,8 +250,8 @@ while($lis_dat = mysql_fetch_array($list)){
                 <?php echo SelectGeneral("bi_nivel", "form-control", "nivel_select", "Nivel:", "tb_niveles_idiomas", "ni_id", "ni_name"); ?>
                 </div>
                 </div>
-                
-                  
+
+
                 </div>
                 <input type="hidden" name="paso" value="1105">
                 <input type="hidden" name="dp_id" value="<?php echo $_GET['dp_id']; ?>">
@@ -271,10 +271,10 @@ while($lis_dat = mysql_fetch_array($list)){
 <div class="panel panel-info">
   <div class="panel-heading">
     <h3 class="panel-title">
-    <span class="glyphicon glyphicon-credit-card"></span>  Permisos / Licencias / Matriculas 
+    <span class="glyphicon glyphicon-credit-card"></span>  Permisos / Licencias / Matriculas
     </h3></div>
       <div class="panel-body">
-      
+
        <table class="table table-striped">
           <thead>
             <tr>
@@ -292,14 +292,14 @@ while($lis_dat = mysql_fetch_array($list)){
                     $list_lic = mysql_query($ttx_lic);
                     while($lis_dat_lic = mysql_fetch_array($list_lic)){
                     ?>
-                  <tr><td><?php echo 
+                  <tr><td><?php echo
                     (BuscaRegistro ("tb_licencias", "lic_id", $lis_dat_lic['lb_lic_id'], "lic_name")); ?></td>
                     <td><?php echo fecha_dev ($lis_dat_lic['lb_vencimiento']); ?></td>
-                    <td><?php echo utf8_encode ($lis_dat_lic['lb_emisora']); ?></td>
-                    <td><?php echo 
-                    utf8_encode(BuscaRegistro ("tb_provincias", "pr_id", $lis_dat_lic['lb_provincia'], "pr_name")); ?></td>
-                    <td><?php echo 
-                    utf8_encode(BuscaRegistro ("tb_localidades_pais", "loc_id", $lis_dat_lic['lb_municipio'], "loc_name")); ?></td>
+                    <td><?php echo $lis_dat_lic['lb_emisora']; ?></td>
+                    <td><?php echo
+                    BuscaRegistro ("tb_provincias", "pr_id", $lis_dat_lic['lb_provincia'], "pr_name"); ?></td>
+                    <td><?php echo
+                    BuscaRegistro ("tb_localidades_pais", "loc_id", $lis_dat_lic['lb_municipio'], "loc_name"); ?></td>
                     <td><a href="tools/quitar.php?val=<?php echo $lis_dat_lic['lb_id']; ?>&id=lb_id&tabla=tb_licencias_beneficiario"  title="eliminar" class="fancybox fancybox.iframe" id="quita_licencia"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a></td>
                     </tr>
                     <?php
@@ -307,8 +307,8 @@ while($lis_dat = mysql_fetch_array($list)){
                     ?>
 
             </tbody>
-      </table>  
-           
+      </table>
+
 
       <button type="button" class="btn btn-warning" id="muestra_licencias"><span class="glyphicon glyphicon-plus"></span>Agregar</button>
 
@@ -318,37 +318,37 @@ while($lis_dat = mysql_fetch_array($list)){
 
                   <div class="col-xs-12 col-md-4">
                     <div class="form-group">
-                 <?php echo SelectGeneral("lb_lic_id", "form-control", "licencia_select", "Permisos / licencia / matrícula:", "tb_licencias", "lic_id", "lic_name"); ?>                    
+                 <?php echo SelectGeneral("lb_lic_id", "form-control", "licencia_select", "Permisos / licencia / matrícula:", "tb_licencias", "lic_id", "lic_name"); ?>
                       <div class="requerido" id="falta_tipo_licencia">Falta completar este campo</div>
                     </div>
                  </div>
 
                  <div class="col-xs-12 col-md-4">
                     <div class="form-group">
-                 <?php echo InputGeneral("date", "lb_vencimiento", "form-control", "vencimiento_canet", "vencimiento del carnet", "Vencimiento del Carnet:"); ?>                    
+                 <?php echo InputGeneral("date", "lb_vencimiento", "form-control", "vencimiento_canet", "vencimiento del carnet", "Vencimiento del Carnet:"); ?>
                     </div>
                  </div>
 
                  <div class="col-xs-12 col-md-4">
                     <div class="form-group">
-                 <?php echo InputGeneral("text", "lb_emisora", "form-control", "entidad_emisora", "entidad emisora", "Entidad Emisora:"); ?>                    
+                 <?php echo InputGeneral("text", "lb_emisora", "form-control", "entidad_emisora", "entidad emisora", "Entidad Emisora:"); ?>
                     </div>
                  </div>
 
                 </div>
 
                 <div class="row">
-                    
+
                     <div class="col-xs-12 col-md-6">
                     <div class="form-group">
-                 <?php echo SelectGeneral("lb_provincia", "form-control", "provincia_select", "Provincia:", "tb_provincias", "pr_id", "pr_name"); ?>                    
+                 <?php echo SelectGeneral("lb_provincia", "form-control", "provincia_select", "Provincia:", "tb_provincias", "pr_id", "pr_name"); ?>
                     </div>
                  </div>
 
                  <div class="col-xs-12 col-md-6">
                     <div class="form-group">
                     <label>Municipio:</label>
-                    <select name="lb_municipio" id="id_municipio" class="form-control"></select>         
+                    <select name="lb_municipio" id="id_municipio" class="form-control"></select>
                     </div>
                  </div>
 
@@ -377,7 +377,7 @@ while($lis_dat = mysql_fetch_array($list)){
             <?php echo SelectGeneralVal("de_pc", "form-control", "depc", "Manejo de PC:", "tb_manejo_pc", "mp_id", "mp_name",BuscaRegistro("tb_datos_educativos","de_dp_id",$_GET['dp_id'],"de_pc")); ?>
             </div>
   </div>
-  
+
   <div class="col-xs-12 col-md-6">
   <div class="form-group">
   <label> Desea continuar estudiando: </label>
@@ -423,7 +423,7 @@ while($lis_dat = mysql_fetch_array($list)){
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 
- 
+
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
 
@@ -470,7 +470,7 @@ while($lis_dat = mysql_fetch_array($list)){
          if($("#denivel").val()==""){
                 $("#falta_nivel").show();
                 event.preventDefault();
-              } 
+              }
           if($("#valor_titulo").val()=="" && $("#denivel").val() > 4){
             $("#falta_titulo").show();
             $("#falta_titulo").text("no ha elegido un elemento de la lista");
@@ -482,24 +482,24 @@ while($lis_dat = mysql_fetch_array($list)){
          if($("#cursopropio").val()==""){
                 $("#falta_curso_propio").show();
                 event.preventDefault();
-              } 
+              }
           if($("#valor_curso").val()==""){
             $("#falta_curso_propio").show();
             $("#falta_curso_propio").text("no ha elegido un elemento de la lista");
             event.preventDefault();
-          } 
+          }
       });
 
         $("#parte11").submit(function(event) {
          if($("#licencia_select").val()==""){
                 $("#falta_tipo_licencia").show();
                 event.preventDefault();
-              } 
+              }
       });
 
 
   /*    $("#envia1").mouseover(function(){
-        
+
           if($("#denivel").val() > 4){
          $.post("tools/titulos1.php",{nivel: $("#denivel").val(), titulo: $("#titulogral").val()},function(result){
                   if(result == 0){
@@ -508,7 +508,7 @@ while($lis_dat = mysql_fetch_array($list)){
                     $('#envia1').attr("disabled", true);
                   } else {
                     $("#listado_titulos").hide();
-                    
+
                   }
                 });
        }
@@ -516,7 +516,7 @@ while($lis_dat = mysql_fetch_array($list)){
 
    /*   $("#envia2").mouseover(function(){
 
-         
+
          $.post("tools/curso_propio1.php",{curso: $("#cursopropio").val()},function(result){
                   if(result == 0){
                     $("#falta_curso_propio").show();
@@ -524,21 +524,21 @@ while($lis_dat = mysql_fetch_array($list)){
                     $('#envia2').attr("disabled", true);
                   } else {
                     $("#falta_curso_propio").hide();
-                    
+
                   }
                 });
-   
+
       });
 
-     
+
     $("#envia1").click(function() {
-       
-       
+
+
     if($("#denivel").val()==""){
       $("#falta_nivel").show();
       return false;
-    } 
-    
+    }
+
     if($("#denivel").val() > 4){
       if($("#determino").val() == ""){
       $("#falta_estado").show();
@@ -560,7 +560,7 @@ while($lis_dat = mysql_fetch_array($list)){
     }
 
   }); */
-  
+
 /*  $("#envia2").click(function() {
       if($("#cursopropio").val()==""){
       $("#falta_curso_propio").show();
@@ -580,7 +580,7 @@ while($lis_dat = mysql_fetch_array($list)){
       $("#falta_nombre_idioma").show();
       return false;
     }
-  }); 
+  });
 
     $("#muestra_form_edu").click(function(){
         $("#forma_educativa").toggle();
@@ -599,19 +599,19 @@ while($lis_dat = mysql_fetch_array($list)){
         $("#cursos_licencias").toggle();
     });
 
-  $("#denivel").change(function () { 
+  $("#denivel").change(function () {
        $("#titulogral").val("");
       if ($(this).val()>3) {
-      $("#aa1").show(); 
+      $("#aa1").show();
       $("#aa3").show();
         if ($(this).val()>4) {
             $("#aa2").show();
                 $("#denivel option:selected").each(function () {
           var  elegido=$(this).val();
-            
+
           /*  $.post("tools/titulos.php", { elegido: elegido }, function(data){
             $("#titulogral").html(data);
-            });   */        
+            });   */
 
             // busca titulo
                  $("#titulogral").keyup(function(){
@@ -621,7 +621,7 @@ while($lis_dat = mysql_fetch_array($list)){
                   $.post("tools/titulos.php",{busca: $("#titulogral").val(),elegido:elegido}, function(htmlexterno){
                       $("#listado_titulos").html(htmlexterno);
                   });
-                   
+
                    $("#listado_titulos").on("click", ".cada_elemento a", function(){
                     var dato = $(this).attr("value");
                         $("#titulogral").val(dato);
@@ -645,20 +645,20 @@ while($lis_dat = mysql_fetch_array($list)){
         });
 
         } else {
-          $("#aa2").hide(); 
+          $("#aa2").hide();
         }
       } else {
       $("#aa1").hide();
-      $("#aa3").hide(); 
+      $("#aa3").hide();
       }
       });
   /* $("#titulogral").change(function(){
       if($("#titulogral").val()=="Agregar"){
           $("#agrega_carrera").trigger("click");
       }
-       
+
     });*/
-      
+
     $.post("tools/curso_propio.php",  function(datacurso){
             $("#cursopropio").html(datacurso);
             });
@@ -669,7 +669,7 @@ while($lis_dat = mysql_fetch_array($list)){
                 $('#envia2').attr("disabled", false);
                   $.post("tools/curso_propio.php",{busca: $("#cursopropio").val()}, function(htmlexterno){
                       $("#listado_cursos").html(htmlexterno);
-                     
+
                   });
 
                    $("#listado_cursos").on("click", ".cada_elemento a", function(){
@@ -681,10 +681,10 @@ while($lis_dat = mysql_fetch_array($list)){
                               $("#agrega_curso_propio").trigger("click");
                         }
                         $.post("tools/curso_propio1.php",{curso: $("#cursopropio").val()},function(result){
-                  
+
                     $("#valor_curso").val(result);
-                    
-                  
+
+
                 });
                         return false;
                   });
@@ -715,17 +715,17 @@ while($lis_dat = mysql_fetch_array($list)){
       }
     });
 
-     $("#provincia_select").change(function () {  
+     $("#provincia_select").change(function () {
                 $("#provincia_select option:selected").each(function () {
             elegido=$(this).val();
             $.post("tools/localidades_pais.php", { elegido: elegido }, function(data){
             $("#id_municipio").html(data);
-            });           
-        }); 
+            });
+        });
       });
 
   });
-  
+
   </script>
    <script type="text/javascript" src="../source/jquery.fancybox.js?v=2.1.5"></script>
     <script type="text/javascript">
@@ -737,65 +737,65 @@ while($lis_dat = mysql_fetch_array($list)){
           type : 'iframe',
           padding : 5
         });
-      }); 
+      });
         $("#agrega_carrera").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
           //  $.post("tools/titulos.php", { elegido: elegido }, function(data){
             $("#titulogral").val("");
-          //  }); 
+          //  });
 
         }
-    }); 
+    });
         $("#agrega_curso_propio").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
        //     $.post("tools/curso_propio.php",  function(datacurso){
             $("#cursopropio").val("");
-       //     }); 
+       //     });
 
         }
-    }); 
+    });
 
         $("#agrega_curso_externo").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             $.post("tools/curso_externo.php",  function(datacursoex){
             $("#cursoexterno").html(datacursoex);
-            }); 
+            });
 
         }
-    }); 
+    });
 
         $("#agrega_idioma").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
-    }); 
+    });
 
         $("#quita_curso_externo").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
-    }); 
+    });
 
         $("#quita_titulo").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
-    }); 
+    });
 
         $("#quita_curso").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
     });
 
         $("#quita_idiomas").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
     });
 
          $("#quita_licencia").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
     });

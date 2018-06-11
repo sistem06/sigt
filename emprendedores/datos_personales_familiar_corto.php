@@ -37,7 +37,7 @@
     <input type="text" class="form-control" id="nrodni" name="dp_nro_doc"
            placeholder="escriba el nro de Documento" maxlength="8">
     <div class="requerido" id="falta_dni">Falta completar este campo o nro incorrecto</div>
-
+    
     </div>
    </div>
    <div class="col-xs-12 col-md-4">
@@ -51,8 +51,8 @@
 
 <!-- Comienza Cuil -->
 
-
-
+    
+  
 
 <!-- Comienza Cuil -->
 

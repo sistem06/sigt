@@ -103,17 +103,13 @@ echo "Miembros del Hogar de ".DatoRegistro ('tb_datos_personales', 'dp_name', 'd
 </form>
 
 
-     
-<!-- aca comienza el calendario -->
-          <div id="respuesta_dni_nueva" style="display:none;"><?php include("datos_personales_familiar.php"); ?></div>
-      
-    
-    <div id="respuesta_dni_anterior" style="display:none;"><?php include("datos_personales_familiar_corto.php"); ?></div>  
+
+<!-- Se ingresa una nueva persona al sistema porque no existía en la db -->
+    <div id="respuesta_dni_nueva" style="display:none;"><?php include("datos_personales_familiar.php"); ?></div>
+<!-- Se asocia perona existente en la db como familiar -->
+    <div id="respuesta_dni_anterior" style="display:none;"><?php include("datos_personales_familiar_corto.php"); ?></div>
 
 
-
-  <!-- fin contenido -->
-  
 </div>
 </div>
 <br><br><br><br><br><br><br><br>
@@ -124,7 +120,7 @@ echo "Miembros del Hogar de ".DatoRegistro ('tb_datos_personales', 'dp_name', 'd
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../source/jquery.fancybox.js?v=2.1.5"></script>
 
- 
+
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
 
@@ -142,33 +138,32 @@ echo "Miembros del Hogar de ".DatoRegistro ('tb_datos_personales', 'dp_name', 'd
             var sistema_actual = $("#sistema_actual").val();
             $.get("../assets/comprobar_inicial_familiar.php", {dnii: nro_doc, tabla: "tb_datos_personales", valorbusc: "dp_nro_doc",actual: sistema_actual}, function(respuesta){
                 if(respuesta == "A"){
-                  
-                $("#parte0").hide();
-                $("#respuesta_dni_nueva").show();
-                $("#respuesta_dni_anterior").remove();
-                $("#nrodni").attr('disabled','disabled');
-                $("#idtipodoc").attr('disabled','disabled');
-                $("#nrodni").val(nro_doc);
-                $("#pasa_dni").val(nro_doc);
-                    } else {
-              $("#respuesta_dni_anterior").show();
-             // $("#respuesta_dni_anterior").html(res[0]);
-             var res = respuesta.split("|");
-             $("#parte0").hide();
-              $("#respuesta_dni_nueva").remove();
-                $("#nrodni").attr('disabled','disabled');
-                $("#idtipodoc").attr('disabled','disabled');
-                $("#nrodni").val(nro_doc);
-                $("#pasa_dni").val(nro_doc);
-                $("#idnombre").val(res[3]);
-                $("#pasa_id").val(res[4]);
-                $("#idapellido").val(res[2]);
-                $("#idnombre").attr('disabled','disabled');
-                $("#idapellido").attr('disabled','disabled');
-            }
-    
+	                $("#parte0").hide();
+	                $("#respuesta_dni_nueva").show();
+	                $("#respuesta_dni_anterior").remove();
+	                $("#nrodni").attr('disabled','disabled');
+									$("#pasa_tipo_doc").val($('select idtipodoc:first-child'))
+	                $("#idtipodoc").attr('disabled','disabled');
+	                $("#nrodni").val(nro_doc);
+	                $("#pasa_dni").val(nro_doc);
+                } else {
+	                $("#respuesta_dni_anterior").show();
+	             		var res = respuesta.split("|");
+	                $("#parte0").hide();
+	                $("#respuesta_dni_nueva").remove();
+	                $("#nrodni").attr('disabled','disabled');
+									$("#pasa_tipo_doc").val($('select idtipodoc:first-child'))
+	                $("#idtipodoc").attr('disabled','disabled');
+	                $("#nrodni").val(nro_doc);
+	                $("#pasa_dni").val(nro_doc);
+	                $("#idnombre").val(res[3]);
+	                $("#pasa_id").val(res[4]);
+	                $("#idapellido").val(res[2]);
+	                $("#idnombre").attr('disabled','disabled');
+	                $("#idapellido").attr('disabled','disabled');
+	            	}
 
-              })
+            })
           }
       });
 
@@ -218,7 +213,7 @@ echo "Miembros del Hogar de ".DatoRegistro ('tb_datos_personales', 'dp_name', 'd
                     if (respuesta == "B"){
                         $(".yasta").show();
                         $('#envia1').attr("disabled", true);
-                    } 
+                    }
                     if (respuesta == "A"){
                         $(".yasta").hide();
                         $('#envia1').attr("disabled", false);
@@ -228,11 +223,11 @@ echo "Miembros del Hogar de ".DatoRegistro ('tb_datos_personales', 'dp_name', 'd
                         $(".yasta").show();
                         $('.yasta').html('Con el nro de documento ingresado ya esta en el sistema '+res[1]+' <a href="tools/agrega_al_sistema.php?dp_id='+res[0]+'&id_us='+<?php echo $_SESSION["id_us"]; ?>+'"><button type="button" class="btn btn-danger">Agregar este Beneficiario</button></a>');
                         $('#envia1').attr("disabled", true);
-                    } 
+                    }
               })
         }
     });
-    
+
       $("#idsexo").change(function(){
           if($("#idsexo").val() != 3 && $("#idtipodoc").val()==1 && $("#nrodni").val().length ==8){
             if($("#idsexo").val() == 1){
@@ -311,21 +306,21 @@ echo "Miembros del Hogar de ".DatoRegistro ('tb_datos_personales', 'dp_name', 'd
   $('#nrotel').mask('000-0000000');
   $('#nrocuil').mask('00-00000000-0');
 
-   $("#iddepartamento").change(function () {  
+   $("#iddepartamento").change(function () {
                 $("#iddepartamento option:selected").each(function () {
             elegido=$(this).val();
             $.post("tools/localidades.php", { elegido: elegido }, function(data){
             $("#idlocalidad").html(data);
-            });           
-        }); 
+            });
+        });
       });
 
    $("#idlocalidad").on("change",Buscaloc);
    $("#dpcalle").on("change",Buscaloc);
    $("#geoloc").on("mouseover",Buscaloc);
    $("#nrolocac").on("change",Buscaloc);
-               
-            
+
+
    function Buscaloc (){
         var id_loc = $("#idlocalidad").val();
             var es_calle = $("#dpcalle").val();
@@ -333,10 +328,10 @@ echo "Miembros del Hogar de ".DatoRegistro ('tb_datos_personales', 'dp_name', 'd
           //  alert(id_loc+es_calle+es_nro);
             $.post("tools/localidades_str.php", { id_loc: id_loc, es_calle: es_calle, es_nro: es_nro }, function(datos){
               $("#address").attr("value",datos);
-            });           
-         
+            });
+
       };
-  
+
       $("#addfamiliar").click(function(){
           $("#datos_familiar").toggle();
           if( $('#datos_familiar').is(":visible") ){
@@ -346,8 +341,8 @@ echo "Miembros del Hogar de ".DatoRegistro ('tb_datos_personales', 'dp_name', 'd
             }
       });
 
-      
-      
+
+
 });
     </script>
 
@@ -360,9 +355,9 @@ echo "Miembros del Hogar de ".DatoRegistro ('tb_datos_personales', 'dp_name', 'd
           type : 'iframe',
           padding : 5
         });
-      }); 
+      });
         $(".fancybox").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
     });

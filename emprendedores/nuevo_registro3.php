@@ -25,8 +25,8 @@ include ("../funciones/funciones_form.php");
 <div class="container">
 
 <!-- aca comienza el calendario -->
-          
-<div class="paso_in"><div class="numb1">2</div><div class="numb2">3</div> Datos del Emprendimiento de 
+
+<div class="paso_in"><div class="numb1">2</div><div class="numb2">3</div> Datos del Emprendimiento de
 <span class="nombre_emp">
 <?php
 echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
@@ -46,7 +46,7 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
 
 
           <form id="parte1" action="tools/add_registro.php" method="post" role="form" class="form-inline" style="padding:10px;">
-    
+
 
 <div class="form-group">
 <?php echo SelectGeneral("ev_tipo", "form-control", "tipo_compra", "Tipo:", "tb_tipo_punto_venta", "tpv_id", "tpv_name"); ?>
@@ -127,30 +127,30 @@ $ttx = "select * from tb_emprendedor_ventas INNER JOIN tb_tipo_punto_venta ON tb
 $list = mysql_query($ttx);
 while($lis_dat = mysql_fetch_array($list)){
 ?>
-<tr><td><?php echo utf8_encode($lis_dat['tpv_name']); ?></td><td>
-  
-<?php 
+<tr><td><?php echo $lis_dat['tpv_name']; ?></td><td>
+
+<?php
 switch($lis_dat['ev_tipo']){
     case 1:
     echo DatoRegistro ('tb_ferias', 'fe_name', 'fe_id', $lis_dat['ev_det_tipo'], $conn);
-    break;  
-    
+    break;
+
     case 2:
     echo 'Barrio '.DatoRegistro ('tb_barrios', 'bar_name', 'bar_id', $lis_dat['ev_det_tipo'], $conn);
-    break;  
-    
+    break;
+
     case 3:
     echo DatoRegistro ('tb_comercios', 'co_name', 'co_id', $lis_dat['ev_det_tipo'], $conn);
-    break;  
-    
+    break;
+
     case 4:
     echo 'Zona '.DatoRegistro ('tb_zonas', 'zo_name', 'zo_id', $lis_dat['ev_det_tipo'], $conn);
-    break;  
-    
+    break;
+
     case 5:
     echo DatoRegistro ('tb_comercios', 'co_name', 'co_id', $lis_dat['ev_det_tipo'], $conn);
     break;
-    
+
     case 6:
     echo DatoRegistro ('tb_organizaciones', 'or_name', 'or_id', $lis_dat['ev_det_tipo'], $conn);
     break;
@@ -173,7 +173,7 @@ switch($lis_dat['ev_tipo']){
 <input type="hidden" name="em_id" value="<?php echo $_GET['em_id']; ?>">
 <input type="hidden" name="id_us" value="<?php echo $_SESSION["id_us"]; ?>">
  </form>
- 
+
   <!-- fin contenido -->
 </div>
 <br><br><br><br>
@@ -182,7 +182,7 @@ switch($lis_dat['ev_tipo']){
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 
- 
+
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
    $("#envia1").click(function() {
@@ -215,7 +215,7 @@ switch($lis_dat['ev_tipo']){
       return false;
     }
   });
-  
+
   $("#tipo_compra").change(function() {
     if($("#tipo_compra").val()==1){
       $("#op1").css("display", "inline");
@@ -241,7 +241,7 @@ switch($lis_dat['ev_tipo']){
       $("#op6").css("display", "inline");
       $("#op1, #op2, #op4, #op5, #op3").hide();
     }
-    });  
+    });
   $.post("tools/ferias.php",  function(datacurso){
             $("#feria").html(datacurso);
             });
@@ -299,9 +299,9 @@ $.post("tools/organizaciones.php",  function(dataorg){
           type : 'iframe',
           padding : 5
         });
-      }); 
+      });
         $("#agregaferia").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             $.post("tools/ferias.php",  function(datacurso){
             $("#feria").html(datacurso);
             });
@@ -309,7 +309,7 @@ $.post("tools/organizaciones.php",  function(dataorg){
     });
 
         $("#agregacomerciopropio").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             $.post("tools/comercios_propios.php",{val:$("#empe").val()},  function(datacom){
             $("#comercio").html(datacom);
             });
@@ -317,7 +317,7 @@ $.post("tools/organizaciones.php",  function(dataorg){
     });
 
          $("#agregazona").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
              $.post("tools/zonas.php",  function(datazona){
             $("#zona").html(datazona);
             });
@@ -326,7 +326,7 @@ $.post("tools/organizaciones.php",  function(dataorg){
     });
 
          $("#agregacomercioestablecido").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
              $.post("tools/comercios_gral.php",{val:$("#empe").val()},  function(datacomag){
             $("#comercio_gral").html(datacomag);
             });
@@ -335,7 +335,7 @@ $.post("tools/organizaciones.php",  function(dataorg){
     });
 
          $("#agregaorg").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             $.post("tools/organizaciones.php",  function(dataorg){
             $("#org").html(dataorg);
             });
@@ -344,7 +344,7 @@ $.post("tools/organizaciones.php",  function(dataorg){
     });
 
         $("#quitar_venta").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
     });

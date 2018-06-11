@@ -24,8 +24,8 @@ include ("../funciones/funciones_form.php");
 <div class="container">
 
 <!-- aca comienza el calendario -->
-          
-<div class="paso_in"><div class="numb1">2</div><div class="numb2">7</div> Datos del Emprendimiento de 
+
+<div class="paso_in"><div class="numb1">2</div><div class="numb2">7</div> Datos del Emprendimiento de
 <span class="nombre_emp">
 <?php
 echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
@@ -45,7 +45,7 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
 
 
           <form id="parte1" action="tools/add_registro1.php" method="post" role="form">
-    
+
 <div class="row">
   <div class="col-xs-12 col-md-4">
 
@@ -79,9 +79,9 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
       while($a = mysql_fetch_array($qu)){
     ?>
     <label>
-    <input type="checkbox" name="<?php echo $a['ti_id']; ?>" value="si"> 
+    <input type="checkbox" name="<?php echo $a['ti_id']; ?>" value="si">
     <?php
-    echo utf8_encode($a['ti_name']).' |    </label>';
+    echo $a['ti_name'].' |    </label>';
 }
 ?>
 </div>
@@ -123,7 +123,7 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 
- 
+
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
      $("#envia1").click(function() {
@@ -136,20 +136,20 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
       return false;
     }
   });
-  
-  $("input[name=efe_so]").change(function () {   
+
+  $("input[name=efe_so]").change(function () {
       if ($(this).val()=='si') {
-      $("#aa2").show(); 
+      $("#aa2").show();
       } else {
-      $("#aa2").hide(); 
+      $("#aa2").hide();
       }
       });
 
-  $("#estadoiva").change(function () {   
+  $("#estadoiva").change(function () {
       if ($(this).val() == 99) {
-      $("#aa1").hide(); 
+      $("#aa1").hide();
       } else {
-      $("#aa1").show(); 
+      $("#aa1").show();
       }
       });
   $("#porcentaje").keypress(function(tecla) {
@@ -167,14 +167,14 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
           type : 'iframe',
           padding : 5
         });
-      }); 
+      });
         $(".fancybox").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
     });
 });
   </script>
-  
+
 </body>
 </html>

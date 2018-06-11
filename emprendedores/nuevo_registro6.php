@@ -23,10 +23,10 @@ include ("../funciones/funciones_form.php");
 </div>
 <div class="container">
 
-     
+
 <!-- aca comienza el calendario -->
-          
-<div class="paso_in"><div class="numb1">2</div><div class="numb2">6</div> Datos del Emprendimiento de 
+
+<div class="paso_in"><div class="numb1">2</div><div class="numb2">6</div> Datos del Emprendimiento de
 <span class="nombre_emp">
 <?php
 echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
@@ -39,14 +39,14 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
 <div class="panel panel-info">
   <div class="panel-heading">
   <h3 class="panel-title">
-  <span class="glyphicon glyphicon-barcode"></span>  Necesidad de Créditos</div>
+  <span class="glyphicon glyphicon-barcode"></span>  Necesidades del Emprendimiento</div>
   </h3>
 
 
 
 
           <form id="parte1" action="tools/add_registro.php" method="post" role="form" class="form-inline" style="padding:10px;">
-    
+
 
 <div class="form-group">
 <label>Necesita Préstamo para:</label>
@@ -80,7 +80,7 @@ $ttx = "select * from tb_emprendedor_credito_nec INNER JOIN tb_motivo_credito ON
 $list = mysql_query($ttx);
 while($lis_dat = mysql_fetch_array($list)){
 ?>
-<tr><td><?php echo utf8_encode($lis_dat['mc_name']); ?></td><td><?php if ($lis_dat['ecn_rubro_cap'] >0){
+<tr><td><?php echo $lis_dat['mc_name']; ?></td><td><?php if ($lis_dat['ecn_rubro_cap'] >0){
   echo DatoRegistro ('tb_tipo_capacitaciones', 'tc_name', 'tc_id', $lis_dat['ecn_rubro_cap']); } ?></td><td><a href="tools/quitar.php?val=<?php echo $lis_dat['ecn_id']; ?>&id=ecn_id&tabla=tb_emprendedor_credito_nec"  title="eliminar" class="fancybox fancybox.iframe" id="quita_org"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a></td>
 </tr>
 <?php
@@ -105,7 +105,7 @@ while($lis_dat = mysql_fetch_array($list)){
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 
- 
+
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
      $("#envia1").click(function() {
@@ -118,7 +118,7 @@ while($lis_dat = mysql_fetch_array($list)){
       return false;
     }
   });
-  
+
 
      $.post("tools/motivo_creditos.php",  function(datamotivo){
             $("#destino").html(datamotivo);
@@ -133,7 +133,7 @@ while($lis_dat = mysql_fetch_array($list)){
     } else {
       $("#op1").css("display", "none");
     }
-  
+
   });
 
   $("#destino").change(function(){
@@ -160,28 +160,28 @@ while($lis_dat = mysql_fetch_array($list)){
           type : 'iframe',
           padding : 5
         });
-      }); 
+      });
         $("#agregacapa").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
            $.post("tools/motivo_capacitaciones.php",  function(datacurso){
             $("#capacitacion").html(datacurso);
             });
         }
     });
         $("#agregadestino").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             $.post("tools/motivo_creditos.php",  function(datamotivo){
             $("#destino").html(datamotivo);
             });
         }
     });
         $("#quita_org").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
     });
 });
   </script>
-  
+
 </body>
 </html>

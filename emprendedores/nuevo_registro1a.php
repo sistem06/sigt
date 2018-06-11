@@ -23,7 +23,7 @@ include ("../funciones/funciones_form.php");
 </div>
 <div class="container">
 
-     <div class="paso_in"><div class="numb1">2</div><div class="numb2">1</div> Datos del Emprendimiento de 
+     <div class="paso_in"><div class="numb1">2</div><div class="numb2">1</div> Datos del Emprendimiento de
 <span class="nombre_emp">
 <?php
 echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
@@ -43,7 +43,7 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
 
 
           <form id="parte1" action="tools/add_registro.php" method="post" role="form">
-    
+
 
 <div class="form-group">
 <?php echo InputGeneral("text","eas_name", "form-control", "name","escriba el nombre del emprendedor asociado", "Nombre del Emprendedor Asociado:"); ?>
@@ -62,7 +62,7 @@ $ttx = "select * from tb_emprendedores_asociados where eas_dp_id = ".$_GET['dp_i
 $list = mysql_query($ttx);
 while($lis_dat = mysql_fetch_array($list)){
 ?>
-<tr><td><?php echo utf8_encode($lis_dat['eas_name']); ?></td>
+<tr><td><?php echo $lis_dat['eas_name']; ?></td>
 <td><a href="tools/quitar.php?val=<?php echo $lis_dat['eas_id']; ?>&id=eas_id&tabla=tb_emprendedores_asociados"  title="eliminar" class="fancybox fancybox.iframe"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a></td>
 </tr>
 <?php
@@ -79,7 +79,7 @@ while($lis_dat = mysql_fetch_array($list)){
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 
- 
+
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
    $("#envia1").click(function() {
@@ -87,8 +87,8 @@ while($lis_dat = mysql_fetch_array($list)){
       $("#falta_org").show();
       return false;
     }
-       
-    
+
+
   });
   });
   </script>
@@ -102,9 +102,9 @@ while($lis_dat = mysql_fetch_array($list)){
           type : 'iframe',
           padding : 5
         });
-      }); 
+      });
         $(".fancybox").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
     });

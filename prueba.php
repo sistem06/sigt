@@ -11,7 +11,7 @@
 	}
 */
 include("conecta.php");
-
+echo md5("admin")."</br>";
 echo $_SERVER['SERVER_NAME']."</br>";
 $base_dir = __DIR__;
 echo $base_dir."</br>";
