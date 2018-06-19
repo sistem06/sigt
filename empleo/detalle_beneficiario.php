@@ -19,33 +19,12 @@ include ("../funciones/funciones_generales.php");
 <?php include("../recorte_gral/encabezado.php"); ?>
 <div class="container-fluid">
 <?php include("recortes/navegacion.php"); ?>
-	<!-- comienza contenido -->
 
-      <h1><?php echo BuscaRegistro ("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_name"); ?></h1>
-
-      <div class="row">
-      <div class="col-xs-12 col-sm-12 col-md-12">
-    <?php
-      $text_ent = "select * from tb_entrevista where (ent_sis = 2 and ent_dp_id ='".$_GET["dp_id"]."')";
-      $q_ent = mysql_query($text_ent);
-      while($a_ent = mysql_fetch_array($q_ent)){
-        if($a_ent['ent_fin']==0){
-        echo '<button type="button" class="btn btn-danger btn-sm">
-    <span class="glyphicon glyphicon-bell"></span> ';
-  } else{
-    echo '<button type="button" class="btn btn-success btn-sm">
-    <span class="glyphicon glyphicon-check"></span> ';
-    }
-    echo $a_ent['ent_proxima'];
-
-  echo ' </button>  ';
-
-
-      }
-      ?>
-      </div></div>
+	   <!-- Nombre Emprendedor y Semáforos de Secciones -->
+		 <h1><?php echo BuscaRegistro ("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_name"); ?></h1>
+ 		 <?php include("recortes/semaforos.php"); ?>
      <br>
-<!-- aca comienza el calendario -->
+		<!-- aca comienza el calendario -->
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-3">
               <div class="panel panel-primary">

@@ -67,6 +67,7 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
 <label for="anio">Año: </label>
     <select name="ec_anio" class="form-control">
         <?php
+					echo "<option>".$aa."</option>";
           $aa = date("Y");
           while ($aa > 1969){
               echo "<option>".$aa."</option>";
@@ -90,7 +91,8 @@ $ttx = "select * from tb_emprendedor_capacitaciones INNER JOIN tb_organizaciones
 $list = mysql_query($ttx);
 while($lis_dat = mysql_fetch_array($list)){
 ?>
-<tr><td><?php echo $lis_dat['or_name']; ?></td><td><?php echo $lis_dat['tc_name']; ?></td><td><?php echo $lis_dat['ec_anio']; ?></td><td><a href="tools/quitar.php?val=<?php echo $lis_dat['ec_id']; ?>&id=ec_id&tabla=tb_emprendedor_capacitaciones"  title="eliminar" class="fancybox fancybox.iframe" id="quita_org"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></a></td>
+<tr><td><?php echo $lis_dat['or_name']; ?></td><td><?php echo $lis_dat['tc_name']; ?></td><td>
+			  <?php if ($lis_dat['ec_anio'] <> 0) { echo $lis_dat['ec_anio']; } else { echo ""; } ?></td><td><a href="tools/quitar.php?val=<?php echo $lis_dat['ec_id']; ?>&id=ec_id&tabla=tb_emprendedor_capacitaciones"  title="eliminar" class="fancybox fancybox.iframe" id="quita_org"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></a></td>
 </tr>
 <?php
 }

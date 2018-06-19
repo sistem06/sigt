@@ -6,7 +6,7 @@ if($_POST['paso']==1){
 	$nro_doc = $_POST['dp_nro_doc1'];
 	$filtro = DatosPersonales::find_by_sql("SELECT count(dp_id) FROM tb_datos_personales");
 	$filtro = DatosPersonales::count(array("conditions" => "dp_nro_doc = '$nro_doc'"));
-	
+
 	if($filtro == 0){
 			   include_once("../../recorte_gral/apertura_inicial.php");
 
@@ -17,6 +17,7 @@ if($_POST['paso']==1){
 			   $recor->ent_sis = $_POST['sistema'];
 			   $recor->ent_fin = '1';
 			   $recor->ent_dp_id = $ult;
+				 $recor->ent_ten_id = 4;
 			   $recor->ent_proxima = "Datos Personales";
 			   $recor->ent_us = $_POST['id_us'];
 			   $recor->save();
@@ -25,6 +26,7 @@ if($_POST['paso']==1){
 			   $recor->ent_sis = $_POST['sistema'];
 			   $recor->ent_fin = '0';
 			   $recor->ent_dp_id = $ult;
+				 $recor->ent_ten_id = 6;
 			   $recor->ent_proxima = "Documentos Graficos";
 			   $recor->ent_us = $_POST['id_us'];
 			   $recor->save();
@@ -33,6 +35,7 @@ if($_POST['paso']==1){
 			   $recor->ent_sis = $_POST['sistema'];
 			   $recor->ent_fin = '0';
 			   $recor->ent_dp_id = $ult;
+				 $recor->ent_ten_id = 11;
 			   $recor->ent_proxima = "Miembros del Hogar";
 			   $recor->ent_us = $_POST['id_us'];
 			   $recor->save();
@@ -41,6 +44,7 @@ if($_POST['paso']==1){
 			   $recor->ent_sis = $_POST['sistema'];
 			   $recor->ent_fin = '0';
 			   $recor->ent_dp_id = $ult;
+				 $recor->ent_ten_id = 3;
 			   $recor->ent_proxima = "Datos Educativos";
 			   $recor->ent_us = $_POST['id_us'];
 			   $recor->save();
@@ -49,6 +53,7 @@ if($_POST['paso']==1){
 			   $recor->ent_sis = $_POST['sistema'];
 			   $recor->ent_fin = '0';
 			   $recor->ent_dp_id = $ult;
+				 $recor->ent_ten_id = 7;
 			   $recor->ent_proxima = "Historia Laboral";
 			   $recor->ent_us = $_POST['id_us'];
 			   $recor->save();
@@ -57,6 +62,7 @@ if($_POST['paso']==1){
 			   $recor->ent_sis = $_POST['sistema'];
 			   $recor->ent_fin = '0';
 			   $recor->ent_dp_id = $ult;
+				 $recor->ent_ten_id = 13;
 			   $recor->ent_proxima = "Postulaciones";
 			   $recor->ent_us = $_POST['id_us'];
 			   $recor->save();
@@ -65,6 +71,7 @@ if($_POST['paso']==1){
 			   $recor->ent_sis = $_POST['sistema'];
 			   $recor->ent_fin = '0';
 			   $recor->ent_dp_id = $ult;
+				 $recor->ent_ten_id = 5;
 			   $recor->ent_proxima = "Discapacidad";
 			   $recor->ent_us = $_POST['id_us'];
 			   $recor->save();
@@ -86,7 +93,7 @@ if($_POST['paso']==1){
 }
 
 	if($_POST['paso']==1001){
-				
+
 				include_once("../../recorte_gral/apertura_mod_dp.php");
 
 				   $prox = "../detalle_beneficiario.php?dp_id=".$_POST['dp_id'];
@@ -127,10 +134,10 @@ if($_POST['paso']==100){
 				   $cliente->dp_cuil = $_POST['dp_cuil'];
 				   $cliente->dp_estado_civil = $_POST['dp_estado_civil'];
 				   $cliente->dp_nacionalidad = $_POST['dp_nacionalidad'];
-            if($_POST['dp_nacionalidad']==1){ 
+            if($_POST['dp_nacionalidad']==1){
                $cliente->dp_pais_nacimiento = 13;
             } else {
-           
+
                if(!empty($_POST['dp_pais_nacimiento'])){
                $cliente->dp_pais_nacimiento = $_POST['dp_pais_nacimiento'];
             }}
@@ -282,7 +289,7 @@ if($_POST['paso']==5){
 		$fp = FormacionProfesional::find_by_fp_name(utf8_decode($_POST['bfp_fp_id']));
 		$bfp_fp_id = $fp->fp_id;
 
-			
+
 	}*/
 	$benfp->bfp_fp_id = $_POST['valor_curso'];
 	$benfp->bfp_situacion = $_POST['bfp_situacion'];
@@ -295,9 +302,9 @@ if($_POST['paso']==5){
 
 if($_POST['paso']==500){
 	$pecas = new PostulacionesCursos();
-	
-		$pecas->pc_curso = $_POST['valor_curso'];	
-	
+
+		$pecas->pc_curso = $_POST['valor_curso'];
+
    $pecas->pc_dp_id = $_POST['dp_id'];
 	$pecas->save();
 	$dp_id = $_POST['dp_id'];
@@ -308,7 +315,7 @@ if($_POST['paso']==4){
 
 	$dp_id = $_POST['dp_id'];
 	$filtro = Educativa::count(array("conditions" => "de_dp_id = '$dp_id'"));
-	
+
 	if($filtro == 0){
 		$edu = new Educativa();
 	$edu->de_dp_id = $_POST['dp_id'];
@@ -377,7 +384,7 @@ if($_POST['paso']==4){
 		}
 		$edu->save();
 	}
-	
+
 	$prox = "../detalle_beneficiario.php?dp_id=$dp_id";
    	$prox1 = "detalle_beneficiario.php?dp_id=$dp_id";
 
@@ -417,7 +424,7 @@ if($_POST['paso']==6){
 		$capa->save();
 
 	$dp_id = $_POST['dp_id'];
-	
+
 	header("location: ../nuevo_registro2.php?dp_id=$dp_id");
 }
 
@@ -429,7 +436,7 @@ if($_POST['paso']==600){
 		$pos->save();
 
 	$dp_id = $_POST['dp_id'];
-	
+
 	header("location: ../nuevo_registro_postulaciones.php?dp_id=$dp_id");
 }
 
@@ -453,7 +460,7 @@ if($_POST['paso']==1205){
 		$lic->save();
 
 	$dp_id = $_POST['dp_id'];
-	
+
 	header("location: ../nuevo_registro1.php?dp_id=$dp_id");
 }
 
@@ -476,20 +483,20 @@ if($_POST['paso']==777){
 		$sal->ds_vencimiento_cud = $_POST['ds_vencimiento_cud'];
 		$sal->ds_ente_cud = utf8_decode($_POST['ds_ente_cud']);
 			if(isset($_POST['ds_tipo_discapacidad'])){
-				$sal->ds_tipo_discapacidad = $_POST['ds_tipo_discapacidad'];	
+				$sal->ds_tipo_discapacidad = $_POST['ds_tipo_discapacidad'];
 			}
 			if(isset($_POST['ds_origen_discapacidad']) or $_POST['ds_origen_discapacidad']==0){
-				$sal->ds_origen_discapacidad = $_POST['ds_origen_discapacidad'];	
+				$sal->ds_origen_discapacidad = $_POST['ds_origen_discapacidad'];
 			}
 			if(isset($_POST['ds_tipo_retraso']) or $_POST['ds_tipo_retraso']==0){
-				$sal->ds_tipo_retraso = $_POST['ds_tipo_retraso'];	
+				$sal->ds_tipo_retraso = $_POST['ds_tipo_retraso'];
 			}
 			if(isset($_POST['ds_situacion_discapacidad']) or $_POST['ds_situacion_discapacidad']==0){
-				$sal->ds_situacion_discapacidad = $_POST['ds_situacion_discapacidad'];	
+				$sal->ds_situacion_discapacidad = $_POST['ds_situacion_discapacidad'];
 			}
-		$sal->ds_descripcion_diagnostico = $_POST['ds_descripcion_diagnostico']; 
-		$sal->ds_rehabilitacion = $_POST['ds_rehabilitacion']; 
-		$sal->ds_toma_medicacion = $_POST['ds_toma_medicacion']; 
+		$sal->ds_descripcion_diagnostico = $_POST['ds_descripcion_diagnostico'];
+		$sal->ds_rehabilitacion = $_POST['ds_rehabilitacion'];
+		$sal->ds_toma_medicacion = $_POST['ds_toma_medicacion'];
 		if(isset($_POST['ds_frecuencia_medicacion'])){
 			$sal->ds_frecuencia_medicacion = $_POST['ds_frecuencia_medicacion'];
 		}
@@ -499,16 +506,16 @@ if($_POST['paso']==777){
 		if(isset($_POST['ds_asistente_trabajo'])){
 			$sal->ds_asistente_trabajo = $_POST['ds_asistente_trabajo'];
 		}
-		$sal->ds_tratamientos_medicos = $_POST['ds_tratamientos_medicos']; 
-		$sal->ds_tiene_ss = $_POST['ds_tiene_ss']; 
+		$sal->ds_tratamientos_medicos = $_POST['ds_tratamientos_medicos'];
+		$sal->ds_tiene_ss = $_POST['ds_tiene_ss'];
 		if(isset($_POST['ds_ss'])){
 			$sal->ds_ss = $_POST['ds_ss'];
 		}
-		$sal->ds_tiene_subsidios = $_POST['ds_tiene_subsidios']; 
+		$sal->ds_tiene_subsidios = $_POST['ds_tiene_subsidios'];
 		if(isset($_POST['ds_subsidios'])){
 			$sal->ds_subsidios = $_POST['ds_subsidios'];
 		}
-		$sal->ds_informacion_importante = $_POST['ds_informacion_importante']; 
+		$sal->ds_informacion_importante = $_POST['ds_informacion_importante'];
 		$sal->save();
 	} else {
 		$sal = new Salud();
@@ -530,22 +537,22 @@ if($_POST['paso']==777){
 		}
 		$sal->ds_ente_cud = utf8_decode($_POST['ds_ente_cud']);
 			if(isset($_POST['ds_tipo_discapacidad'])){
-				$sal->ds_tipo_discapacidad = $_POST['ds_tipo_discapacidad'];	
+				$sal->ds_tipo_discapacidad = $_POST['ds_tipo_discapacidad'];
 			}
 			if(isset($_POST['ds_origen_discapacidad'])){
-				$sal->ds_origen_discapacidad = $_POST['ds_origen_discapacidad'];	
+				$sal->ds_origen_discapacidad = $_POST['ds_origen_discapacidad'];
 			}
 			if(isset($_POST['ds_tipo_retraso'])){
-				$sal->ds_tipo_retraso = $_POST['ds_tipo_retraso'];	
+				$sal->ds_tipo_retraso = $_POST['ds_tipo_retraso'];
 			}
 			if(isset($_POST['ds_situacion_discapacidad'])){
-				$sal->ds_situacion_discapacidad = $_POST['ds_situacion_discapacidad'];	
+				$sal->ds_situacion_discapacidad = $_POST['ds_situacion_discapacidad'];
 			}
 			if(isset($_POST['ds_descripcion_diagnostico'])){
-		$sal->ds_descripcion_diagnostico = $_POST['ds_descripcion_diagnostico']; 
+		$sal->ds_descripcion_diagnostico = $_POST['ds_descripcion_diagnostico'];
 	}
-		$sal->ds_rehabilitacion = $_POST['ds_rehabilitacion']; 
-		$sal->ds_toma_medicacion = $_POST['ds_toma_medicacion']; 
+		$sal->ds_rehabilitacion = $_POST['ds_rehabilitacion'];
+		$sal->ds_toma_medicacion = $_POST['ds_toma_medicacion'];
 		if(isset($_POST['ds_frecuencia_medicacion'])){
 			$sal->ds_frecuencia_medicacion = $_POST['ds_frecuencia_medicacion'];
 		}
@@ -555,19 +562,19 @@ if($_POST['paso']==777){
 		if(isset($_POST['ds_asistente_trabajo'])){
 			$sal->ds_asistente_trabajo = $_POST['ds_asistente_trabajo'];
 		}
-		$sal->ds_tratamientos_medicos = $_POST['ds_tratamientos_medicos']; 
-		$sal->ds_tiene_ss = $_POST['ds_tiene_ss']; 
+		$sal->ds_tratamientos_medicos = $_POST['ds_tratamientos_medicos'];
+		$sal->ds_tiene_ss = $_POST['ds_tiene_ss'];
 		if(isset($_POST['ds_ss'])){
 			$sal->ds_ss = $_POST['ds_ss'];
 		}
-		$sal->ds_tiene_subsidios = $_POST['ds_tiene_subsidios']; 
+		$sal->ds_tiene_subsidios = $_POST['ds_tiene_subsidios'];
 		if(isset($_POST['ds_subsidios'])){
 			$sal->ds_subsidios = $_POST['ds_subsidios'];
 		}
 		$sal->ds_informacion_importante = $_POST['ds_informacion_importante'];
 		$sal->save();
 	}
-	
+
 	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima(2, $dp_id,"Discapacidad");
    	$ent_id = $entre->ent_id;
 
@@ -684,14 +691,14 @@ if($_POST['paso']==1105){
 		$idi->bi_nivel = $_POST['bi_nivel'];
 		$idi->bi_idi_id = $_POST['bi_idi_id'];
 		$idi->save();
-	
+
 	$dp_id = $_POST['dp_id'];
 	header("location: ../nuevo_registro1.php?dp_id=$dp_id");
 }
 
 if($_POST['paso']==8){
 	include_once("../../recorte_gral/apertura_mod_domicilio.php");
-	
+
 
 					   $dp_id = $_POST['dp_id'];
 						header("location: ../detalle_beneficiario.php?dp_id=$dp_id");

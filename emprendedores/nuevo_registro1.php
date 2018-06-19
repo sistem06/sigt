@@ -54,8 +54,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 ?>
 <div class="row">
 <div class="col-xs-12 col-md-12">
-<!--*SK01*    <?php /* echo 'Rubro anterior: <b>'.utf8_decode(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro_old")).'</b>'; */ ?> -->
-<!--*SK01*--> <?php echo 'Rubro anterior: <b>'.BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro_old").'</b>'; ?>
+  <?php echo 'Rubro anterior: <b>'.BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro_old").'</b>'; ?>
 </div>
 </div>
   <?php
@@ -63,7 +62,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 ?>
 <div class="row">
 <div class="col-xs-12 col-md-6">
-<div class="form-group has-success">
+<div class="form-group">
   <?php echo SelectGeneralVal("em_rubro", "form-control", "rubroid", "Rubro:","tb_rubros", "ru_id", "ru_name",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_rubro")); ?>
  <div id="listado_rubros" class="requerido"></div>
  <div class="requerido" id="falta_rubro">Falta completar este campo</div>
@@ -71,7 +70,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 </div>
 
 <div class="col-xs-12 col-md-6">
-<div class="form-group has-success">
+<div class="form-group">
   <label>Subrubro:</label>
  <select id="subrubroid" class="form-control" name="em_subrubro"/>
  <option value="<?php echo BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro"); ?>"><?php echo BuscaRegistro ("tb_subrubros", "sr_id",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro"),"sr_name"); ?></option>
@@ -208,6 +207,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
       $("#falta_nombre").show();
      event.preventDefault();
     }
+		/*sk04* IS016 Campos NO requeridos
     if($("#rubroid").val()==""){
       $("#falta_rubro").show();
       event.preventDefault();
@@ -216,6 +216,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
       $("#falta_subrubro").show();
       event.preventDefault();
     }
+		*sk04*/
     if($("#tipoemp").val()==""){
       $("#falta_tipo").show();
       event.preventDefault();

@@ -5,7 +5,7 @@
 
 	$query = mysql_query($txt);
 		while($dat = mysql_fetch_array($query)){
-			$resp .= '<div class = "cada_elemento"><a href="" value="'.utf8_encode($dat['ca_name']).'">'.utf8_encode($dat['ca_name']).'</a></div>';
+			$resp .= '<div class = "cada_elemento"><a href="" value="'.$dat['ca_name'].'">'.$dat['ca_name'].'</a></div>';
 		}
 	echo $resp;
 ?>

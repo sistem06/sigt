@@ -5,13 +5,13 @@ include ("../../funciones/funciones_generales.php");
 		$query = mysql_query($txt);
 			$res = "";
 			$res .= '<option></option>';
-			
+
 			$res .= '<optgroup label="Accion">';
 			$res .= '<option>Agregar</option>';
-			
+
 			$res .= '<optgroup label="Zonas">';
 			while($a=mysql_fetch_array($query)){
-				$res .= '<option value="'.$a['zo_id'].'">'.utf8_encode($a['zo_name']).'</option>';
+				$res .= '<option value="'.$a['zo_id'].'">'.$a['zo_name'].'</option>';
 			}
 	echo $res;
 	?>

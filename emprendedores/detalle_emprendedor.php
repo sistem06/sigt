@@ -33,12 +33,12 @@ include ("../funciones/funciones_generales.php");
                     <p>Nombre: <strong><?php echo BuscaRegistro ("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_name"); ?></strong></p>
                     <p>Documento: <strong><?php echo BuscaRegistro ("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_nro_doc"); ?></strong></p>
                     <p>Nacimiento: <strong><?php echo fecha_dev(BuscaRegistro ("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_nacimiento")); ?></strong></p>
-                    <p>Estado Civil: <strong><?php 
+                    <p>Estado Civil: <strong><?php
                     $ec = BuscaRegistro ("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_estado_civil");
-                    echo BuscaRegistro ("tb_estado_civil", "ec_id", $ec, "ec_name"); 
+                    echo BuscaRegistro ("tb_estado_civil", "ec_id", $ec, "ec_name");
                     ?></strong></p>
-                    <p>Domicilio: <strong><?php 
-                    echo TirameDomicilio($_GET["dp_id"]); 
+                    <p>Domicilio: <strong><?php
+                    echo TirameDomicilio($_GET["dp_id"]);
                     ?></strong></p>
                      <p>Telefono: <strong><?php echo BuscaRegistro ("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_telefono"); ?></strong></p>
                     <p>Celular: <strong><?php echo BuscaRegistro ("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_movil"); ?></strong></p>
@@ -87,13 +87,13 @@ include ("../funciones/funciones_generales.php");
                 </div>
                 <div class="panel-body">
 
-        <?php 
-        $hb_ho_id = BuscaRegistro ("tb_hogar_beneficiario", "hb_dp_id", $_GET["dp_id"], "hb_ho_id"); 
+        <?php
+        $hb_ho_id = BuscaRegistro ("tb_hogar_beneficiario", "hb_dp_id", $_GET["dp_id"], "hb_ho_id");
         $query_hogar = mysql_query("select * from tb_hogar_beneficiario where hb_ho_id = '$hb_ho_id'");
         while($a_hogar = mysql_fetch_array($query_hogar)){
             $n_dp_id = $a_hogar['hb_dp_id'];
             $n_parent = BuscaRegistro ("tb_datos_personales", "dp_id", $n_dp_id, "dp_parentesco");
-            
+
           echo '<p>'.BuscaRegistro ("tb_datos_personales", "dp_id", $n_dp_id, "dp_name").'</p>';
         }
 
@@ -114,9 +114,9 @@ include ("../funciones/funciones_generales.php");
                 </div>
                 <div class="panel-body">
                     <p>Nombre: <strong><?php echo BuscaRegistro ("tb_datos_emprendimiento", "em_id", $em_id, "em_nombre"); ?></strong></p>
-                    <p>Rubro: <strong><?php 
+                    <p>Rubro: <strong><?php
                     echo BuscaRegistro ("tb_datos_emprendimiento", "em_id", $em_id, "em_subrubro");
-                    
+
                     ?></strong></p>
                     <p>Descripción: <i><?php echo BuscaRegistro ("tb_datos_emprendimiento", "em_id", $em_id, "em_descripcion"); ?></i></p>
                     <p>Fecha de Inicio: <strong><?php echo fecha_dev(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $em_id, "em_fecha_inicio")); ?></strong></p>
@@ -134,19 +134,19 @@ include ("../funciones/funciones_generales.php");
                       <?php
                      }
                      ?>
-                     <p>Tiene espacio suficiente: <strong><?php 
+                     <p>Tiene espacio suficiente: <strong><?php
                       echo SiNo(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $em_id, "em_espacio"));
                      ?></strong></p>
                        <?php
                      if(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $em_id, "em_espacio") == 0){
                       ?>
-                       <p>Motivo del poco espacio: <strong><?php 
+                       <p>Motivo del poco espacio: <strong><?php
                       echo $tipo_lugar = BuscaRegistro ("tb_datos_emprendimiento", "em_id", $em_id, "em_motivo_espacio");;
 
                      ?></strong></p>
                       <?php
                      }
-                     ?>   
+                     ?>
                     <p>Tipo de emprendimiento: <strong><?php $tipo_empr = BuscaRegistro ("tb_datos_emprendimiento", "em_id", $em_id, "em_tipo_empresa");
                       echo BuscaRegistro ("tb_tipo_emprendimiento", "te_id", $tipo_empr, "te_name");
                      ?></strong></p>
@@ -169,7 +169,7 @@ $ttx = "select * from tb_emprendedor_organizacion INNER JOIN tb_organizaciones O
 $list = mysql_query($ttx);
 while($lis_dat = mysql_fetch_array($list)){
 ?>
-<tr><td><?php echo utf8_encode($lis_dat['or_name']); ?></td><td><?php echo utf8_encode($lis_dat['ta_name']); ?></td>
+<tr><td><?php echo $lis_dat['or_name']; ?></td><td><?php $lis_dat['ta_name']; ?></td>
 </tr>
 <?php
 }
@@ -192,30 +192,30 @@ $ttx = "select * from tb_emprendedor_ventas INNER JOIN tb_tipo_punto_venta ON tb
 $list = mysql_query($ttx);
 while($lis_dat = mysql_fetch_array($list)){
 ?>
-<tr><td><?php echo utf8_encode($lis_dat['tpv_name']); ?></td><td>
-  
-<?php 
+<tr><td><?php echo $lis_dat['tpv_name']; ?></td><td>
+
+<?php
 switch($lis_dat['ev_tipo']){
     case 1:
     echo DatoRegistro ('tb_ferias', 'fe_name', 'fe_id', $lis_dat['ev_det_tipo'], $conn);
-    break;  
-    
+    break;
+
     case 2:
     echo 'Barrio '.DatoRegistro ('tb_barrios', 'bar_name', 'bar_id', $lis_dat['ev_det_tipo'], $conn);
-    break;  
-    
+    break;
+
     case 3:
     echo DatoRegistro ('tb_comercios', 'co_name', 'co_id', $lis_dat['ev_det_tipo'], $conn);
-    break;  
-    
+    break;
+
     case 4:
     echo 'Zona '.DatoRegistro ('tb_zonas', 'zo_name', 'zo_id', $lis_dat['ev_det_tipo'], $conn);
-    break;  
-    
+    break;
+
     case 5:
     echo DatoRegistro ('tb_comercios', 'co_name', 'co_id', $lis_dat['ev_det_tipo'], $conn);
     break;
-    
+
     case 6:
     echo DatoRegistro ('tb_organizaciones', 'or_name', 'or_id', $lis_dat['ev_det_tipo'], $conn);
     break;
@@ -232,7 +232,7 @@ switch($lis_dat['ev_tipo']){
               </div>
         </div>
 
-    
+
                       <div class="col-xs-12 col-sm-6 col-md-3">
               <div class="panel panel-info">
                 <div class="panel-heading">
@@ -245,7 +245,7 @@ $ttx = "select * from tb_emprendedor_capacitaciones INNER JOIN tb_organizaciones
 $list = mysql_query($ttx);
 while($lis_dat = mysql_fetch_array($list)){
 ?>
-<tr><td><?php echo utf8_encode($lis_dat['or_name']); ?></td><td><?php echo utf8_encode($lis_dat['tc_name']); ?></td>
+<tr><td><?php echo $lis_dat['or_name']; ?></td><td><?php echo $lis_dat['tc_name']; ?></td>
 </tr>
 <?php
 }
@@ -269,7 +269,7 @@ $ttx = "select * from tb_emprendedor_credito INNER JOIN tb_organizaciones ON tb_
 $list = mysql_query($ttx);
 while($lis_dat = mysql_fetch_array($list)){
 ?>
-<tr><td><?php echo utf8_encode($lis_dat['or_name']); ?></td><td><?php echo utf8_encode($lis_dat['mc_name']); ?></td><td><?php if($lis_dat['ec_vigente']=="SI"){ ?> <span class="label label-danger">VIGENTE</span> <?php } ?></td>
+<tr><td><?php echo $lis_dat['or_name']; ?></td><td><?php echo $lis_dat['mc_name']; ?></td><td><?php if($lis_dat['ec_vigente']=="SI"){ ?> <span class="label label-danger">VIGENTE</span> <?php } ?></td>
 </tr>
 <?php
 }
@@ -284,7 +284,7 @@ while($lis_dat = mysql_fetch_array($list)){
          <div class="col-xs-12 col-sm-6 col-md-3">
               <div class="panel panel-warning">
                 <div class="panel-heading">
-                  <h3 class="panel-title"><span class="glyphicon glyphicon-barcode"></span>Necesidad de Créditos</h3>
+                  <h3 class="panel-title"><span class="glyphicon glyphicon-barcode"></span>Necesidades del Emprendimiento</h3>
                 </div>
                 <div class="panel-body">
                     <table class="table table-striped">
@@ -293,7 +293,7 @@ $ttx = "select * from tb_emprendedor_credito_nec INNER JOIN tb_motivo_credito ON
 $list = mysql_query($ttx);
 while($lis_dat = mysql_fetch_array($list)){
 ?>
-<tr><td><?php echo utf8_encode($lis_dat['mc_name']); ?></td><td><?php if ($lis_dat['ecn_rubro_cap'] >0){
+<tr><td><?php echo $lis_dat['mc_name']; ?></td><td><?php if ($lis_dat['ecn_rubro_cap'] >0){
   echo DatoRegistro ('tb_tipo_capacitaciones', 'tc_name', 'tc_id', $lis_dat['ecn_rubro_cap']); } ?></td>
 </tr>
 <?php
@@ -322,8 +322,8 @@ while($lis_dat = mysql_fetch_array($list)){
                       }
                       ?>
                     </strong></p>
-                   
-                    <p>Estado ante la AFIP: <strong><?php 
+
+                    <p>Estado ante la AFIP: <strong><?php
                     $bafip = BuscaRegistro ("tb_estado_afip", "ea_dp_id", $_GET['dp_id'], "ea_tipo_relacion");
                     echo BuscaRegistro ("tb_tipo_iva", "ti_id", $bafip, "ti_name") ?></strong></p>
 
@@ -342,12 +342,12 @@ while($lis_dat = mysql_fetch_array($list)){
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" language="javascript" src="../js/jquery.dataTables.js"></script>
-  
+
   <script type="text/javascript" language="javascript" class="init">
   $(document).ready(function() {
   $('#list_emprendedores').DataTable();
 });
-  </script> 
+  </script>
   <script type="text/javascript" language="javascript">
     $('#list_emprendedores').DataTable( {
         responsive: true
@@ -364,9 +364,9 @@ while($lis_dat = mysql_fetch_array($list)){
           type : 'iframe',
           padding : 5
         });
-      }); 
+      });
         $(".fancybox").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
     });

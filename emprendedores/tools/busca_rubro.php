@@ -6,7 +6,7 @@ include ("../../funciones/funciones_generales.php");
 
 	$query = mysql_query($txt);
 		while($dat = mysql_fetch_array($query)){
-			$resp .= '<option value="'.$dat['sr_id'].'">'.utf8_encode($dat['sr_name']).'</option>';
+			$resp .= '<option value="'.$dat['sr_id'].'">'.$dat['sr_name'].'</option>';
 		}
 	echo $resp;
 	?>

@@ -6,7 +6,7 @@ include ("../../funciones/funciones_generales.php");
 
 	$query = mysql_query($txt);
 		while($dat = mysql_fetch_array($query)){
-			$resp .= '<div class = "cada_elemento"><a href="" value="'.utf8_encode($dat['ts_name']).'">'.utf8_encode($dat['ts_name']).'</a></div>';
+			$resp .= '<div class = "cada_elemento"><a href="" value="'.$dat['ts_name'].'">'.$dat['ts_name'].'</a></div>';
 		}
 	echo $resp;
 	?>

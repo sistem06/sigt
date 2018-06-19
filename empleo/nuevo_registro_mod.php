@@ -19,10 +19,10 @@ include ("../funciones/funciones_form.php");
 <?php include("../recorte_gral/encabezado.php"); ?>
 <div class="container-fluid">
 <?php include("recortes/navegacion.php"); ?>
-	
+
 <div class="container">
-      <h3>Modifica Beneficiario</h3>       
-        
+      <h3>Modifica Beneficiario</h3>
+
 
 <?php include("../recorte_gral/datos_personales_mod.php"); ?>
 
@@ -82,7 +82,7 @@ include ("../funciones/funciones_form.php");
         if(tecla.charCode < 48 || tecla.charCode > 57) return false;
     });
 
-      
+
       if($("#idnacionalidad").val() == 1){
           $("#idpaisnacimiento").attr('disabled','disabled');
           $("#anos_residencia").attr('disabled','disabled');
@@ -102,13 +102,13 @@ include ("../funciones/funciones_form.php");
 
         <script type="text/javascript">
         $(document).ready(function(){
-  $('#nrocelu').mask('000-0000000');
-  $('#nrotel').mask('000-0000000');
-  $('#nrocelu1').mask('000-0000000');
-  $('#nrotel1').mask('000-0000000');
+  $('#nrocelu').mask('000-00000000');
+  $('#nrotel').mask('000-00000000');
+  $('#nrocelu1').mask('000-00000000');
+  $('#nrotel1').mask('000-00000000');
   $('#nrocuil').mask('00-00000000-0');
 
-  
+
   $("#idsexo").change(function(){
       if($("#idsexo").val()==3){
           $("#agregasexo").trigger("click");
@@ -128,15 +128,15 @@ include ("../funciones/funciones_form.php");
           type : 'iframe',
           padding : 5
         });
-      }); 
+      });
         $("#agregasexo").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             $.post("tools/sexos.php",  function(datacurso){
             $("#idsexo").html(datacurso);
             });
         }
     });
-       
+
 });
   </script>
 

@@ -197,7 +197,7 @@ while($lis_dat = mysql_fetch_array($list)){
          <div class="col-xs-12 col-sm-6 col-md-3">
               <div class="panel panel-warning">
                 <div class="panel-heading">
-                  <h3 class="panel-title"><span class="glyphicon glyphicon-barcode"></span>Necesidad de Créditos</h3>
+                  <h3 class="panel-title"><span class="glyphicon glyphicon-barcode"></span>Necesidades del Emprendimiento</h3>
                 </div>
                 <div class="panel-body">
                     <table class="table table-striped">

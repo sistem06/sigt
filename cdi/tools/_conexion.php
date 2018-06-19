@@ -5,6 +5,6 @@
  {
     $cfg->set_model_directory('../../models');
     $cfg->set_connections(array(
-    'development' => 'mysql://sistem06_admin:Bari2012@localhost/sistem06_informes'));
+    'development' => 'mysql://sistem06_admin:Bari2012@localhost/sistem06_informes;charset=utf8'));
  }); 
 ?>

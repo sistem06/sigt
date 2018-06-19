@@ -21,6 +21,7 @@ if($_POST['paso']==1){
 	    $recor->ent_sis = $_POST['sistema'];
 	    $recor->ent_fin = '1';
 	    $recor->ent_dp_id = $ult;
+			$recor->ent_ten_id = 4;
 	    $recor->ent_proxima = "Datos Personales";
 	    $recor->ent_us = $_POST['id_us'];
 	    $recor->save();
@@ -29,6 +30,7 @@ if($_POST['paso']==1){
 	    $recor->ent_sis = $_POST['sistema'];
 	    $recor->ent_fin = '0';
 	    $recor->ent_dp_id = $ult;
+			$recor->ent_ten_id = 6;
 	    $recor->ent_proxima = "Documentos Graficos";
 	    $recor->ent_us = $_POST['id_us'];
 	    $recor->save();
@@ -37,6 +39,7 @@ if($_POST['paso']==1){
 	    $recor->ent_sis = $_POST['sistema'];
 	    $recor->ent_fin = '0';
 	    $recor->ent_dp_id = $ult;
+			$recor->ent_ten_id = 11;
 	    $recor->ent_proxima = "Miembros del Hogar";
 	    $recor->ent_us = $_POST['id_us'];
 	    $recor->save();
@@ -45,6 +48,7 @@ if($_POST['paso']==1){
 			$recor->ent_sis = $_POST['sistema'];
 			$recor->ent_fin = '0';
 			$recor->ent_dp_id = $ult;
+			$recor->ent_ten_id = 3;
 			$recor->ent_proxima = "Datos Educativos";
 			$recor->ent_us = $_POST['id_us'];
 			$recor->save();
@@ -53,6 +57,7 @@ if($_POST['paso']==1){
 			$recor->ent_sis = $_POST['sistema'];
 			$recor->ent_fin = '0';
 			$recor->ent_dp_id = $ult;
+			$recor->ent_ten_id = 5;
 			$recor->ent_proxima = "Discapacidad";
 			$recor->ent_us = $_POST['id_us'];
 			$recor->save();
@@ -61,6 +66,7 @@ if($_POST['paso']==1){
 	    $recor->ent_sis = $_POST['sistema'];
 	    $recor->ent_fin = '0';
 	    $recor->ent_dp_id = $ult;
+			$recor->ent_ten_id = 2;
 	    $recor->ent_proxima = "Datos del Emprendimiento";
 	    $recor->ent_us = $_POST['id_us'];
 	    $recor->save();
@@ -69,6 +75,7 @@ if($_POST['paso']==1){
 	    $recor->ent_sis = $_POST['sistema'];
 	    $recor->ent_fin = '0';
 	    $recor->ent_dp_id = $ult;
+			$recor->ent_ten_id = 9;
 	    $recor->ent_proxima = "Instituciones Asociadas";
 	    $recor->ent_us = $_POST['id_us'];
 	    $recor->save();
@@ -77,6 +84,7 @@ if($_POST['paso']==1){
 	    $recor->ent_sis = $_POST['sistema'];
 	    $recor->ent_fin = '0';
 	    $recor->ent_dp_id = $ult;
+			$recor->ent_ten_id = 10;
 	    $recor->ent_proxima = "Lugares de Venta";
 	    $recor->ent_us = $_POST['id_us'];
 	    $recor->save();
@@ -85,6 +93,7 @@ if($_POST['paso']==1){
 	    $recor->ent_sis = $_POST['sistema'];
 	    $recor->ent_fin = '0';
 	    $recor->ent_dp_id = $ult;
+			$recor->ent_ten_id = 1;
 	    $recor->ent_proxima = "Capacitaciones Recibidas";
 	    $recor->ent_us = $_POST['id_us'];
 	    $recor->save();
@@ -93,6 +102,7 @@ if($_POST['paso']==1){
 	    $recor->ent_sis = $_POST['sistema'];
 	    $recor->ent_fin = '0';
 	    $recor->ent_dp_id = $ult;
+			$recor->ent_ten_id = 14;
 	    $recor->ent_proxima = "Subsidios/Créditos Recibidos";
 	    $recor->ent_us = $_POST['id_us'];
 	    $recor->save();
@@ -101,6 +111,7 @@ if($_POST['paso']==1){
 	    $recor->ent_sis = $_POST['sistema'];
 	    $recor->ent_fin = '0';
 	    $recor->ent_dp_id = $ult;
+			$recor->ent_ten_id = 12;
 	    $recor->ent_proxima = "Necesidad del Emprendimiento";
 	    $recor->ent_us = $_POST['id_us'];
 	    $recor->save();
@@ -109,6 +120,7 @@ if($_POST['paso']==1){
 	    $recor->ent_sis = $_POST['sistema'];
 	    $recor->ent_fin = '0';
 	    $recor->ent_dp_id = $ult;
+			$recor->ent_ten_id = 8;
 	    $recor->ent_proxima = "Ingresos";
 	    $recor->ent_us = $_POST['id_us'];
 	    $recor->save();
@@ -196,7 +208,7 @@ if($_POST['paso']==100){ //Alta Hogar Familares
 				  $cliente->save();
 
 				  $book = DatosPersonales::last();
-				  /*sk03** CUIDADO!! esto podría recuperar el id de otra persona si hubiese un save() desde otra session posterior a este!!!! */
+				  /*sk03** CUIDADO!! el last() podría recuperar el id de otra persona si hubiese un save() desde otra session posterior a este!!!! */
 				  $ult = $book->dp_id;
 
 			    $ho_id = $_POST['ho_id'];
@@ -735,7 +747,7 @@ if($_POST['paso']==12){ // Alta Necesidades del Emprendimiento
 	$prox = "../detalle_beneficiario.php?dp_id=$dp_id";
   $prox1 = "detalle_beneficiario.php?dp_id=$dp_id";
 
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima(1, $dp_id,"Necesidad de Créditos");
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima(1, $dp_id,"Necesidad del Emprendimiento");
   $ent_id = $entre->ent_id;
   if(isset($ent_id)){
     $recor = AltaEntrevista::find($ent_id);

@@ -39,7 +39,7 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
 <div class="panel panel-default">
   <div class="panel-heading">
   <h3 class="panel-title">
-  <span class="glyphicon glyphicon-barcode"></span>  Necesidad de Créditos</div>
+  <span class="glyphicon glyphicon-barcode"></span>  Necesidades del Emprendimiento</div>
   </h3>
 </div>
 

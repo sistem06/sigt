@@ -54,10 +54,11 @@ include ("../funciones/funciones_generales.php");
             </tbody>
         </table>
   <!-- fin contenido  prueba utf8-->
-
+	<br><br><br><br>
   <!-- fin prueba -->
 
 </div>
+
 <?php include("../recorte_gral/pie.php"); ?>
 
 <script type="text/javascript" src="../js/jquery.js"></script>

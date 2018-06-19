@@ -23,6 +23,12 @@ if (!empty($_GET['fe_id'])){
   $us_form = InputGeneralVal("text", "fe_name", "form-control", "usuario", "nombre de la ferian", "Nombre de la Feria:",BuscaRegistro ("tb_ferias", "fe_id", $_GET['fe_id'], "fe_name"));
  /* $valor = BuscaRegistro ("tb_usuarios", "us_id", $_GET['us_id'], "us_tipo");
   $us_tipo = SelectGeneralVal("funcion", "form-control", "funcion", "Tipo de Usuario:","tb_tipo_usuarios", "tus_id", "tus_name",$valor,BuscaRegistro ("tb_tipo_usuarios", "tus_id", $valor, "tus_name"));*/
+  if (BuscaRegistro ("tb_ferias", "fe_id", $_GET['fe_id'], "fe_municipal") == 1) {
+    $fe_muni ='checked="checked"';
+  } else {
+    $fe_muni = '';
+  };
+  $propia = '<input type="checkbox" value="1" '.$fe_muni.' name="fe_municipal">Es una feria municipal';
   $accion = "M";
 } else {
   $titulo = "Nueva Feria";
@@ -47,18 +53,16 @@ if (!empty($_GET['fe_id'])){
   </label>
 </div>
 
-  <button type="submit" class="btn btn-info" id="envia1"><?php echo $titulo_boton; ?></button>
-  
 
+<button type="submit" class="btn btn-info" id="envia1"><?php echo $titulo_boton; ?></button>
 
 <input type="hidden" name="fe_id" value="<?php echo $_GET['fe_id']; ?>" />
-
 <input type="hidden" name="accion" value="<?php echo $accion; ?>" />
-
 <input type="hidden" name="tabla" value="tb_ferias" />
 </form>
 </div>
-   <script type="text/javascript" src="../../js/jquery.js"></script>
+
+<script type="text/javascript" src="../../js/jquery.js"></script>
 <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
 
 <script type="text/javascript" language="javascript">
@@ -69,7 +73,7 @@ if (!empty($_GET['fe_id'])){
             $('#falta_nombre').text("Debe completar este campo");
             return false;
             }
-            
+
         });
 
             $("#usuario").focusout(function() {

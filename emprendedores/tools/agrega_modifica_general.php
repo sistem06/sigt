@@ -1,6 +1,6 @@
 <?php
 	require_once '_conexion.php';
-	mysql_set_charset('utf8');
+	/*sk01** mysql_set_charset('utf8'); */
 	header("Content-Type: text/html;charset=utf-8");
 	if($_POST['tabla']=="tb_usuarios"){
 		if($_POST['accion']=="A"){
@@ -35,7 +35,7 @@
 		if($_POST['accion']=="A"){
 			$texto = "Se agrego el titulo exitosamente";
 			$orga = new TituloEducativo();
-			$orga-> ts_name = strtoupper(utf8_decode($_POST['ts_name']));
+			$orga-> ts_name = strtoupper($_POST['ts_name']);
 			$orga-> ts_nivel = $_POST['ts_nivel'];
 			$orga-> save();
 
@@ -51,7 +51,7 @@
 		} else {
 			$texto = "Se modifico la carrera exitosamente";
 			$orga = TituloEducativo::find($_POST['ts_id']);
-			$orga-> ts_name = strtoupper(utf8_decode($_POST['ts_name']));
+			$orga-> ts_name = strtoupper($_POST['ts_name']);
 			$orga-> ts_nivel = $_POST['ts_nivel'];
 			$orga-> save();
 
@@ -67,12 +67,12 @@
 		if($_POST['accion']=="A"){
 			$texto = "Se agrego el idioma exitosamente";
 			$aup = new IdiomasAdd();
-			$aup-> idi_name = strtoupper(utf8_decode($_POST['idi_name']));
+			$aup-> idi_name = strtoupper($_POST['idi_name']);
 			$aup-> save();
 		} else {
 			$texto = "Se modifico la zona exitosamente";
 			$zo = Zona::find($_POST['zo_id']);
-			$zo-> zo_name = strtoupper(utf8_decode($_POST['zo_name']));
+			$zo-> zo_name = strtoupper($_POST['zo_name']);
 			$zo-> save();
 		}
 	}
@@ -80,7 +80,7 @@
 		if($_POST['accion']=="A"){
 			$texto = "Se registro la organizacion exitosamente";
 			$orga = new Organizacion();
-			$orga-> or_name = utf8_decode($_POST['or_name']);
+			$orga-> or_name = $_POST['or_name'];
 			$orga-> or_depto_provincial = $_POST['or_depto_provincial'];
 			$orga-> or_localidad = $_POST['or_localidad'];
 			$orga-> or_calle = $_POST['or_calle'];
@@ -92,7 +92,7 @@
 		} else {
 			$texto = "Se modifico la organizacion exitosamente";
 			$orga = Organizacion::find($_POST['or_id']);
-			$orga-> or_name = utf8_decode($_POST['or_name']);
+			$orga-> or_name = $_POST['or_name'];
 			$orga-> save();
 		}
 	}
@@ -100,15 +100,20 @@
 		if($_POST['accion']=="A"){
 			$texto = "Se registro la feria exitosamente";
 			$feri = new Feria();
-			$feri-> fe_name = utf8_decode($_POST['fe_name']);
+			$feri-> fe_name = $_POST['fe_name'];
 			if($_POST['fe_municipal']==1){
 				$feri-> fe_municipal = 1;
-			} 
+			}
 			$feri-> save();
 		} else {
 			$texto = "Se modifico la feria exitosamente";
 			$feri = Feria::find($_POST['fe_id']);
-			$feri-> fe_name = utf8_decode($_POST['fe_name']);
+			$feri-> fe_name = $_POST['fe_name'];
+			if(isset($_POST['fe_municipal']) && $_POST['fe_municipal'] == 1){
+				$feri-> fe_municipal = 1;
+			} else {
+				$feri-> fe_municipal = 0;
+			}
 			$feri-> save();
 		}
 	}
@@ -116,12 +121,12 @@
 		if($_POST['accion']=="A"){
 			$texto = "Se agrego la zona exitosamente";
 			$zo = new Zona();
-			$zo-> zo_name = utf8_decode($_POST['zo_name']);
+			$zo-> zo_name = $_POST['zo_name'];
 			$zo-> save();
 		} else {
 			$texto = "Se modifico la zona exitosamente";
 			$zo = Zona::find($_POST['zo_id']);
-			$zo-> zo_name = utf8_decode($_POST['zo_name']);
+			$zo-> zo_name = $_POST['zo_name'];
 			$zo-> save();
 		}
 	}
@@ -130,7 +135,7 @@
 		if($_POST['accion']=="A"){
 			$texto = "Se agrego el comercio exitosamente";
 			$comer = new Comercio();
-		$comer->co_name = utf8_decode($_POST['co_name']);
+		$comer->co_name = $_POST['co_name'];
 		$comer->co_depto_provincial = $_POST['co_depto_provincial'];
 		$comer->co_localidad = $_POST['co_localidad'];
 		$comer->co_calle = $_POST['co_calle'];
@@ -144,7 +149,7 @@
 		} else {
 			$texto = "Se modifico el comercio exitosamente";
 			$zo = Zona::find($_POST['zo_id']);
-			$zo-> zo_name = utf8_decode($_POST['zo_name']);
+			$zo-> zo_name = $_POST['zo_name'];
 			$zo-> save();
 		}
 	}
@@ -153,12 +158,12 @@
 		if($_POST['accion']=="A"){
 			$texto = "Se agrego el motivo de capacitación exitosamente";
 			$moca = new MotivoCapacitacion();
-			$moca-> tc_name = utf8_decode($_POST['tc_name']);
+			$moca-> tc_name = $_POST['tc_name'];
 			$moca-> save();
 		} else {
 			$texto = "Se modifico la zona exitosamente";
 			$moca = MotivoCapacitacion::find($_POST['tc_id']);
-			$moca-> tc_name = utf8_decode($_POST['tc_name']);
+			$moca-> tc_name = $_POST['tc_name'];
 			$moca-> save();
 		}
 	}
@@ -167,7 +172,7 @@
 		if($_POST['accion']=="A"){
 			$texto = "Se agrego el motivo del crédito exitosamente";
 			$mocre = new MotivoCredito();
-			$mocre-> mc_name = utf8_decode($_POST['mc_name']);
+			$mocre-> mc_name = $_POST['mc_name'];
 			$mocre-> save();
 		} else {
 			$texto = "Se modifico la zona exitosamente";

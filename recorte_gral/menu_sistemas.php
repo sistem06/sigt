@@ -5,7 +5,7 @@
         if($n_user > 0){
           ?>
        <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sistemas <b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Áreas <b class="caret"></b></a>
         <ul class="dropdown-menu">
 
           <?php
@@ -13,7 +13,7 @@
             $id_sis = $a_user['uss_sistema'];
             $data_sis = mysql_fetch_array(mysql_query("select * from tb_sistemas where sis_id = '$id_sis'"))
             ?>
-            <!-- *sk01* Quito utf8_encode(); -->
+
             <li><a href="../change_sis.php?sis_id=<?php echo $data_sis['sis_id']; ?>"><?php echo $data_sis['sis_name']; ?></a></li>
             <?php
           }

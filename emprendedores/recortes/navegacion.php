@@ -14,10 +14,10 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
       <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Secciones <b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Emprendedores <b class="caret"></b></a>
         <ul class="dropdown-menu">
 
-            <li><a href="beneficiarios.php">Emprendedores</a></li>
+            <li><a href="beneficiarios.php">Listado Emprendedores</a></li>
             <li><a href="nuevo_registro.php">Nuevo Emprendedor</a></li>
             <li class="divider"></li>
             <li><a href="organizaciones.php">Organizaciones</a></li>
@@ -39,10 +39,10 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prestaciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
 
-            <li><a href="beneficiarios.php">Emprendedores</a></li>
-
+            <li><a href="archivo.php">ABM Prestaciones</a></li>
+            <li><a href="archivo.php">Asignación de Prestaciones</a></li>
             <li class="divider"></li>
-            <li><a href="organizaciones.php">Organizaciones</a></li>
+            <li><a href="archivo.php">Histórico</a></li>
 
         </ul>
       </li>
