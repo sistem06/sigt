@@ -93,6 +93,13 @@
 			$texto = "Se modifico la organizacion exitosamente";
 			$orga = Organizacion::find($_POST['or_id']);
 			$orga-> or_name = $_POST['or_name'];
+			$orga-> or_depto_provincial = $_POST['or_depto_provincial'];
+			$orga-> or_localidad = $_POST['or_localidad'];
+			$orga-> or_calle = $_POST['or_calle'];
+			$orga-> or_altura = $_POST['or_altura'];
+			$orga-> or_piso = $_POST['or_piso'];
+			$orga-> or_depto = $_POST['or_depto'];
+			$orga-> or_cuit = $_POST['or_cuit'];			
 			$orga-> save();
 		}
 	}
@@ -135,22 +142,29 @@
 		if($_POST['accion']=="A"){
 			$texto = "Se agrego el comercio exitosamente";
 			$comer = new Comercio();
-		$comer->co_name = $_POST['co_name'];
-		$comer->co_depto_provincial = $_POST['co_depto_provincial'];
-		$comer->co_localidad = $_POST['co_localidad'];
-		$comer->co_calle = $_POST['co_calle'];
-		$comer->co_altura = $_POST['co_altura'];
-		$comer->co_piso = $_POST['co_piso'];
-		$comer->co_depto = $_POST['co_depto'];
-		$comer->co_cuit = $_POST['co_cuit'];
-		$comer->co_dp_id = $_POST['co_dp_id'];
-		$comer->co_tipo = "P";
-		$comer->save();
+			$comer->co_name = $_POST['co_name'];
+			$comer->co_depto_provincial = $_POST['co_depto_provincial'];
+			$comer->co_localidad = $_POST['co_localidad'];
+			$comer->co_calle = $_POST['co_calle'];
+			$comer->co_altura = $_POST['co_altura'];
+			$comer->co_piso = $_POST['co_piso'];
+			$comer->co_depto = $_POST['co_depto'];
+			$comer->co_cuit = $_POST['co_cuit'];
+			$comer->co_dp_id = $_POST['co_dp_id'];
+			$comer->co_tipo = "P";
+			$comer->save();
 		} else {
 			$texto = "Se modifico el comercio exitosamente";
-			$zo = Zona::find($_POST['zo_id']);
-			$zo-> zo_name = $_POST['zo_name'];
-			$zo-> save();
+			$comer = Comercio::find($_POST['co_id']);
+			$comer->co_name = $_POST['co_name'];
+			$comer->co_depto_provincial = $_POST['co_depto_provincial'];
+			$comer->co_localidad = $_POST['co_localidad'];
+			$comer->co_calle = $_POST['co_calle'];
+			$comer->co_altura = $_POST['co_altura'];
+			$comer->co_piso = $_POST['co_piso'];
+			$comer->co_depto = $_POST['co_depto'];
+			$comer->co_cuit = $_POST['co_cuit'];
+			$comer-> save();
 		}
 	}
 

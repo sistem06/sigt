@@ -50,7 +50,38 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
   <div class="col-xs-12 col-md-4">
 
 <div class="form-group  has-success">
-<?php echo InputGeneralVal("text", "nro_porcentaje", "form-control", "porcentaje", "escriba el porcentaje", "Porcentaje del ingreso familiar del Emprendimiento:",BuscaRegistro("tb_ingresos","in_dp_id",$_GET['dp_id'],"in_por")); ?>
+<?php //echo InputGeneralVal("text", "nro_porcentaje", "form-control", "porcentaje", "escriba el porcentaje", "Porcentaje del ingreso familiar del Emprendimiento:",BuscaRegistro("tb_ingresos","in_dp_id",$_GET['dp_id'],"in_por")); ?>
+<label for="porcentaje">Porcentaje de Ingreso Familiar</label>
+<?php
+	$sel1 = "";
+	$sel2 = "";
+	$sel3 = "";
+	$sel4 = "";
+	$qu = mysql_query("select * from tb_ingresos where in_dp_id = ".$_GET['dp_id']);
+	while($a = mysql_fetch_array($qu)){
+		switch ($a['in_por']) {
+			case '1':
+				$sel1 = 'selected="selected"';
+				break;
+			case '2':
+				$sel2 = 'selected="selected"';
+				break;
+			case '3':
+				$sel3 = 'selected="selected"';
+				break;
+			case '4':
+				$sel4 = 'selected="selected"';
+				break;
+		}
+	}
+ ?>
+<select class="form-control" name="nro_porcentaje" id="porcentaje">
+	<option value="0"></option>
+	<option value="1" <?php echo $sel1; ?> >Muy Poco &nbsp(&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp	< 24% )</option>
+	<option value="2" <?php echo $sel2; ?> >Poco &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(25% a 49% )</option>
+	<option value="3" <?php echo $sel3; ?> >Bastante &nbsp&nbsp&nbsp(50% a 74% )</option>
+	<option value="4" <?php echo $sel4; ?> >Mucho &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp(75% a 100%)</option>
+</select>
 <div class="requerido" id="falta_porcentaje">Falta completar este campo</div>
 </div>
   </div>

@@ -23,7 +23,7 @@
             <li><a href="organizaciones.php">Organizaciones</a></li>
             <li><a href="ferias.php">Ferias</a></li>
             <li><a href="zonas.php">Zonas de Comercialización</a></li>
-            <li><a href="comercios.php">Comercios</a></li>
+            <li><a href="comercios_list.php">Comercios</a></li>
           <li class="divider"></li>
           <?php
       iF($_SESSION['sector']==1){

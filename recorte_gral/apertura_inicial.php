@@ -71,8 +71,8 @@
    					$bookii = Hogar::last();
 					$ult_ho = $bookii->ho_id;
 
-					$dp_apellido =  ucwords(strtolower(utf8_decode($_POST['dp_apellido'])));
-					$dp_nombre =  ucwords(strtolower(utf8_decode($_POST['dp_nombre'])));
+					$dp_apellido =  ucwords(strtolower($_POST['dp_apellido']));
+					$dp_nombre =  ucwords(strtolower($_POST['dp_nombre']));
 
 					$dp_name = $dp_apellido.', '.$dp_nombre;
 					$dp_busqueda = $_POST['dp_nro_doc1'].' '.$dp_name.' '.$_POST['dp_telefono'].' '.$_POST['dp_mail'].' '.$_POST['dp_movil'];
@@ -87,10 +87,10 @@
 				   $cliente->dp_cuil = $_POST['dp_cuil'];
 				   $cliente->dp_estado_civil = $_POST['dp_estado_civil'];
 				   $cliente->dp_nacionalidad = $_POST['dp_nacionalidad'];
-            if($_POST['dp_nacionalidad']==1){ 
+            if($_POST['dp_nacionalidad']==1){
                $cliente->dp_pais_nacimiento = 13;
             } else {
-           
+
                if(!empty($_POST['dp_pais_nacimiento'])){
                $cliente->dp_pais_nacimiento = $_POST['dp_pais_nacimiento'];
             }}
@@ -135,7 +135,7 @@
 			   $histori->hi_dp_id = $ult;
 			   $histori->hi_detalle = "Agrego este beneficiario";
 			   $histori->save();
-   
+
 			   $alto = new BenSistema();
 			   $alto->bs_us = $_POST['id_us'];
 			   $alto->bs_dni = $_POST['dp_nro_doc1'];

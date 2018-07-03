@@ -1,9 +1,13 @@
 <div class="container">
-      <h3>Modifica Domicilio de <?php echo BuscaRegistro("tb_datos_personales","dp_id",$_GET['dp_id'],"dp_name"); ?> (<?php echo BuscaRegistro("tb_datos_personales","dp_id",$_GET['dp_id'],"dp_nro_doc"); ?>)</h3>       
-        <?php
-        $ho_id = BuscaRegistro("tb_hogar_beneficiario","hb_dp_id",$_GET['dp_id'],"hb_ho_id");
-        $dom_id = BuscaRegistro("tb_hogar","ho_id",$ho_id,"ho_dom_id");
-        ?>
+  <h3>Modifica Domicilio de <?php echo BuscaRegistro("tb_datos_personales","dp_id",$_GET['dp_id'],"dp_name"); ?> (<?php echo BuscaRegistro("tb_datos_personales","dp_id",$_GET['dp_id'],"dp_nro_doc"); ?>)</h3>
+  <?php
+  $ho_id = BuscaRegistro("tb_hogar_beneficiario","hb_dp_id",$_GET['dp_id'],"hb_ho_id");
+  $dom_id = BuscaRegistro("tb_hogar","ho_id",$ho_id,"ho_dom_id");
+
+  // SK: traigo los datos personales para inicializar formulario
+  $regDp = mysql_fetch_array(mysql_query("select * from tb_datos_personales where dp_id = ".$_GET['dp_id']));
+  $regDom = mysql_fetch_array(mysql_query("select * from tb_domicilios where dom_id = ".$dom_id));
+  ?>
 
 <form id="parte1" action="tools/add_registro.php" method="post" role="form">
 <div class="panel panel-info">
@@ -14,17 +18,19 @@
 </div>
 
 
-      <div class="row">
-  <div class="col-xs-12 col-md-6">
-  <div class="form-group  has-success">
-   <?php echo SelectFiltroVal("dom_pr_dpto", "form-control", "iddepartamento", "Departamento Provincial:","tb_departamentos", "dep_id", "dep_name","dep_mostrar","1","3"); ?>
-<div class="requerido" id="falta_departamento">Falta completar este campo</div>
-</div>
-   </div>
-   <div class="col-xs-12 col-md-6">
-   <div class="form-group  has-success">
-   <label>Localidad:</label>
-<select name="dom_localidad" class="form-control" id="idlocalidad">
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <div class="form-group  has-success">
+       <?php echo SelectFiltroVal("dom_pr_dpto", "form-control", "iddepartamento", "Departamento Provincial:","tb_departamentos", "dep_id", "dep_name","dep_mostrar","1",$regDom['dom_pr_dpto']); ?>
+       <div class="requerido" id="falta_departamento">Falta completar este campo</div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-6">
+      <div class="form-group  has-success">
+<!-- <label>Localidad:</label>
+<select name="dom_localidad" class="form-control" id="idlocalidad"> -->
+<?php echo SelectFiltroVal("dom_localidad", "form-control", "idlocalidad", "Localidad:","tb_localidades", "lo_id", "lo_name","lo_depto",$regDom['dom_pr_dpto'],$regDom['dom_localidad']); ?>
 
 </select>
 <div class="requerido" id="falta_localidad">Falta completar este campo</div>
@@ -33,27 +39,35 @@
    </div>
 
    <div class="form-group">
-  <label>Calle:</label>
- <input id="dpcalle" type="text" class="form-control" placeholder="escriba la calle" autocomplete="off" name="dp_calle"/>
+  <!-- <label>Calle:</label> -->
+ <!-- <input id="dpcalle" type="text" class="form-control" placeholder="escriba la calle" autocomplete="off" name="dp_calle"/> -->
+ <?php echo InputGeneralVal("text", "dp_calle", "form-control", "dpcalle", "escriba la calle", "Calle:",$regDom['dom_calle']); ?>
  <div id="listado_calles" class="listado_rubros"></div>
 <div id="falta_calle" class="requerido">debe elegir un elemento de la lista</div>
-</div> 
-<input id="valor_calle" name="valor_calle" type="hidden" class="form-control">
+</div>
+<?php
+if ($regDom['dom_calle'] != "") {
+  echo '<input id="valor_calle" name="valor_calle" type="hidden" class="form-control" value="'.$regDom['dom_calle'].'">';
+} else {
+  echo '<input id="valor_calle" name="valor_calle" type="hidden" class="form-control">';
+}
+?>
+
 
     <div class="row">
   <div class="col-xs-12 col-md-4">
 <div class="form-group">
-   <?php echo InputGeneral("number", "dom_nro", "form-control", "nrolocac", "escriba el nro del domicilio", "Altura:",""); ?>
+   <?php echo InputGeneralVal("number", "dom_nro", "form-control", "nrolocac", "escriba el nro del domicilio", "Altura:",$regDom['dom_nro']); ?>
   </div>
   </div>
   <div class="col-xs-12 col-md-4">
 <div class="form-group">
-   <?php echo InputGeneral("text", "dom_piso", "form-control", "idpiso", "escriba el piso", "Piso:",""); ?>
+   <?php echo InputGeneralVal("text", "dom_piso", "form-control", "idpiso", "escriba el piso", "Piso:",$regDom['dom_piso']); ?>
   </div>
   </div>
   <div class="col-xs-12 col-md-4">
 <div class="form-group">
-   <?php echo InputGeneral("text", "dom_depto", "form-control", "iddepto", "escriba el departamento", "Departamento:",""); ?>
+   <?php echo InputGeneralVal("text", "dom_depto", "form-control", "iddepto", "escriba el departamento", "Departamento:",$regDom['dom_depto']); ?>
   </div>
   </div>
   </div>
@@ -61,17 +75,17 @@
   <div class="row">
   <div class="col-xs-12 col-md-4">
 <div class="form-group">
-   <?php echo InputGeneral("text", "dom_edificio", "form-control", "idedificio", "escriba el Edificio", "Edificio:",""); ?>
+   <?php echo InputGeneralVal("text", "dom_edificio", "form-control", "idedificio", "escriba el Edificio", "Edificio:",$regDom['dom_edificio']); ?>
   </div>
   </div>
   <div class="col-xs-12 col-md-4">
 <div class="form-group">
-   <?php echo InputGeneral("text", "dom_escalera", "form-control", "idescalera", "nro de escalera", "Escalera:",""); ?>
+   <?php echo InputGeneralVal("text", "dom_escalera", "form-control", "idescalera", "nro de escalera", "Escalera:",$regDom['dom_escalera']); ?>
   </div>
   </div>
   <div class="col-xs-12 col-md-4">
 <div class="form-group">
-   <?php echo InputGeneral("text", "dom_casa", "form-control", "idcasa", "nro de casa", "Casa:",""); ?>
+   <?php echo InputGeneralVal("text", "dom_casa", "form-control", "idcasa", "nro de casa", "Casa:",$regDom['dom_casa']); ?>
   </div>
   </div>
   </div>
@@ -95,7 +109,7 @@ function initMap() {
 }
 
 function geocodeAddress(geocoder, resultsMap) {
- 
+
   if(nro > 1){
     marca.setMap(null);
   }
@@ -119,8 +133,8 @@ function geocodeAddress(geocoder, resultsMap) {
       });
       var ubica = "-41.1334722, -71.310778";
     }
-    
-    marca.addListener('dragend', function() 
+
+    marca.addListener('dragend', function()
 {
  var ubica = this.getPosition().lat()+","+ this.getPosition().lng();
 document.getElementById("latid").value=ubica;
@@ -136,8 +150,8 @@ document.getElementById("latid").value=ubica;
         <input type="hidden" name="latitud" id="latid">
         <input type="hidden" name="barrioid" id="barrioid">
         <input type="hidden" name="caatid" id="caatid">
-        
-        
+
+
         <div class="requerido" id="falta_mapa">Falta ubicar en el Mapa</div>
 
           <div class="form-group">

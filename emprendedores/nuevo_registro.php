@@ -89,18 +89,19 @@ include ("../funciones/funciones_form.php");
 
 <script src="../js/jquery.mask.min.js"></script>
 
-        <script type="text/javascript">
-        $(document).ready(function(){
+<script type="text/javascript">
+$(document).ready(function(){
   $('#nrocelu').mask('000-00000000');
   $('#nrotel').mask('000-00000000');
   $('#nrocelu1').mask('000-00000000');
   $('#nrotel1').mask('000-00000000');
   $('#nrocuil').mask('00-00000000-0');
 
-      var elegido=$("#iddepartamento").val();
-      $.post("../recorte_gral/localidades.php", { elegido: elegido }, function(data){
-            $("#idlocalidad").html(data);
-            });
+  var elegido=$("#iddepartamento").val();
+	var localidad=$("#idlocalidad").val();
+  $.post("../recorte_gral/localidades.php", { elegido: elegido, localidad: localidad }, function(data){
+  	$("#idlocalidad").html(data);
+  });
 
 });
     </script>

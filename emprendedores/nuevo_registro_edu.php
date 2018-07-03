@@ -112,7 +112,7 @@ while($lis_dat = mysql_fetch_array($list)){
 
 <button type="submit" class="btn btn-success" id="envia1">Agregar</button>
 <input type="hidden" id="valor_titulo" name="valor_titulo">
-<input type="hidden" name="paso" value="2">
+<input type="hidden" name="paso" value="2002">
 <input type="hidden" name="dne_dp_id" value="<?php echo $_GET['dp_id']; ?>">
 <input type="hidden" name="id_us" value="<?php echo $_SESSION['id_us']; ?>">
 </form>
@@ -144,7 +144,11 @@ while($lis_dat = mysql_fetch_array($list)){
             $list = mysql_query($ttx);
             while($lis_dat = mysql_fetch_array($list)){
             ?>
-            <tr><td><?php echo BuscaRegistro ("tb_formacion_profesional", "fp_id", $lis_dat['bfp_fp_id'], "fp_name"); ?></td><td><?php echo (BuscaRegistro ("tb_situaciones_curso", "sc_id", $lis_dat['bfp_situacion'], "sc_name")); ?></td><td><?php echo $lis_dat['bfp_year']; ?></td><td><a href="tools/quitar.php?val=<?php echo $lis_dat['bfp_id']; ?>&id=bfp_id&tabla=tb_beneficiario_formacion_profesional"  title="eliminar" class="fancybox fancybox.iframe" id="quita_curso"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a></td>
+            <tr>
+						  <td><?php echo BuscaRegistro ("tb_formacion_profesional", "fp_id", $lis_dat['bfp_fp_id'], "fp_name"); ?></td>
+						  <td><?php echo (BuscaRegistro ("tb_situaciones_curso", "sc_id", $lis_dat['bfp_situacion'], "sc_name")); ?></td>
+						  <td><?php echo $lis_dat['bfp_year']; ?> </td>
+							<td><a href="tools/quitar.php?val=<?php echo $lis_dat['bfp_id']; ?>&id=bfp_id&tabla=tb_beneficiario_formacion_profesional"  title="eliminar" class="fancybox fancybox.iframe" id="quita_curso"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a></td>
             </tr>
             <?php
             }
@@ -160,9 +164,9 @@ while($lis_dat = mysql_fetch_array($list)){
                 <div class="col-xs-12 col-md-4">
                 <div class="form-group">
                   <label>Curso:</label>
-                               <input type="text" name="bfp_fp_id" class="form-control" id="cursopropio" placeholder="escriba el curso" autocomplete="off">
-                              <div id="listado_cursos" class="listado_rubros"></div>
-                              <div class="requerido" id="falta_curso_propio">Falta completar este campo</div>
+	                  <input type="text" name="bfp_fp_id" class="form-control" id="cursopropio" placeholder="escriba el curso" autocomplete="off">
+	                  <div id="listado_cursos" class="listado_rubros"></div>
+	                  <div class="requerido" id="falta_curso_propio">Falta completar este campo</div>
                 </div>
                 </div>
                 <div class="col-xs-12 col-md-4">
@@ -187,7 +191,7 @@ while($lis_dat = mysql_fetch_array($list)){
                 </div>
                 </div>
                 </div>
-                <input type="hidden" name="paso" value="5">
+                <input type="hidden" name="paso" value="1005">
                 <input type="hidden" name="dp_id" value="<?php echo $_GET['dp_id']; ?>">
                 <button type="submit" class="btn btn-success" id="envia2">Agregar</button>
                 <input type="hidden" name="valor_curso" id="valor_curso">
@@ -381,10 +385,20 @@ while($lis_dat = mysql_fetch_array($list)){
   <div class="col-xs-12 col-md-6">
   <div class="form-group">
   <label> Desea continuar estudiando: </label>
+	<select name="de_continuar" class="form-control" id="idcontinua">
+	<!--
   <div class="radio">
    <label>
-    <input type="radio" name="de_continuar" value="1" <?php if(BuscaRegistro("tb_datos_educativos","de_dp_id",$_GET['dp_id'],"de_continuar")==1) echo "checked"; ?>> Si </label>
-    <label> <input type="radio" name="de_continuar" value="0" <?php if(BuscaRegistro("tb_datos_educativos","de_dp_id",$_GET['dp_id'],"de_continuar")==0) echo "checked"; ?>> No </label>
+    <input type="radio" name="de_continuar" value="1" <?php // if(BuscaRegistro("tb_datos_educativos","de_dp_id",$_GET['dp_id'],"de_continuar")==1) echo "checked"; ?>> Si </label>
+    <label> <input type="radio" name="de_continuar" value="0" <?php // if(BuscaRegistro("tb_datos_educativos","de_dp_id",$_GET['dp_id'],"de_continuar")==0) echo "checked"; ?>> No </label>
+	-->
+		<?php
+			$continua = BuscaRegistro("tb_datos_educativos","de_dp_id",$_GET['dp_id'],"de_continuar");
+		?>
+		<option value=0 <?php if (!isset($continua)) {echo 'selected="selected"';} ?>></option>
+		<option value=1 <?php if ($continua == 1) {echo 'selected="selected"';} ?>> Sí </option>
+		<option value=2 <?php if ($continua == 2) {echo 'selected="selected"';} ?>> No </option>
+ 	</select>
   </div>
   </div>
   </div>
@@ -409,7 +423,7 @@ while($lis_dat = mysql_fetch_array($list)){
     </div>
 </div>
             <button type="submit" class="btn btn-info" id="envia4">Guardar y Volver</button>
-<input type="hidden" name="paso" value="4">
+<input type="hidden" name="paso" value="444">
 <input type="hidden" name="dp_id" value="<?php echo $_GET['dp_id']; ?>">
 <input type="hidden" name="id_us" value="<?php echo $_SESSION["id_us"]; ?>">
       </form>

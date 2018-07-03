@@ -50,6 +50,7 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
 
 <div class="form-group">
 <?php echo SelectGeneral("ev_tipo", "form-control", "tipo_compra", "Tipo:", "tb_tipo_punto_venta", "tpv_id", "tpv_name"); ?>
+
 <div class="requerido" id="falta_tipo">Falta completar este campo</div>
 </div>
 
@@ -136,7 +137,8 @@ switch($lis_dat['ev_tipo']){
     break;
 
     case 2:
-    echo 'Barrio '.DatoRegistro ('tb_barrios', 'bar_name', 'bar_id', $lis_dat['ev_det_tipo'], $conn);
+    //IS021 echo 'Barrio '.DatoRegistro ('tb_barrios', 'bar_name', 'bar_id', $lis_dat['ev_det_tipo'], $conn);
+		echo 'Zona '.DatoRegistro ('tb_zonas', 'zo_name', 'zo_id', $lis_dat['ev_det_tipo'], $conn);
     break;
 
     case 3:
@@ -194,7 +196,7 @@ switch($lis_dat['ev_tipo']){
       $("#falta_feria").show();
       return false;
     }
-    if($("#tipo_compra").val()==2 && $("#barrio").val()==""){
+    if($("#tipo_compra").val()==2 && $("#zona").val()==""){
       $("#falta_barrio").show();
       return false;
     }
@@ -222,8 +224,8 @@ switch($lis_dat['ev_tipo']){
       $("#op2, #op3, #op4, #op5, #op6").hide();
     }
     if($("#tipo_compra").val()==2){
-      $("#op2").css("display", "inline");
-      $("#op1, #op3, #op4, #op5, #op6").hide();
+      $("#op4").css("display", "inline");
+      $("#op1, #op3, #op2, #op5, #op6").hide();
     }
     if($("#tipo_compra").val()==3){
       $("#op3").css("display", "inline");
@@ -261,8 +263,8 @@ switch($lis_dat['ev_tipo']){
     });
 
   $.post("tools/zonas.php",  function(datazona){
-            $("#zona").html(datazona);
-            });
+		$("#zona").html(datazona);
+	});
   $("#zona").change(function(){
       if($("#zona").val()=="Agregar"){
           $("#agregazona").trigger("click");

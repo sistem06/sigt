@@ -35,42 +35,66 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
 ?>
 </div>
 
+
 <div class="panel panel-info">
   <div class="panel-heading">
   <h3 class="panel-title">
   <span class="glyphicon glyphicon-usd"></span>  Subsidios/Créditos Recibidos</div>
   </h3>
 
-
-
-
           <form id="parte1" action="tools/add_registro.php" method="post" role="form" class="form-inline" style="padding:10px;">
 
+<div class="row">
+  <div class="col-xs-12 col-md-3">
+		<div class="form-group">
+			<label>Entidad Otorgante:</label>
+			<select name="nro_org" class="form-control" id="org"></select>
+			<div class="requerido" id="falta_org">Falta completar este campo</div>
+		</div>
+		<a href="tools/cambios_organizaciones.php" class="fancybox fancybox.iframe" id="agregaorg" style="display:none">agrega org</a></div>
 
-<div class="form-group">
-<label>Entidad Otorgante:</label>
-<select name="nro_org" class="form-control" id="org">
-</select>
-<div class="requerido" id="falta_org">Falta completar este campo</div>
+<div class="col-xs-12 col-md-3">
+	<div class="form-group">
+		<label>Destino del Crédito:</label>
+		<select name="nro_destino" class="form-control" id="destino"></select>
+		<div class="requerido" id="falta_destino">Falta completar este campo</div>
+	</div>
+	<a href="tools/cambios_motivo_credito.php" class="fancybox fancybox.iframe" id="agregamotivo" style="display:none">motivo</a>
 </div>
-<a href="tools/cambios_organizaciones.php" class="fancybox fancybox.iframe" id="agregaorg" style="display:none">agrega org</a>
 
-
-<div class="form-group">
-<label>Destino del Crédito:</label>
-<select name="nro_destino" class="form-control" id="destino">
-</select>
-<div class="requerido" id="falta_destino">Falta completar este campo</div>
+<div class="col-xs-12 col-md-3">
+	<div class="form-group">
+	<label>Monto:</label>
+		<?php echo InputGeneral("number", "monto", "form-control", "monto", "", "",""); ?>
+	</div>
 </div>
-<a href="tools/cambios_motivo_credito.php" class="fancybox fancybox.iframe" id="agregamotivo" style="display:none">motivo</a>
 
-
-<div class="checkbox">
-  <label>
-
-    Esta Vigente el Crédito?
- <input name="vigente" type="checkbox" value="SI"> </label>
+<div class="col-xs-12 col-md-1">
+	<div class="form-group">
+		<label>Año:</label>
+		<select name="ano" class="form-control" id="idano">
+			<option></option>
+				 <?php
+				 $ano = date("Y");
+						while($ano > 1959){
+							echo '<option value="'.$ano.'">'.$ano.'</option>';
+							$ano--;
+						}
+						?>
+		 </select>
+	</div>
 </div>
+
+<div class="col-xs-12 col-md-3">
+	<div class="checkbox">
+		<label>
+			Esta Vigente el Crédito?
+	 <input name="vigente" type="checkbox" value="SI"> </label>
+	</div>
+</div>
+
+</div> <!-- div class="row" -->
+<br>
 
 <input type="hidden" name="paso" value="9">
 <input type="hidden" name="dp_id" value="<?php echo $_GET['dp_id']; ?>">
@@ -81,15 +105,24 @@ echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['
 </div>
 
 <table class="table table-striped">
+	<tr>
+		<td><b>Entidad Otorgante</b></td>
+		<td><b>Destino del Crédito</b></td>
+		<td><b>Monto</b></td>
+		<td><b>Año</b></td>
+		<td><b>Estado</b></td>
+		<td><b>Eliminar</b></td>
+	</tr>
 <?php
 $ttx = "select * from tb_emprendedor_credito INNER JOIN tb_organizaciones ON tb_emprendedor_credito.ec_or = tb_organizaciones.or_id INNER JOIN tb_motivo_credito ON tb_emprendedor_credito.ec_mo = tb_motivo_credito.mc_id where tb_emprendedor_credito.ec_dp_id = ".$_GET['dp_id'];
 $list = mysql_query($ttx);
 while($lis_dat = mysql_fetch_array($list)){
 ?>
-<tr><td><?php echo $lis_dat['or_name']; ?></td><td><?php echo $lis_dat['mc_name']; ?></td><td>
-<?php if($lis_dat['ec_vigente']=="SI"){ ?> <span class="label label-danger">VIGENTE</span> <?php } ?>
-
-</td><td><a href="tools/quitar.php?val=<?php echo $lis_dat['ec_id']; ?>&id=ec_id&tabla=tb_emprendedor_credito"  title="eliminar" class="fancybox fancybox.iframe" id="quita_org"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></a></td>
+<tr><td><?php echo $lis_dat['or_name']; ?></td><td><?php echo $lis_dat['mc_name']; ?></td>
+	<td><?php if (isset($lis_dat['ec_monto'])) { echo "$".$lis_dat['ec_monto'];	} ?></td>
+	<td><?php echo $lis_dat['ec_año']; ?></td>
+	<td><?php if($lis_dat['ec_vigente']=="SI"){ ?> <span class="label label-danger">VIGENTE</span> <?php } ?></td>
+	<td><a href="tools/quitar.php?val=<?php echo $lis_dat['ec_id']; ?>&id=ec_id&tabla=tb_emprendedor_credito"  title="eliminar" class="fancybox fancybox.iframe" id="quita_org"><button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button></a></td>
 </tr>
 <?php
 }
@@ -124,8 +157,6 @@ while($lis_dat = mysql_fetch_array($list)){
       $("#falta_destino").show();
       return false;
     }
-
-
   });
 
      $.post("tools/organizaciones.php",  function(datacurso){

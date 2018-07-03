@@ -28,7 +28,7 @@ body {
 	border-top-style: none;
 	border-right-style: none;
 	border-bottom-style: none;
-	border-left-style: none;	
+	border-left-style: none;
 }
 .noquita_acc {
 	line-height: 24px;
@@ -63,7 +63,7 @@ switch($tabla){
 	$id_us = $val;
 	$preg ="Desea quitar el usuario <b>".$ppre['us_name']."</b> ?";
 	break;
-	
+
 	case 'tb_datos_nivel_educativo':
 	$preg ="Desea quitar este dato educativo?";
 	break;
@@ -71,13 +71,19 @@ switch($tabla){
 	case 'tb_emprendedor_organizacion':
 	$preg ="Desea quitar esta asociación?";
 	break;
-	
+
+	case 'tb_comercios':
+	$ttx2 = "select * from ".$tabla." where ".$id." = '".$val."'";
+	$ppre = mysql_fetch_array(mysql_query($ttx2));
+	$preg ="Desea quitar el comercio <b>".$ppre['co_name']."</b> ?";
+	break;
+
 	case 'tb_organizaciones':
 	$ttx2 = "select * from ".$tabla." where ".$id." = '".$val."'";
 	$ppre = mysql_fetch_array(mysql_query($ttx2));
 	$preg ="Desea quitar la organización <b>".$ppre['or_name']."</b> ?";
 	break;
-	
+
 	case 'tb_ferias':
 	$ttx2 = "select * from ".$tabla." where ".$id." = '".$val."'";
 	$ppre = mysql_fetch_array(mysql_query($ttx2));
@@ -89,27 +95,27 @@ switch($tabla){
 	$ppre = mysql_fetch_array(mysql_query($ttx2));
 	$preg ="Desea quitar la aona <b>".$ppre['zo_name']."</b> ?";
 	break;
-	
+
 	case 'tb_emprendedor_ventas':
 	$preg ="Desea quitar el punto de venta";
 	break;
-	
+
 	case 'tb_emprendedor_capacitaciones':
 	$preg ="Desea quitar esta capacitación";
 	break;
-	
+
 	case 'tb_emprendedor_credito':
 	$preg ="Desea quitar este credito";
 	break;
-	
+
 	case 'tb_emprendedor_credito_nec':
 	$preg ="Desea quitar esta necesidad de credito";
 	break;
-	
+
 	case 'tb_familiares':
 	$preg ="Desea quitar a este familiar";
 	break;
-	
+
 	case 'tb_emprendedores_asociados':
 	$preg ="Desea quitar a este emprendedor asociado";
 	break;
@@ -117,7 +123,7 @@ switch($tabla){
 	case 'tb_hogar_beneficiario':
 	$preg ="Desea quitar a este miembro del hogar?";
 	break;
-	
+
 	case 'tb_imagenes':
 	$preg ="Desea quitar esta imagen?";
 	break;
@@ -129,7 +135,7 @@ switch($tabla){
 	case 'tb_licencias_beneficiario':
 	$preg ="Desea quitar esta licencia?</b> ?";
 	break;
-	
+
 }
 echo $preg;
 ?>
@@ -141,12 +147,12 @@ echo $preg;
 } else {
 	$ttx1 = "delete from ".$tabla." where ".$id." = '".$val."'";
 	if ($_POST['accion']=="remover"){
-		
+
 			if($tabla=='tb_usuarios'){
 				mysql_query($ttx1);
 				/*
 				$ddat = mysql_fetch_array(mysql_query("select * from usuarios where id_us = '$id_us'"));
-				
+
 				if ($ddat['us_social']=='no' and $ddat['us_tierra']=='no'){
 			mysql_query("delete from usuarios where id_us ='$id_us'");
 				} else {
@@ -155,73 +161,77 @@ echo $preg;
 				}
 				*/
 			}
-		
-		
+
+
 		if($tabla=='tb_emprendedor_organizacion'){
-			
+
 				mysql_query($ttx1);
-			
+
 			}
 
 		if($tabla=='tb_datos_nivel_educativo'){
-			
+
 				mysql_query($ttx1);
-			
+
 			}
 
 			if($tabla=='tb_beneficiario_idioma'){
-			
+
 				mysql_query($ttx1);
-			
+
 			}
 
 		if($tabla=='tb_licencias_beneficiario'){
-			
+
 				mysql_query($ttx1);
-			
+
 			}
-			
+
+			if($tabla=='tb_comercios'){
+				mysql_query($ttx1);
+			}
+
 		if($tabla=='tb_organizaciones'){
-			
+
 				mysql_query($ttx1);
-			
+
 			}
-			
+
 			if($tabla=='tb_ferias'){
-			
+
 				mysql_query($ttx1);
-			
+
 			}
-			
+
 			if($tabla=='tb_emprendedor_ventas'){
 				mysql_query($ttx1);
 			}
-			
+
 			if($tabla=='tb_emprendedor_capacitaciones'){
 				mysql_query($ttx1);
 			}
-			
+
 			if($tabla=='tb_emprendedor_credito'){
 				mysql_query($ttx1);
 			}
-			
+
 			if($tabla=='tb_emprendedor_credito_nec'){
 				mysql_query($ttx1);
 			}
-			
+
 			if($tabla=='tb_zonas'){
 				mysql_query($ttx1);
 			}
-			
-			
+
+
 			if($tabla=='tb_familiares'){
 				mysql_query($ttx1);
 			}
-			
+
 			if($tabla=='tb_emprendedores_asociados'){
 				mysql_query($ttx1);
 			}
-		
+
 			if($tabla=='tb_hogar_beneficiario'){
 				mysql_query($ttx1);
 			}
@@ -232,11 +242,11 @@ echo $preg;
 				unlink("../../imagenes/dni_th_".$val.".jpg");
 			}
 		}
-	
+
 	echo ' <script type="text/javascript">
 parent.jQuery.fancybox.close();
 	</script>';
-	
+
 }
 	?>
 </body>

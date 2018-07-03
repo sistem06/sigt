@@ -56,6 +56,7 @@ include ("../funciones/funciones_generales.php");
             </tbody>
         </table>
   <!-- fin contenido -->
+	<br><br><br>
 </div>
 <?php include("../recorte_gral/pie.php"); ?>
 

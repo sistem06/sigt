@@ -31,27 +31,25 @@ include ("../funciones/funciones_form.php");
 <script type="text/javascript" src="../js/validacion_calle.js"></script>
 <script type="text/javascript" src="../js/predictivo_calles.js"></script>
 <script type="text/javascript" src="../js/busca_barrio.js"></script>
-        <script type="text/javascript">
-        $(document).ready(function(){
 
-  $("#parte1").submit(function(event) {
-         if($("#dpcalle").val() != "" && $("#dpcalle").val() != $("#valor_calle").val()){
-                $("#falta_calle").show();
-                event.preventDefault();
-              }       
-      });
-
-      var elegido=$("#iddepartamento").val();
-      $.post("../recorte_gral/localidades.php", { elegido: elegido }, function(data){
-            $("#idlocalidad").html(data);
-            });
-     
+<script type="text/javascript">
+  $(document).ready(function(){
+  	$("#parte1").submit(function(event) {
+		   if($("#dpcalle").val() != "" && $("#dpcalle").val() != $("#valor_calle").val()){
+		          $("#falta_calle").show();
+		          event.preventDefault();
+       }
     });
 
-    </script>
+	  var elegido=$("#iddepartamento").val();
+		localidad=$("#idlocalidad").val();
+	  $.post("../recorte_gral/localidades.php", { elegido: elegido, localidad: localidad }, function(data){
+	        $("#idlocalidad").html(data);
+    });
+  });
+</script>
 
-
-  <script type="text/javascript" language="javascript" src="../js/navbar.js"></script>
+<script type="text/javascript" language="javascript" src="../js/navbar.js"></script>
 
 </body>
 </html>

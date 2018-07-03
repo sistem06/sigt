@@ -6,7 +6,8 @@ include ("../../funciones/funciones_generales.php");
 	$n1 = mysql_num_rows(mysql_query("select in_dp_id from tb_ingresos where in_dp_id = '$dp_id'"));
 
 	if($n1 == 0){
-	$txt = "insert into tb_ingresos (in_dp_id, in_por, in_efector, in_efector_expediente) values ('".$_POST['dp_id']."', '".$_POST['nro_porcentaje']."', '".$_POST['efe_so']."', '".$_POST['efector_expediente']."')";
+	$txt = "insert into tb_ingresos (in_dp_id, in_por, in_efector, in_efector_expediente)
+	        values ('".$_POST['dp_id']."', '".$_POST['nro_porcentaje']."', '".$_POST['efe_so']."', '".$_POST['efector_expediente']."')";
 	mysql_query($txt);
 	} else {
 		$txt = "UPDATE tb_ingresos SET in_por = '".$_POST['nro_porcentaje']."', in_efector = '".$_POST['efe_so']."', in_efector_expediente = '".$_POST['efector_expediente']."' WHERE in_dp_id = '".$_POST['dp_id']."'";
@@ -27,7 +28,7 @@ include ("../../funciones/funciones_generales.php");
 	$dp_id = $_POST['dp_id'];
 	while($aa = mysql_fetch_array($qq) ){
 		$vara = $aa['ti_id'];
-			
+
 			if($_POST[$vara]=='si'){
 				if(NroRegistroDoble ("tb_ingresos_otros", "io_dp_id", $dp_id, "io_ti_id", $vara)==0){
 				$txtx = "insert into tb_ingresos_otros (io_dp_id, io_ti_id) values ('".$dp_id."','".$vara."')";
@@ -41,5 +42,10 @@ include ("../../funciones/funciones_generales.php");
 
 			}
 	}
+
+	//Cambio Flag entrevista realizada (Ingresos registrado)
+	$txt2 = "update tb_entrevista set ent_fin = 1 where ent_dp_id = ".$dp_id." and ent_ten_id = 8";
+	mysql_query($txt2);
+
 	header("location: ../detalle_beneficiario.php?dp_id=$dp_id");
 ?>

@@ -18,16 +18,14 @@
 		$txt_q = "select ".$campo." from ".$tabla." where ".$valor_id."='".$valor."' LIMIT 1";
 		$result = mysql_query ($txt_q);
 		$ddat = mysql_fetch_array ($result);
-/*sk01**	return strtoupper(utf8_encode ($ddat[$campo])); */
-/*sk01*/	return strtoupper($ddat[$campo]);
+		return strtoupper($ddat[$campo]);
 	}
 
 	function BuscaRegistroDoble ($tabla, $valor_id, $valor, $valor_id1, $valor1, $campo){
 		$txt_q = "select ".$campo." from ".$tabla." where ".$valor_id."='".$valor."' and ".$valor_id1."='".$valor1."' LIMIT 1";
 		$result = mysql_query ($txt_q);
 		$ddat = mysql_fetch_array ($result);
-/*sk01** return utf8_encode ($ddat[$campo]); */
-/*sk01*/ return $ddat[$campo];
+ 		return $ddat[$campo];
 	}
 
 	function NroRegistroDoble ($tabla, $valor1, $valorN1, $valor2, $valorN2){

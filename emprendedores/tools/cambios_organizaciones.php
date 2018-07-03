@@ -20,15 +20,28 @@ include ("../../funciones/funciones_form.php");
 if (!empty($_GET['or_id'])){
   $titulo = "Modificar Organizacion";
   $titulo_boton = "Hacer Cambios";
+
+  $sql = "select * from tb_organizaciones where or_id = ".$_GET['or_id'];
+  $reg_org = mysql_fetch_array(mysql_query ($sql));
+  $id_loc_org = $reg_org['or_localidad'];
+  $id_dpto_org = $reg_org['or_depto_provincial'];
+
   $us_form = InputGeneralVal("text", "or_name", "form-control", "usuario", "nombre de la organizacion", "Nombre de la Organizacion:",BuscaRegistro ("tb_organizaciones", "or_id", $_GET['or_id'], "or_name"));
-  
+  $depto_provincial = SelectFiltroVal("or_depto_provincial", "form-control", "iddepartamento", "Departamento Provincial:","tb_departamentos", "dep_id", "dep_name","dep_mostrar","1",$id_dpto_org);
+  $localidad = SelectFiltroVal("or_localidad", "form-control", "idlocalidad", "Localidad:","tb_localidades", "lo_id", "lo_name","lo_depto",   $id_dpto_org,       $id_loc_org);
+  $calle = InputGeneralVal("text", "or_calle", "form-control", "dpcalle", "escriba el nombre de la calle", "Calle:",BuscaRegistro ("tb_organizaciones", "or_id", $_GET['or_id'], "or_calle"));  
+  $numero = InputGeneralVal("number", "or_altura", "form-control", "altura", "escriba el altura del domicilio", "Altura:",BuscaRegistro ("tb_organizaciones", "or_id", $_GET['or_id'], "or_altura"));
+  $piso = InputGeneralVal("text", "or_piso", "form-control", "idpiso", "escriba el piso", "Piso:",BuscaRegistro ("tb_organizaciones", "or_id", $_GET['or_id'], "or_piso"));
+  $departamento = InputGeneralVal("text", "or_depto", "form-control", "iddepto", "escriba el departamento", "Departamento:",BuscaRegistro ("tb_organizaciones", "or_id", $_GET['or_id'], "or_depto"));
+  $cuil = InputGeneralVal("text", "or_cuit", "form-control", "nrocuit", "escriba el número de CUIT", "CUIT:",BuscaRegistro ("tb_organizaciones", "or_id", $_GET['or_id'], "or_cuit"));
+
 
   $accion = "M";
 } else {
   $titulo = "Nueva Organizacion";
   $titulo_boton = "Guardar";
   $us_form = InputGeneral("text", "or_name", "form-control", "usuario", "nombre de la organizacion", "Nombre de la Organizacion:");
-  $depto_provincial = SelectFiltro("or_depto_provincial", "form-control", "iddepartamento", "Departamento Provincial:","tb_departamentos", "dep_id", "dep_name","dep_mostrar","1"); 
+  $depto_provincial = SelectFiltro("or_depto_provincial", "form-control", "iddepartamento", "Departamento Provincial:","tb_departamentos", "dep_id", "dep_name","dep_mostrar","1");
   $localidad = '<select name="or_localidad" class="form-control" id="idlocalidad"></select>';
   $calle = '<input id="dpcalle" type="text" class="form-control" placeholder="escriba la calle" autocomplete="off" name="or_calle"/>';
   $numero = InputGeneral("number", "or_altura", "form-control", "nrolocac", "escriba el nro del domicilio", "Altura:","");
@@ -59,7 +72,6 @@ if (!empty($_GET['or_id'])){
 
    <div class="col-xs-12 col-md-6">
    <div class="form-group has-success">
-   <label>Localidad:</label>
     <?php echo $localidad; ?>
     <div class="requerido" id="falta_localidad"></div>
 </div>
@@ -67,7 +79,6 @@ if (!empty($_GET['or_id'])){
    </div>
 
 <div class="form-group">
-  <label>Calle:</label>
   <?php echo $calle; ?>
 </div>
 
@@ -90,14 +101,13 @@ if (!empty($_GET['or_id'])){
   </div>
 
  <div class="form-group">
-  <label for="nrocuil">Nro de CUIT:</label>
     <?php echo $cuil; ?>
     <div class="requerido" id="falta_cuit"></div>
     </div>
 
 
   <button type="submit" class="btn btn-info" id="envia1"><?php echo $titulo_boton; ?></button>
-  
+
 
 
 <input type="hidden" name="or_id" value="<?php echo $_GET['or_id']; ?>" />
@@ -137,16 +147,16 @@ if (!empty($_GET['or_id'])){
             $('#falta_cuit').text("Debe completar este campo");
             return false;
             } */
-            
+
         });
 
-           $("#iddepartamento").change(function () {  
+           $("#iddepartamento").change(function () {
                 $("#iddepartamento option:selected").each(function () {
             elegido=$(this).val();
             $.post("localidades.php", { elegido: elegido }, function(data){
             $("#idlocalidad").html(data);
-            });           
-        }); 
+            });
+        });
       });
            $('#nrocuil').mask('00-00000000-0');
 

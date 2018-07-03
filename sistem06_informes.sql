@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-06-2018 a las 19:17:39
+-- Tiempo de generación: 03-07-2018 a las 13:56:49
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 5.6.34
 
@@ -21,7 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `sistem06_informes`
 --
-CREATE DATABASE IF NOT EXISTS `sistem06_informes` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+DROP DATABASE IF EXISTS `sistem06_informes`;
+CREATE DATABASE IF NOT EXISTS `sistem06_informes` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 USE `sistem06_informes`;
 
 -- --------------------------------------------------------
@@ -438,7 +439,7 @@ CREATE TABLE `tb_cursos_externos` (
 CREATE TABLE `tb_datos_educativos` (
   `de_dp_id` int(9) NOT NULL,
   `de_idioma` int(2) NOT NULL,
-  `de_continuar` int(1) NOT NULL DEFAULT '1',
+  `de_continuar` int(1) DEFAULT '1',
   `de_pc` int(1) NOT NULL,
   `de_carnet` int(1) NOT NULL DEFAULT '0',
   `de_tipo_carnet` int(2) NOT NULL,
@@ -795,7 +796,9 @@ CREATE TABLE `tb_emprendedor_credito` (
   `ec_dp_id` int(6) NOT NULL,
   `ec_or` int(4) NOT NULL,
   `ec_mo` int(4) NOT NULL,
-  `ec_vigente` varchar(2) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'NO'
+  `ec_vigente` varchar(2) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'NO',
+  `ec_monto` int(11) DEFAULT NULL,
+  `ec_año` smallint(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------

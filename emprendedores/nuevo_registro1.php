@@ -141,14 +141,14 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 
 <?php include("../recorte_gral/datos_domicilio.php"); ?>
 
-
+</div>
 
 
 <div class="form-group">
 <?php echo SelectGeneralVal("em_tipo_lugar", "form-control", "tipolugaroid", "El lugar es:", "tb_tipo_locacion", "tl_id", "tl_name",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_tipo_lugar")); ?>
 </div>
 
-</div>
+
 
 <div class="form-group">
 <label>Espacio físico suficiente:</label>
@@ -198,7 +198,8 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
     $(document).ready(function() {
 
       var elegido=$("#iddepartamento").val();
-      $.post("../recorte_gral/localidades.php", { elegido: elegido }, function(data){
+			localidad=$("#idlocalidad").val();
+      $.post("../recorte_gral/localidades.php", { elegido: elegido, localidad: localidad }, function(data){
             $("#idlocalidad").html(data);
             });
 

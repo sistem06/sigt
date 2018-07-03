@@ -1,10 +1,10 @@
 <?php
 require_once '_conexion.php';
-/*sk01*/ session_start();
-/*sk01
-        mysql_set_charset('utf8');
-        header("Content-Type: text/html;charset=utf-8");
-*sk01*/
+session_start();
+
+mysql_set_charset('utf8');
+header("Content-Type: text/html;charset=utf-8");
+
 
 if($_POST['paso']==1){
 	$nro_doc = $_POST['dp_nro_doc1'];
@@ -470,7 +470,8 @@ if($_POST['paso']==5){ // Alta Puntos de Venta
 		break;
 
 		case 2:
-		$det = $_POST['nro_barrio'];
+		//IS021 $det = $_POST['nro_barrio'];
+		$det = $_POST['nro_zona'];
 		break;
 
 		case 3:
@@ -685,18 +686,20 @@ if($_POST['paso']==8){ // Alta Capacitaciones Recibidas
 }
 
 
-if($_POST['paso']==9){
+if($_POST['paso']==9){ //Subsidios/Créditos Recibidos
 	if($_POST['vigente']=="SI"){
 		$vig = "SI";
 	} else {
 		$vig = "NO";
 	}
-	$capa = new EmpCredito();
-	$capa->ec_dp_id = $_POST['dp_id'];
-	$capa->ec_or = $_POST['nro_org'];
-	$capa->ec_mo = $_POST['nro_destino'];
-	$capa->ec_vigente = $vig;
-	$capa->save();
+	$recor = new EmpCredito();
+	$recor->ec_dp_id = $_POST['dp_id'];
+	$recor->ec_or = $_POST['nro_org'];
+	$recor->ec_mo = $_POST['nro_destino'];
+	$recor->ec_vigente = $vig;
+	$recor->ec_monto = $_POST['monto'];
+	$recor->ec_año = $_POST['ano'];
+	$recor->save();
 	$dp_id = $_POST['dp_id'];
 	$em_id = $_POST['em_id'];
 	if(empty($_POST['estado'])){
@@ -758,6 +761,42 @@ if($_POST['paso']==12){ // Alta Necesidades del Emprendimiento
 	header("location: $prox");
 }
 
+if($_POST['paso']==13){ // Alta Ingresos del Emprendimiento
+/*
+	$dp_id = $_POST['dp_id'];
+	$filtro = Ingresos::count(array("conditions" => "in_dp_id = '$dp_id'"));
+
+	if($filtro == 0){
+		$record = new Ingresos();
+		$record->in_dp_id = $dp_id;
+		$record->in_por = $_POST['nro_porcentaje'];
+		$record->in_efector = $_POST['efe_so'];
+		$record->in_efector = $_POST['efector_expediente'];
+
+		if(isset($_POST['de_continuar'])){
+ 			$edu->de_continuar = $_POST['de_continuar'];
+		}
+		if(!empty($_POST['de_carnet'])){
+	   $edu->de_carnet = 1;
+		}
+	} else {
+		 $edu = Educativa::find($dp_id);
+	}
+
+	$prox = "../detalle_beneficiario.php?dp_id=$dp_id";
+  $prox1 = "detalle_beneficiario.php?dp_id=$dp_id";
+
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima(1, $dp_id,"Ingresos");
+  $ent_id = $entre->ent_id;
+  if(isset($ent_id)){
+    $recor = AltaEntrevista::find($ent_id);
+    $recor->ent_fin = '1';
+    $recor->ent_us = $_POST['id_us'];
+    $recor->save();
+  }
+	header("location: $prox");
+	*/
+}
 
 
 if($_POST['paso']==14){
@@ -814,19 +853,21 @@ if($_POST['paso']==2002){
   $prox1 = "nuevo_registro_edu.php?dp_id=".$_POST['dne_dp_id'];
 
   $dp_id = $_POST['dne_dp_id'];
-/*
-   	$entre = AltaEntrevista::find_by_ent_dp_id($_POST['dne_dp_id']);
-   	$ent_id = $entre->ent_id;
 
-   $recor = AltaEntrevista::find($ent_id);
-   $recor->ent_sis = '2';
-   $recor->ent_fin = '0';
-   $recor->ent_proxima = $prox1;
-   $recor->ent_us = $_POST['id_us'];
-   $recor->save();
-*/
 	header("location: $prox");
 }
+
+if($_POST['paso']==1005){
+	$benfp = new BeneficiarioFormacionProfesional();
+	$benfp->bfp_fp_id = $_POST['valor_curso'];
+	$benfp->bfp_situacion = $_POST['bfp_situacion'];
+  $benfp->bfp_dp_id = $_POST['dp_id'];
+  $benfp->bfp_year = $_POST['bfp_year'];
+	$benfp->save();
+	$dp_id = $_POST['dp_id'];
+	header("location: ../nuevo_registro_edu.php?dp_id=$dp_id");
+}
+
 
 if($_POST['paso']==1105){
 	$idi = new Idiomas();
@@ -938,7 +979,7 @@ if($_POST['paso']==444){ // Alta Datos Educativos
 			$prox = "../detalle_beneficiario.php?dp_id=$dp_id";
  			$prox1 = "detalle_beneficiario.php?dp_id=$dp_id";
 
-   		$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima(2, $dp_id,"Datos Educativos");
+   		$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima(1, $dp_id,"Datos Educativos");
 	   	$ent_id = $entre->ent_id;
 	   	if(isset($ent_id)){
 		   $recor = AltaEntrevista::find($ent_id);
@@ -946,6 +987,7 @@ if($_POST['paso']==444){ // Alta Datos Educativos
 		   $recor->ent_us = $_POST['id_us'];
 		   $recor->save();
 			}
+
 			header("location: $prox");
 }
 exit();
