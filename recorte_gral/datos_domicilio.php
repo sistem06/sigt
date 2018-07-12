@@ -16,10 +16,11 @@
 
 
 <div class="panel panel-info">
-  <div class="panel-heading">
+<div class="panel-heading">
   <h3 class="panel-title">
   <span class="glyphicon glyphicon-map-marker"></span>  Domicilio</div>
   </h3>
+
 </div>
 
 <div class="row">
@@ -64,7 +65,7 @@
 if ($modif && isset($dom_emp_id) && $regDom['dom_calle'] != "") {
   echo '<input id="valor_calle" name="valor_calle" type="hidden" value="'.$regDom['dom_calle'].'">';
 } else {
-  echo '<input id="valor_calle" name="valor_calle" type="hidden"';
+  echo '<input id="valor_calle" name="valor_calle" type="hidden">';
 }
 ?>
 </div>
@@ -145,11 +146,12 @@ if ($modif && isset($dom_emp_id) && $regDom['dom_calle'] != "") {
 </div> <!-- class="row" -->
 
 <div class="form-group">
-      <input id="address" type="hidden" value="">
-      <button type="button" class="btn btn-warning" id="geoloc">Ubicar en el mapa</button>
-    </div>
-    <div id="map" style="width=100%; height: 500px; margin-bottom:20px;"></div>
-     <script>
+    <input id="address" type="hidden" value="">
+    <button type="button" class="btn btn-warning" id="geoloc">Ubicar en el mapa</button>
+</div>
+<div id="map" style="width=100%; height: 500px; margin-bottom:20px;"></div>
+
+<script>
     var nro = 0;
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -199,9 +201,8 @@ document.getElementById("latid").value=ubica;
 }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgYSMpv4ijxs_HCxoXiJlQyGTl5nlBIOQ&callback=initMap"
-        async defer></script>
-        <input type="hidden" name="latitud" id="latid">
-        <input type="hidden" name="barrioid" id="barrioid">
-        <input type="hidden" name="caatid" id="caatid">
-        <div class="requerido" id="falta_mapa">Falta ubicar en el Mapa</div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgYSMpv4ijxs_HCxoXiJlQyGTl5nlBIOQ&callback=initMap" async defer></script>
+    <input type="hidden" name="latitud" id="latid">
+    <input type="hidden" name="barrioid" id="barrioid">
+    <input type="hidden" name="caatid" id="caatid">
+    <div class="requerido" id="falta_mapa">Falta ubicar en el Mapa</div>

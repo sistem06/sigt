@@ -42,43 +42,43 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 
 
 
-          <form id="parte1" action="tools/add_registro.php" method="post" role="form">
-      <div class="row">
-<div class="col-xs-12 col-md-12">
-    <div class="form-group has-success">
-   <?php echo InputGeneralVal("text", "em_nombre", "form-control", "emnombre", "escriba el nombre del emprendimiento", "Nombre o Marca del Emprendimiento:",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_nombre")); ?>
-   <div class="requerido" id="falta_nombre">Falta completar este campo</div>
-  </div>
-</div></div>
-<?php if(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro_old")){
-?>
+<form id="parte1" action="tools/add_registro.php" method="post" role="form">
 <div class="row">
-<div class="col-xs-12 col-md-12">
-  <?php echo 'Rubro anterior: <b>'.BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro_old").'</b>'; ?>
+	<div class="col-xs-12 col-md-12">
+	    <div class="form-group has-success">
+	   <?php echo InputGeneralVal("text", "em_nombre", "form-control", "emnombre", "escriba el nombre del emprendimiento", "Nombre o Marca del Emprendimiento:",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_nombre")); ?>
+	   <div class="requerido" id="falta_nombre">Falta completar este campo</div>
+	  </div>
+	</div>
 </div>
-</div>
+<?php if(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro_old")){ ?>
+	<div class="row">
+		<div class="col-xs-12 col-md-12">
+		  <?php echo 'Rubro anterior: <b>'.BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro_old").'</b>'; ?>
+		</div>
+	</div>
   <?php
-}
-?>
+	}
+	?>
 <div class="row">
-<div class="col-xs-12 col-md-6">
-<div class="form-group">
-  <?php echo SelectGeneralVal("em_rubro", "form-control", "rubroid", "Rubro:","tb_rubros", "ru_id", "ru_name",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_rubro")); ?>
- <div id="listado_rubros" class="requerido"></div>
- <div class="requerido" id="falta_rubro">Falta completar este campo</div>
-</div>
-</div>
+	<div class="col-xs-12 col-md-6">
+		<div class="form-group">
+		   <?php echo SelectGeneralVal("em_rubro", "form-control", "rubroid", "Rubro:","tb_rubros", "ru_id", "ru_name",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_rubro")); ?>
+			 <div id="listado_rubros" class="requerido"></div>
+			 <div class="requerido" id="falta_rubro">Falta completar este campo</div>
+		</div>
+	</div>
 
-<div class="col-xs-12 col-md-6">
-<div class="form-group">
-  <label>Subrubro:</label>
- <select id="subrubroid" class="form-control" name="em_subrubro"/>
- <option value="<?php echo BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro"); ?>"><?php echo BuscaRegistro ("tb_subrubros", "sr_id",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro"),"sr_name"); ?></option>
- </select>
- <div class="requerido" id="falta_subrubro">Falta completar este campo</div>
-</div>
-</div>
-</div>
+	<div class="col-xs-12 col-md-6">
+		<div class="form-group">
+		  <label>Subrubro:</label>
+		 <select id="subrubroid" class="form-control" name="em_subrubro"/>
+		 <option value="<?php echo BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro"); ?>"><?php echo BuscaRegistro ("tb_subrubros", "sr_id",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_subrubro"),"sr_name"); ?></option>
+		 </select>
+		 <div class="requerido" id="falta_subrubro">Falta completar este campo</div>
+		</div>
+	</div>
+</div> <!-- class="row"-->
 
 <div class="form-group">
 <?php echo TextAreaGeneralVal("em_descripcion", "form-control", "iddescripcion", "3", "Descripción del Emprendimiento:",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_descripcion")); ?>
@@ -126,21 +126,19 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 
 
 <div class="form-group">
-<label>Funciona en su Domicilio:</label>
-<div class="radio">
-  <label>
-<input name="em_en_donde" type="radio" value="0" <?php if(TirameDomicilioNro($_GET['dp_id'])==BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_domicilio")) echo 'checked'; ?>> Si |
-</label>
-<label>
-<input name="em_en_donde" type="radio" value="1" <?php if(TirameDomicilioNro($_GET['dp_id'])!=BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_domicilio")) echo 'checked'; ?>> No
-</label>
-</div>
+	<label>Funciona en su Domicilio:</label>
+	<div class="radio">
+	  <label>
+			<input name="em_en_donde" type="radio" value="0" <?php if(TirameDomicilioNro($_GET['dp_id'])==BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_domicilio")) echo 'checked'; ?>> Si |
+		</label>
+		<label>
+			<input name="em_en_donde" type="radio" value="1" <?php if(TirameDomicilioNro($_GET['dp_id'])!=BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_domicilio")) echo 'checked'; ?>> No
+		</label>
+	</div>
 </div>
 
 <div id="aa1">
-
-<?php include("../recorte_gral/datos_domicilio.php"); ?>
-
+	<?php include("../recorte_gral/datos_domicilio.php"); ?>
 </div>
 
 
@@ -151,26 +149,25 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 
 
 <div class="form-group">
-<label>Espacio físico suficiente:</label>
-<div class="radio">
-  <label>
-<input name="em_espacio" type="radio" value="1" <?php if(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_espacio")==1) echo 'checked'; ?>> Si |
-</label>
-<label>
-<input name="em_espacio" type="radio" value="0" <?php if(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_espacio")==0) echo 'checked'; ?>> No
-</label>
-</div>
+	<label>Espacio físico suficiente:</label>
+	<div class="radio">
+	  <label>
+		<input name="em_espacio" type="radio" value="1" <?php if(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_espacio")==1) echo 'checked'; ?>> Si |
+		</label>
+		<label>
+		<input name="em_espacio" type="radio" value="0" <?php if(BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_espacio")==0) echo 'checked'; ?>> No
+		</label>
+	</div>
 </div>
 
 <div id="aa2" style="display:none">
-
-<div class="form-group">
-<?php echo TextAreaGeneralVal("em_motivo_espacio", "form-control", "idmotivo", "2", "Motivo del poco espacio:",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_motivo_espacio")); ?>
-</div>
+	<div class="form-group">
+	<?php echo TextAreaGeneralVal("em_motivo_espacio", "form-control", "idmotivo", "2", "Motivo del poco espacio:",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_motivo_espacio")); ?>
+	</div>
 </div>
 
 <div class="form-group has-success">
-<?php echo SelectGeneralVal("em_tipo_empresa", "form-control", "tipoemp", "Tipo de emprendimiento:", "tb_tipo_emprendimiento", "te_id", "te_name",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_tipo_empresa")); ?>
+	<?php echo SelectGeneralVal("em_tipo_empresa", "form-control", "tipoemp", "Tipo de emprendimiento:", "tb_tipo_emprendimiento", "te_id", "te_name",BuscaRegistro ("tb_datos_emprendimiento", "em_id", $_GET['em_id'], "em_tipo_empresa")); ?>
   <div class="requerido" id="falta_tipo">Falta completar este campo</div>
 </div>
 
@@ -182,7 +179,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 </form>
 
   <!-- fin contenido -->
-</div>
+</div> <!-- div class="container" -->
 <br><br><br><br>
 <?php include("../recorte_gral/pie.php"); ?>
 
@@ -201,12 +198,12 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 			localidad=$("#idlocalidad").val();
       $.post("../recorte_gral/localidades.php", { elegido: elegido, localidad: localidad }, function(data){
             $("#idlocalidad").html(data);
-            });
+      });
 
      $("#parte1").submit(function(event) {
-    if($("#emnombre").val()==""){
+     	if($("#emnombre").val()==""){
       $("#falta_nombre").show();
-     event.preventDefault();
+    	event.preventDefault();
     }
 		/*sk04* IS016 Campos NO requeridos
     if($("#rubroid").val()==""){
