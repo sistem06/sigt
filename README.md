@@ -1,2 +1,2 @@
 # sigt
-registro único de hogares
+registro único de hogares beneficiarios de prestaciones sociales
