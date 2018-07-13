@@ -1,2 +1,2 @@
-# sigt
-registro único de hogares
+# SIGT
+Registro Único de Hogares
