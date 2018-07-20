@@ -38,12 +38,10 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prestaciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
-
-            <li><a href="archivo.php">ABM Prestaciones</a></li>
-            <li><a href="archivo.php">Asignación de Prestaciones</a></li>
+            <li><a href="gestor_prestaciones.php">Gestión de Prestaciones</a></li>            
             <li class="divider"></li>
-            <li><a href="archivo.php">Histórico</a></li>
-
+            <li><a href="alta_prestacion_individual.php">Asignación de Prestaciones Individuales</a></li>
+            <li><a href="alta_prestacion_grupal.php">Asignación de Prestaciones Grupales</a></li>
         </ul>
       </li>
 

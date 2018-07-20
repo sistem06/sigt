@@ -19,7 +19,7 @@ include ("../funciones/funciones_generales.php");
 <div class="container-fluid">
 <?php include("recortes/navegacion.php"); ?>
 	<!-- comienza contenido -->
-  <h3>Listado de Beneficiarios</h3>
+  <h3>Listado de Personas</h3>
 	<!-- aca comienza el calendario -->
 	<table id="list_emprendedores" class="display" cellspacing="0" width="100%">
       <thead>

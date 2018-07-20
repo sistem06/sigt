@@ -9,9 +9,9 @@
 	   echo "ID: ".$resultados['bar_id']."<br />";
 	 }
 	}
-*/
+
 include("conecta.php");
-echo md5("admin")."</br>";
+
 echo $_SERVER['SERVER_NAME']."</br>";
 $base_dir = __DIR__;
 echo $base_dir."</br>";
@@ -30,5 +30,11 @@ echo $base_url."</br>";
   } else {
     echo "Producción!!";
   };
+*/
+
+echo md5("admin")."</br>";
+
+sd000022_sigt
+  pevituVO36
 
 ?>

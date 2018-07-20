@@ -14,11 +14,11 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
       <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Secciones <b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Personas <b class="caret"></b></a>
         <ul class="dropdown-menu">
 
-            <li><a href="beneficiarios.php">Beneficiarios</a></li>
-            <li><a href="nuevo_registro.php">Nuevo Beneficiario</a></li>
+            <li><a href="beneficiarios.php">Listado de Personas</a></li>
+            <li><a href="nuevo_registro.php">Nueva Persona</a></li>
 
           <li class="divider"></li>
           <?php
@@ -30,16 +30,14 @@
       ?>
         </ul>
       </li>
-<!-- agregar en otros -->
+      <!-- agregar en otros -->
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prestaciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
-
-            <li><a href="beneficiarios.php">Emprendedores</a></li>
-
+            <li><a href="gestor_prestaciones.php">Gestión de Prestaciones</a></li>
             <li class="divider"></li>
-            <li><a href="organizaciones.php">Organizaciones</a></li>
-
+            <li><a href="alta_prestacion_individual.php">Asignación de Prestaciones Individuales</a></li>
+            <li><a href="alta_prestacion_grupal.php">Asignación de Prestaciones Grupales</a></li>
         </ul>
       </li>
 
