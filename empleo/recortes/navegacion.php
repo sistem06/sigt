@@ -17,14 +17,14 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Personas <b class="caret"></b></a>
         <ul class="dropdown-menu">
 
-            <li><a href="beneficiarios.php">Listado de Personas</a></li>
-            <li><a href="nuevo_registro.php">Nueva Persona</a></li>
+            <li><a href="../empleo/beneficiarios.php">Listado de Personas</a></li>
+            <li><a href="../empleo/nuevo_registro.php">Nueva Persona</a></li>
 
           <li class="divider"></li>
           <?php
       iF($_SESSION['sector']==1){
         ?>
-            <li><a href="usuarios.php">Usuarios</a></li>
+            <li><a href="../recorte_gral/usuarios.php">Usuarios</a></li>
             <?php
       }
       ?>
@@ -34,10 +34,10 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prestaciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
-            <li><a href="gestor_prestaciones.php">Gestión de Prestaciones</a></li>
+            <li><a href="../empleo/gestor_prestaciones.php">Gestión de Prestaciones</a></li>
             <li class="divider"></li>
-            <li><a href="alta_prestacion_individual.php">Asignación de Prestaciones Individuales</a></li>
-            <li><a href="alta_prestacion_grupal.php">Asignación de Prestaciones Grupales</a></li>
+            <li><a href="../empleo/alta_prestacion_individual.php">Asignación de Prestaciones Individuales</a></li>
+            <li><a href="../empleo/alta_prestacion_grupal.php">Asignación de Prestaciones Grupales</a></li>
         </ul>
       </li>
 
@@ -48,7 +48,7 @@
 
 
 
-            <li><a href="informes.php">Informes de detalle</a></li>
+            <li><a href="../empleo/informes.php">Informes de detalle</a></li>
               <li class="divider"></li>
         </ul>
       </li>
@@ -64,12 +64,12 @@
 
             <li class="divider"></li>
             -->
-            <li><a href="carreras.php">Carreras</a></li>
-            <li><a href="cursos.php">Cursos</a></li>
-            <li><a href="actividades.php">Actividades</a></li>
-            <li><a href="puestos.php">Puestos</a></li>
-            <li><a href="jerarquias.php">Jerarquias</a></li>
-            <li><a href="calles.php">Calles</a></li>
+            <li><a href="../empleo/carreras.php">Carreras</a></li>
+            <li><a href="../empleo/cursos.php">Cursos</a></li>
+            <li><a href="../empleo/actividades.php">Actividades</a></li>
+            <li><a href="../empleo/puestos.php">Puestos</a></li>
+            <li><a href="../empleo/jerarquias.php">Jerarquias</a></li>
+            <li><a href="../empleo/calles.php">Calles</a></li>
 
         </ul>
       </li>
@@ -120,7 +120,7 @@
               <li>
                   <span class="item">
                     <span class="item-left">
-                      <!-- <img src="http://lorempixel.com/50/50/" alt="" /> -->
+                      <!-- <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" /> -->
                         <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />
                         <span class="item-info">
                             <span>Item name</span>
@@ -135,7 +135,7 @@
               <li>
                   <span class="item">
                     <span class="item-left">
-                        <!-- <img src="http://lorempixel.com/50/50/" alt="" /> -->
+                        <!-- <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" /> -->
                         <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />
                         <span class="item-info">
                             <span>Item name</span>
@@ -150,7 +150,7 @@
               <li>
                   <span class="item">
                     <span class="item-left">
-                        <!-- <img src="http://lorempixel.com/50/50/" alt="" /> -->
+                        <!-- <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" /> -->
                         <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />
                         <span class="item-info">
                             <span>Item name</span>
@@ -165,7 +165,7 @@
               <li>
                   <span class="item">
                     <span class="item-left">
-                        <!-- <img src="http://lorempixel.com/50/50/" alt="" /> -->
+                        <!-- <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" /> -->
                         <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />
                         <span class="item-info">
                             <span>Item name</span>

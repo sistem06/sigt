@@ -17,18 +17,18 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Emprendedores <b class="caret"></b></a>
         <ul class="dropdown-menu">
 
-            <li><a href="beneficiarios.php">Listado Emprendedores</a></li>
-            <li><a href="nuevo_registro.php">Nuevo Emprendedor</a></li>
+            <li><a href="../emprendedores/beneficiarios.php">Listado Emprendedores</a></li>
+            <li><a href="../emprendedores/nuevo_registro.php">Nuevo Emprendedor</a></li>
             <li class="divider"></li>
-            <li><a href="organizaciones.php">Organizaciones</a></li>
-            <li><a href="ferias.php">Ferias</a></li>
-            <li><a href="zonas.php">Zonas de Comercialización</a></li>
-            <li><a href="comercios_list.php">Comercios</a></li>
+            <li><a href="../emprendedores/organizaciones.php">Organizaciones</a></li>
+            <li><a href="../emprendedores/ferias.php">Ferias</a></li>
+            <li><a href="../emprendedores/zonas.php">Zonas de Comercialización</a></li>
+            <li><a href="../emprendedores/comercios_list.php">Comercios</a></li>
           <li class="divider"></li>
           <?php
       iF($_SESSION['sector']==1){
         ?>
-            <li><a href="usuarios.php">Usuarios</a></li>
+            <li><a href="../recorte_gral/usuarios.php">Usuarios</a></li>
             <?php
       }
       ?>
@@ -38,10 +38,10 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prestaciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
-            <li><a href="gestor_prestaciones.php">Gestión de Prestaciones</a></li>            
+            <li><a href="../emprendedores/gestor_prestaciones.php">Gestión de Prestaciones</a></li>
             <li class="divider"></li>
-            <li><a href="alta_prestacion_individual.php">Asignación de Prestaciones Individuales</a></li>
-            <li><a href="alta_prestacion_grupal.php">Asignación de Prestaciones Grupales</a></li>
+            <li><a href="../emprendedores/alta_prestacion_individual.php">Asignación de Prestaciones Individuales</a></li>
+            <li><a href="../emprendedores/alta_prestacion_grupal.php">Asignación de Prestaciones Grupales</a></li>
         </ul>
       </li>
 
@@ -49,10 +49,10 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Informes <b class="caret"></b></a>
         <ul class="dropdown-menu">
 
-            <li><a href="beneficiarios.php">Emprendedores</a></li>
+            <li><a href="../emprendedores/beneficiarios.php">Emprendedores</a></li>
 
             <li class="divider"></li>
-            <li><a href="organizaciones.php">Organizaciones</a></li>
+            <li><a href="../emprendedores/organizaciones.php">Organizaciones</a></li>
 
         </ul>
       </li>

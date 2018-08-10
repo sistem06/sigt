@@ -1,6 +1,6 @@
 <?php
 	require_once '_conexion.php';
-	/*sk01** mysql_set_charset('utf8'); */
+	
 	header("Content-Type: text/html;charset=utf-8");
 	if($_POST['tabla']=="tb_usuarios"){
 		if($_POST['accion']=="A"){
@@ -26,7 +26,7 @@
 			$user-> us_pass = md5($_POST['pass']);
 			$user-> save();
 
-			$userS = UsuarioSistema::find_by_uss_us_id_and_uss_sistema($_POST['us_id'], 1);
+			$userS = UsuarioSistema::find_by_uss_us_id_and_uss_sistema($_POST['us_id'], $_POST['sistema']);
 			$userS-> uss_tipo = $_POST['funcion'];
 			$userS-> save();
 		}

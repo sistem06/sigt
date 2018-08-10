@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default" role="navigation">
-  
+
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
       <span class="sr-only">Toggle navigation</span>
@@ -16,7 +16,7 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Secciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          
+
             <li><a href="eventos.php">Eventos</a></li>
             <li><a href="nuevo_evento.php">Nuevo Evento</a></li>
             <li class="divider"></li>
@@ -25,7 +25,7 @@
           <?php
       iF($_SESSION['sector']==1){
         ?>
-            <li><a href="usuarios.php">Usuarios</a></li>
+            <li><a href="../recorte_gral/usuarios.php">Usuarios</a></li>
             <?php
       }
       ?>
@@ -35,9 +35,9 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prestaciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          
+
             <li><a href="beneficiarios.php">Emprendedores</a></li>
-           
+
             <li class="divider"></li>
             <li><a href="organizaciones.php">Organizaciones</a></li>
 
@@ -47,9 +47,9 @@
      <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Informes <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          
+
             <li><a href="beneficiarios.php">Emprendedores</a></li>
-           
+
             <li class="divider"></li>
             <li><a href="organizaciones.php">Organizaciones</a></li>
 
@@ -64,7 +64,7 @@
        <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sistemas <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          
+
           <?php
           while($a_user = mysql_fetch_array($que_user)){
             $id_sis = $a_user['uss_sistema'];
@@ -93,7 +93,7 @@
         </form>
     </div>
     <ul class="nav navbar-nav navbar-right">
-      
+
 
         <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>  <?php echo $_SESSION["usuario"]; ?><b class="caret"></b></a>
@@ -109,7 +109,7 @@
         <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-comment"></span>  Conectados <span class="label label-success">8</span></a>
         <ul class="dropdown-menu">
-         
+
                         <li><a href="#"> Fernando Sacara</a></li>
                         <li><a href="#"> Marisa Montes</a></li>
                         <li><a href="#"> Rodrigo Vargas</a></li>
@@ -119,7 +119,7 @@
 
 
 
-      
+
       <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
                     class="glyphicon glyphicon-bell"></span> Avisos <span class="label label-danger">32</span>
@@ -128,7 +128,7 @@
               <li>
                   <span class="item">
                     <span class="item-left">
-                        <img src="http://lorempixel.com/50/50/" alt="" />
+                        <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />
                         <span class="item-info">
                             <span>Item name</span>
                             <span>23$</span>
@@ -142,7 +142,7 @@
               <li>
                   <span class="item">
                     <span class="item-left">
-                        <img src="http://lorempixel.com/50/50/" alt="" />
+                        <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />
                         <span class="item-info">
                             <span>Item name</span>
                             <span>23$</span>
@@ -156,7 +156,7 @@
               <li>
                   <span class="item">
                     <span class="item-left">
-                        <img src="http://lorempixel.com/50/50/" alt="" />
+                        <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />
                         <span class="item-info">
                             <span>Item name</span>
                             <span>23$</span>
@@ -170,7 +170,7 @@
               <li>
                   <span class="item">
                     <span class="item-left">
-                        <img src="http://lorempixel.com/50/50/" alt="" />
+                        <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />
                         <span class="item-info">
                             <span>Item name</span>
                             <span>23$</span>

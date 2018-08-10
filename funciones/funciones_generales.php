@@ -131,6 +131,7 @@ function DatoRegistro ($tabla, $campo_muestra, $campo_id, $id){
 	function TirameOrigen ($dp_id){
 		$divide = BuscaRegistro ("tb_102_llamados", "la_102_id", $dp_id, "la_102_relacion");
 		$clave = BuscaRegistro ("tb_102_llamados", "la_102_id", $dp_id, "la_clave_ex");
+		$origen = "";
 		switch($divide){
 			case 1:
 				$origen = BuscaRegistro ("tb_datos_personales", "dp_id", $clave, "dp_name");

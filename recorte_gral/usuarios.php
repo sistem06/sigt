@@ -1,5 +1,6 @@
 <?php
-include("secure1.php");
+session_start();
+include("../".$_SESSION["dir_sis"]."/secure1.php");
 include ("../conecta.php");
 include ("../funciones/funciones_generales.php");
 ?>
@@ -16,26 +17,25 @@ include ("../funciones/funciones_generales.php");
   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"
 </head>
 <body>
-<?php include("../recorte_gral/encabezado.php"); ?>
+<?php include("encabezado.php"); ?>
 <div class="container-fluid">
-<?php include("recortes/navegacion.php"); ?>
+<?php include("../".$_SESSION["dir_sis"]."/recortes/navegacion.php"); ?>
 	<!-- comienza contenido -->
-
-       <?php include("../recorte_gral/listado_usuarios.php"); ?>
+       <?php include("listado_usuarios.php"); ?>
   <!-- fin contenido -->
 </div>
 <br><br><br><br>
-<?php include("../recorte_gral/pie.php"); ?>
+<?php include("pie.php"); ?>
 
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" language="javascript" src="../js/jquery.dataTables.js"></script>
-  
+
   <script type="text/javascript" language="javascript" class="init">
   $(document).ready(function() {
   $('#list_emprendedores').DataTable();
 });
-  </script> 
+  </script>
   <script type="text/javascript" language="javascript">
     $('#list_emprendedores').DataTable( {
         responsive: true
@@ -52,9 +52,9 @@ include ("../funciones/funciones_generales.php");
           type : 'iframe',
           padding : 5
         });
-      }); 
+      });
         $(".fancybox").fancybox({
-        afterClose  : function() { 
+        afterClose  : function() {
             window.location.reload();
         }
     });

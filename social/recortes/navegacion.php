@@ -19,25 +19,26 @@
           <?php
             iF($_SESSION['sector']==1){
           ?>
-            <li><a href="usuarios.php">Usuarios</a></li>
+            <li><a href="../recorte_gral/usuarios.php">Usuarios</a></li>
           <?php
             }
           ?>
         <li class="divider"></li>
-            <li><a href="beneficiarios.php">Beneficiarios</a></li>
+            <li><a href="../social/beneficiarios.php">Personas</a></li>
+            <li><a href="../recorte_gral/nuevo_persona.php">Alta de Persona</a></li>
         <li class="divider"></li>
-            <li><a href="hogares.php">Hogares</a></li>
-            <li><a href="nuevo_registro.php">Nuevo Hogar</a></li>
+            <li><a href="../social/hogares.php">Hogares</a></li>
+            <li><a href="../social/nuevo_registro.php">Nuevo Hogar</a></li>
         </ul>
       </li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prestaciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
 
-            <li><a href="beneficiarios.php">Emprendedores</a></li>
+            <li><a href="../social/beneficiarios.php">Emprendedores</a></li>
 
             <li class="divider"></li>
-            <li><a href="organizaciones.php">Organizaciones</a></li>
+            <li><a href="../social/organizaciones.php">Organizaciones</a></li>
 
         </ul>
       </li>
@@ -46,10 +47,10 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Informes <b class="caret"></b></a>
         <ul class="dropdown-menu">
 
-            <li><a href="beneficiarios.php">Emprendedores</a></li>
+            <li><a href="../social/beneficiarios.php">Emprendedores</a></li>
 
             <li class="divider"></li>
-            <li><a href="organizaciones.php">Organizaciones</a></li>
+            <li><a href="../social/organizaciones.php">Organizaciones</a></li>
 
         </ul>
       </li>
@@ -57,7 +58,7 @@
       <?php include("../recorte_gral/menu_sistemas.php"); ?>
       <!--fin menu sistemas -->
     </ul>
-  
+
     <div class="col-sm-3 col-md-3">
         <form class="navbar-form" role="search">
         <div class="input-group">
@@ -87,7 +88,7 @@
               <li>
                   <span class="item">
                     <span class="item-left">
-                        <!--<img src="http://lorempixel.com/50/50/" alt="" />-->
+                        <!--<img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />-->
                         <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />
                         <span class="item-info">
                             <span>Item name</span>
@@ -102,7 +103,7 @@
               <li>
                   <span class="item">
                     <span class="item-left">
-                        <!--<img src="http://lorempixel.com/50/50/" alt="" />-->
+                        <!--<img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />-->
                         <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />
                         <span class="item-info">
                             <span>Item name</span>
@@ -117,7 +118,7 @@
               <li>
                   <span class="item">
                     <span class="item-left">
-                        <!--<img src="http://lorempixel.com/50/50/" alt="" />-->
+                        <!--<img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />-->
                         <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />
                         <span class="item-info">
                             <span>Item name</span>
@@ -132,7 +133,7 @@
               <li>
                   <span class="item">
                     <span class="item-left">
-                        <!--<img src="http://lorempixel.com/50/50/" alt="" />-->
+                        <!--<img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />-->
                         <img src="../images/msg_icon_01.jpg" width="50px" height="50px" alt="" />
                         <span class="item-info">
                             <span>Item name</span>

@@ -1,4 +1,9 @@
 <?php
+$a = 5;
+$a++;
+echo "ahora?: " .$a."</br>";
+echo "ahora?: " .$a."</br>";
+echo "ahora?: " .$a."</br>";
 /*
 	require_once "modelo.php";
 
@@ -32,9 +37,9 @@ echo $base_url."</br>";
   };
 */
 
-echo md5("admin")."</br>";
-
+//echo md5("admin")."</br>";
+/*
 sd000022_sigt
   pevituVO36
-
+*/
 ?>

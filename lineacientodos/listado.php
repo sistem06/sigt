@@ -22,10 +22,10 @@ include ("../funciones/funciones_generales.php");
 
       <h3>Listado de Atenciones</h3>
 <!-- aca comienza el calendario -->
-          
+
 <table id="list_emprendedores" class="display" cellspacing="0" width="100%">
         <thead>
-          <tr>       
+          <tr>
           <th>Fecha</th>
           <th>Operador</th>
           <th>Tipo</th>
@@ -34,26 +34,23 @@ include ("../funciones/funciones_generales.php");
           <th>Detalle</th>
           </tr>
         </thead>
-            
-            <tbody>
-      <?php
-    
-      $qe=mysql_query("select * from tb_102_llamados");
-        while($row = mysql_fetch_array($qe)){
-  echo '<tr>';
-  echo '<td>'.$row['la_102_fecha'].'</td>';
-  echo '<td>'.BuscaRegistro ("tb_usuarios", "us_id", $row['la_102_us'], "us_name").'</td>';
- 
-  echo '<td>'.BuscaRegistro ("tb_motivo_llamado", "ml_id", $row['la_102_tipo_llamado'], "ml_name").'</td>';
-   echo '<td>'.BuscaRegistro ("tb_datos_personales", "dp_id", $row['la_dp_id'], "dp_name").'</td>';
-    echo '<td>'.TirameOrigen($row['la_102_id']).'</td>';
-    echo '<td><a href="detalle_llamado.php?la_102_id='.$row['la_102_id'].'&dp_id='.$row['la_dp_id'].'"><button class="btn btn-warning">Ver</button></a></td>';
-  echo '</tr>';
-  }
-               ?> 
-               
-               
-            </tbody>
+
+          <tbody>
+			      <?php
+			      $qe=mysql_query("select * from tb_102_llamados");
+			        while($row = mysql_fetch_array($qe)){
+							  echo '<tr>';
+								  echo '<td>'.$row['la_102_fecha'].'</td>';
+								  echo '<td>'.BuscaRegistro ("tb_usuarios", "us_id", $row['la_102_us'], "us_name").'</td>';
+								  echo '<td>'.BuscaRegistro ("tb_motivo_llamado", "ml_id", $row['la_102_tipo_llamado'], "ml_name").'</td>';
+								  echo '<td>'.BuscaRegistro ("tb_datos_personales", "dp_id", $row['la_dp_id'], "dp_name").'</td>';
+								  //echo '<td>'.TirameOrigen($row['la_102_id']).'</td>';
+									if (null !== TirameOrigen($row['la_102_id'])) { echo "<td>".TirameOrigen($row['la_102_id'])."</td>"; } else { echo "<td></td>"; }
+								  echo '<td><a href="detalle_llamado.php?la_102_id='.$row['la_102_id'].'&dp_id='.$row['la_dp_id'].'"><button class="btn btn-warning">Ver</button></a></td>';
+							  echo '</tr>';
+						  }
+			     ?>
+          </tbody>
         </table>
   <!-- fin contenido -->
 </div>
@@ -63,12 +60,12 @@ include ("../funciones/funciones_generales.php");
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" language="javascript" src="../js/jquery.dataTables.js"></script>
-  
+
   <script type="text/javascript" language="javascript" class="init">
   $(document).ready(function() {
   $('#list_emprendedores').DataTable();
 });
-  </script> 
+  </script>
   <script type="text/javascript" language="javascript">
     $('#list_emprendedores').DataTable( {
         responsive: true

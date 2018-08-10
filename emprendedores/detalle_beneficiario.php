@@ -22,9 +22,18 @@ include ("../funciones/funciones_generales.php");
 
 	  <!-- Nombre Emprendedor y Semáforos de Secciones -->
     <h1><?php echo BuscaRegistro ("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_name"); ?> <small><?php echo BuscaRegistro ("tb_datos_emprendimiento", "em_dp_id", $_GET["dp_id"], "em_nombre"); ?></small></h1>
+  
+    <ul class="nav nav-tabs">
+  <li class="active" id="ver1"><a href="#" >Datos Personales</a></li>
+  <li id="ver2"><a href="#">Prestaciones</a></li>
+    </ul>
+<br>
+
+<div id="gr1">
 		<?php include("recortes/semaforos.php"); ?>
     <br>
-
+    
+    
 		<!-- Secciones de Datos -->
     <div class="row">
         <div class="col-xs-12 col-sm-6 col-md-3">
@@ -643,9 +652,96 @@ while($lis_dat = mysql_fetch_array($list)){
                 </div>
               </div>
         </div>
+
 <!-- fin row 2 -->
        </div>
   <!-- fin contenido -->
+</div>
+
+<div id="gr2">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><span class="glyphicon glyphicon-save"></span> Prestaciones Propias</h3>
+                </div>
+                <div class="panel-body">
+                 <?php 
+                    $txt_pres_p = "SELECT * FROM tbp_prestaciones_beneficiarios INNER JOIN tbp_prestaciones ON tbp_prestaciones_beneficiarios.pb_pre_id = tbp_prestaciones.pre_id INNER JOIN tbp_prestaciones_lista ON tbp_prestaciones.pre_pr_id = tbp_prestaciones_lista.tbp_pr_id WHERE (tbp_prestaciones_beneficiarios.pb_dp_id = '".$_GET['dp_id']."' and tbp_prestaciones_lista.tbp_sis_id = '".$_SESSION['sistema']."')";
+                    $query_pre_p = mysql_query($txt_pres_p);
+                    if(mysql_num_rows($query_pre_p)==0){
+                        echo "<b> No hay prestaciones para mostrar </b>";
+                    } else {
+                      while($data_pre_p = mysql_fetch_array($query_pre_p)){
+                       echo "<h4>".$data_pre_p['tbp_pr_name']." (".BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_p['tbp_pt_id'],"pt_name").")</h4>";
+                       echo "<i>Agregado por :".BuscaRegistro("tb_usuarios","us_id",$data_pre_p['pre_us_id'],"us_name")." - En la fecha: ".$data_pre_p['pre_fecha_alta']."</i><br>";
+
+                            switch ($data_pre_p['tbp_pt_id']) {
+                              case '1':
+                                echo "Motivo: <b>".$data_pre_p['pre_tema']."</b><br>";
+                                echo "Entrevistador: <b>".$data_pre_p['pre_responsable']."</b> - Ubicación: <b>".$data_pre_p['pre_ubicacion']."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b> - Hora: <b>".$data_pre_p['pre_hora']."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                break;
+
+                              case '2':
+                                echo "Descripción: <b>".$data_pre_p['pre_tema']."</b><br>";
+                                echo "Monto: <b>$ ".$data_pre_p['pre_monto']."</b> - Cuotas: <b>".$data_pre_p['pre_cuotas']."</b> - Fecha Inicio: <b>".$data_pre_p['pre_fecha']."</b> - Fecha Fin: <b>".$data_pre_p['pre_fecha_out']."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                break;
+
+                               case '10':
+                                echo "Descripción: <b>".$data_pre_p['pre_tema']."</b><br>";
+                                echo "Monto: <b>$ ".$data_pre_p['pre_monto']."</b> - Cuotas: <b>".$data_pre_p['pre_cuotas']."</b> - Fecha Inicio: <b>".$data_pre_p['pre_fecha']."</b> - Fecha Fin: <b>".$data_pre_p['pre_fecha_out']."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                break;
+
+                              case '11':
+                                echo "Descripción: <b>".$data_pre_p['pre_tema']."</b><br>";
+                                echo "Monto: <b>$ ".$data_pre_p['pre_monto']."</b> - Cuotas: <b>".$data_pre_p['pre_cuotas']."</b> - Fecha Inicio: <b>".$data_pre_p['pre_fecha']."</b> - Fecha Fin: <b>".$data_pre_p['pre_fecha_out']."</b><br>";
+                                echo "Responsable: <b>".$data_pre_p['pre_fam_responsable']."</b> - DNI del Responsable: <b>".$data_pre_p['pre_dni_responsable']."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                break;
+
+                               case '12':
+                                echo "Motivo: <b>".$data_pre_p['pre_tema']."</b><br>";
+                                echo "Asesor: <b>".$data_pre_p['pre_responsable']."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                break;
+
+                                 case '13':
+                                echo "Motivo: <b>".$data_pre_p['pre_tema']."</b><br>";
+                                echo "Asistente: <b>".$data_pre_p['pre_responsable']."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                break;
+
+                                 case '14':
+                                echo "Motivo: <b>".$data_pre_p['pre_tema']."</b><br>";
+                                echo "Visitador: <b>".$data_pre_p['pre_responsable']."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                break;
+                            }
+
+                       echo "<hr>";
+                      }
+                    }
+                  ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><span class="glyphicon glyphicon-share-alt"></span> Prestaciones de otras áreas</h3>
+                </div>
+                <div class="panel-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </div>
 <br><br><br><br><br><br>
 <?php include("../recorte_gral/pie.php"); ?>
@@ -656,14 +752,28 @@ while($lis_dat = mysql_fetch_array($list)){
 
   <script type="text/javascript" language="javascript" class="init">
   $(document).ready(function() {
-  $('#list_emprendedores').DataTable();
+     
+     $("#gr2").hide();
+
+     $("#ver1").click(function(){
+         $("#ver1").addClass("active");
+         $("#ver2").removeClass("active");
+
+    $("#gr2").hide();
+    $("#gr1").show();
+    });
+
+      $("#ver2").click(function(){
+         $("#ver2").addClass("active");
+         $("#ver1").removeClass("active");
+
+    $("#gr1").hide();
+    $("#gr2").show();
+    });
+  
 });
   </script>
-  <script type="text/javascript" language="javascript">
-    $('#list_emprendedores').DataTable( {
-        responsive: true
-    } );
-  </script>
+  
   <script type="text/javascript" language="javascript" src="../js/navbar.js"></script>
   <script type="text/javascript" src="../source/jquery.fancybox.js?v=2.1.5"></script>
   <script type="text/javascript">
