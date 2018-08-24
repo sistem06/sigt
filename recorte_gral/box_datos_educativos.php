@@ -42,8 +42,9 @@ echo '
       <tr>
        <th>Licencia</th>
        <th>Vencimiento</th>
-       <th>Entidad Emisora</th>
-       <th>Lugar</th>
+       <th>Entidad Emisora</th>';
+      /*<th>Lugar</th>*/
+      echo '
       </tr>
       </thead>
       <tbody>';
@@ -55,8 +56,9 @@ echo '
       <tr>
          <td>'.BuscaRegistroM ("tb_licencias", "lic_id", $lis_dat_lic['lb_lic_id'], "lic_name").'</td>
          <td>'.fecha_dev ($lis_dat_lic['lb_vencimiento']).'</td>
-         <td>'.strtoupper($lis_dat_lic['lb_emisora']).'</td>
-         <td>'.BuscaRegistroM ("tb_localidades_pais", "loc_id", $lis_dat_lic['lb_municipio'], "loc_name").', '.BuscaRegistro ("tb_provincias", "pr_id", $lis_dat_lic['lb_provincia'], "pr_name").'</td>
+         <td>'.strtoupper($lis_dat_lic['lb_emisora']).'</td>';
+       /*<td>'.BuscaRegistroM ("tb_localidades_pais", "loc_id", $lis_dat_lic['lb_municipio'], "loc_name").', '.BuscaRegistro ("tb_provincias", "pr_id", $lis_dat_lic['lb_provincia'], "pr_name").'</td>*/
+       echo '
          </tr>';
       }
       echo '
@@ -76,7 +78,7 @@ echo '
       echo '</strong></p>';
       echo '<p>Observaciones: <i>'.BuscaRegistroM("tb_datos_educativos", "de_dp_id", $_GET["dp_id"], "de_observaciones").'</i></p>';
       echo '<p>Fecha de Carga: <b>'.fecha_dev(BuscaRegistro ("tb_datos_educativos", "de_dp_id", $_GET["dp_id"], "de_fecha_actualizacion")).'</b></p>';
-      echo '<a href="nuevo_registro_edu.php?dp_id='.$_GET["dp_id"].'"><button type="button" class="btn btn-success">Modificar</button></a>
+      echo '<a href="datos_educativos.php?dp_id='.$_GET["dp_id"].'"><button type="button" class="btn btn-success">Modificar</button></a>
 
      </div>
    </div>

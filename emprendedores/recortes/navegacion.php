@@ -18,7 +18,7 @@
         <ul class="dropdown-menu">
 
             <li><a href="../emprendedores/beneficiarios.php">Listado Emprendedores</a></li>
-            <li><a href="../emprendedores/nuevo_registro.php">Nuevo Emprendedor</a></li>
+            <li><a href="../recorte_gral/nuevo_persona.php">Nuevo Emprendedor</a></li>
             <li class="divider"></li>
             <li><a href="../emprendedores/organizaciones.php">Organizaciones</a></li>
             <li><a href="../emprendedores/ferias.php">Ferias</a></li>
@@ -38,10 +38,12 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prestaciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
-            <li><a href="../emprendedores/gestor_prestaciones.php">Gestión de Prestaciones</a></li>
+            <li><a href="../recorte_gral/gestor_prestaciones.php">Gestión de Prestaciones</a></li>
             <li class="divider"></li>
-            <li><a href="../emprendedores/alta_prestacion_individual.php">Asignación de Prestaciones Individuales</a></li>
-            <li><a href="../emprendedores/alta_prestacion_grupal.php">Asignación de Prestaciones Grupales</a></li>
+            <li><a href="../recorte_gral/alta_prestacion_individual.php">Asignación de Prestaciones Individuales</a></li>
+            <li><a href="../recorte_gral/alta_prestacion_grupal.php">Asignación de Prestaciones Grupales</a></li>
+            <li class="divider"></li>
+           <li><a href="../recorte_gral/listado_prestaciones.php">Listado de Prestaciones Asignadas</a></li>
         </ul>
       </li>
 

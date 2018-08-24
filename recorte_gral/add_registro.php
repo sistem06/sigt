@@ -62,7 +62,7 @@ if($_POST['paso']==1){
 		    $recor->save();
 				break;
 
-				case 5: //Discapacidad
+				case 5: // Salud / Discapacidad
 				$recor = new AltaEntrevista();
 				$recor->ent_sis = $_SESSION['sistema'];
 				$recor->ent_fin = '0';
@@ -201,13 +201,20 @@ if($_POST['paso']==1){
 	}
 }
 
-if($_POST['paso']==1001){
-			include_once("../../recorte_gral/apertura_mod_dp.php");
+if($_POST['paso']==1001){ //Modifica Datos Personales
+			include_once("apertura_mod_dp.php");
+
+			$histori = new Historial();
+			$histori->hi_us_id = $_POST['id_us'];
+			$histori->hi_dp_id = $_POST['dp_id'];
+			$histori->hi_detalle = "Modifica Datos Personales";
+			$histori->save();
+
 	    $prox = "detalle_persona.php?dp_id=".$_POST['dp_id'];
   	  header("location: $prox");
 }
 
-if($_POST['paso']==1111){
+if($_POST['paso']==1111){ // Modifica Datos Personales DNI
 	    $dp_name = $_POST['dp_apellido'].', '.$_POST['dp_nombre'];
 			$cliente = DatosPersonales::find($_POST['dp_id']);
 			$cliente->dp_nro_doc = $_POST['dp_nro_doc'];
@@ -220,11 +227,17 @@ if($_POST['paso']==1111){
 			$sistema->bs_dni = $_POST['dp_nro_doc'];
 			$sistema->save();
 
+			$histori = new Historial();
+			$histori->hi_us_id = $_POST['id_us'];
+			$histori->hi_dp_id = $_POST['dp_id'];
+			$histori->hi_detalle = "Modifica Datos Personales DNI";
+			$histori->save();
+
 			$prox = "detalle_persona.php?dp_id=".$_POST['dp_id'];
 			   header("location: $prox");
 }
 
-if($_POST['paso']==100){ //Alta Hogar Familares
+if($_POST['paso']==100){ //Alta Miembro Hogar
 		if($_POST['tratamiento']=="largo"){
 				  $dp_apellido =  ucwords(strtolower($_POST['dp_apellido']));
 				  $dp_nombre =  ucwords(strtolower($_POST['dp_nombre']));
@@ -237,8 +250,11 @@ if($_POST['paso']==100){ //Alta Hogar Familares
 				  $cliente->dp_apellido = $dp_apellido;
 				  $cliente->dp_name = $dp_name;
 				  $cliente->dp_sexo = $_POST['dp_sexo'];
-				  //$cliente->dp_tipo_doc = $_POST['dp_tipo_doc'];
-					$cliente->dp_tipo_doc = $_POST['dp_tipo_doc1'];
+					// En el alta standard de Personas se está forzando
+					// el tipo de documento DNI, no sé por qué, mientras
+					// tanto se harcodea acá también.
+					//$cliente->dp_tipo_doc = $_POST['dp_tipo_doc1'];
+					$cliente->dp_tipo_doc = 1;
 				  $cliente->dp_nro_doc = $_POST['dp_nro_doc1'];
 				  $cliente->dp_cuil = $_POST['dp_cuil'];
 				  $cliente->dp_estado_civil = $_POST['dp_estado_civil'];
@@ -276,13 +292,74 @@ if($_POST['paso']==100){ //Alta Hogar Familares
 			    $beneho->hb_ho_id = $ho_id;
 			    $beneho->save();
 
+					$alto = new BenSistema();
+  			  $alto->bs_us = $_POST['id_us'];
+	 			  $alto->bs_dni = $_POST['dp_nro_doc1'];
+	 			  $alto->bs_dp_id = $ult;
+	 			  $alto->bs_sis = $_SESSION['sistema'];
+	 			  $alto->bs_sis_ini = $_SESSION['sistema'];
+	 			  $alto->save();
+
+					$histori = new Historial();
+					$histori->hi_us_id = $_POST['id_us'];
+					$histori->hi_dp_id = $_POST['dp_id'];
+					$histori->hi_detalle = "Alta Miembro Hogar Largo";
+					$histori->save();
+
 		} else {
 
 			 	  $ho_id = $_POST['ho_id'];
-	 			  $beneho = new HogarBeneficiario();
- 		      $beneho->hb_dp_id = $_POST['dp_id_fam'];
+	 			  $beneho = HogarBeneficiario::find_by_hb_dp_id($_POST['dp_id_fam']);
+					if (empty($beneho)) {
+						$beneho = new HogarBeneficiario();
+						$beneho->hb_dp_id = $_POST['dp_id_fam'];
+					} else {
+						//Elimino Domicilio de la persona si no hay más
+						//integrantes del grupo hogar anterior
+						$hb_ho_id_ante = $beneho->hb_ho_id;
+						$cant_miembros_hogar_ant = HogarBeneficiario::count(array("conditions" => "hb_ho_id = '$hb_ho_id_ante'"));
+						if ($cant_miembros_hogar_ant = 1) {
+							$ho_ant = Hogar::find($beneho->hb_ho_id);
+							$dom_ant = Domicilio::find($ho_ant->ho_dom_id);
+							$dom_ant->Delete();
+						}
+					};
  		      $beneho->hb_ho_id = $_POST['ho_id'];
  		      $beneho->save();
+
+
+					/*
+					$ho_id = BuscaRegistro("tb_hogar_beneficiario", "hb_dp_id", $val, "hb_id");
+					$r_cant_benef_hogar = mysql_query("select count(*) from tb_hogar_beneficiario where hb_ho_id = '".$ho_id."'");
+					$q_cant_benef_hogar = mysql_num_rows($r_cant_benef_hogar);
+					if ($q_cant_benef_hogar > 1) {
+						$id_dom = BuscaRegistro("tb_hogar_beneficiario", "hb_dp_id", $val, "hb_ho_id");
+						mysql_query("delete from tb_domicilios where dom_id = '".$id_dom."'");
+					}	*/
+
+					$alto = BenSistema::find_by_bs_dp_id_and_bs_sis($_POST['dp_id_fam'],$_SESSION['sistema']);
+					if (empty($alto)) {
+						$alto = new BenSistema();
+						$alto->bs_sis_ini = 0;
+						$alto->bs_dp_id = $_POST['dp_id_fam'];
+					};
+
+					$dp_rec = DatosPersonales::find($_POST['dp_id_fam']);
+					if (empty($_POST['dp_nro_doc1'])) {
+						$alto->bs_dni = $dp_rec->dp_nro_doc;
+					} else {
+						$alto->bs_dni = $_POST['dp_nro_doc1'];
+					}
+				  $alto->bs_us = $_POST['id_us'];
+	 			  $alto->bs_sis = $_SESSION['sistema'];
+	 			  $alto->save();
+
+					$histori = new Historial();
+					$histori->hi_us_id = $_POST['id_us'];
+					$histori->hi_dp_id = $_POST['dp_id'];
+					$histori->hi_detalle = "Alta Miembro Hogar Corto";
+					$histori->save();
+
  		      $prox = "miembros_hogar.php?dp_id=".$_POST['dp_id']."&ho_id=".$ho_id;
  		      header("location: $prox");
 	  }
@@ -295,7 +372,7 @@ if($_POST['paso']==100){ //Alta Hogar Familares
 		header("location: $prox");
 }
 
-if($_POST['paso']==101){ //Miembros del Hogar
+if($_POST['paso']==101){ // Update Entrevista - Miembros del Hogar
 	$dp_id = $_POST['dp_id'];
 
 	$prox = "detalle_persona.php?dp_id=$dp_id";
@@ -327,6 +404,12 @@ if($_POST['paso']==202){ // Alta Documentos Gráficos Frente
     $recor->save();
  	 }
 
+	 $histori = new Historial();
+	 $histori->hi_us_id = $_POST['id_us'];
+	 $histori->hi_dp_id = $_POST['dp_id'];
+	 $histori->hi_detalle = "Alta Imagen DNI Front";
+	 $histori->save();
+
  	 header("location: $prox");
 }
 
@@ -343,6 +426,13 @@ if($_POST['paso']==102){ // Alta Documentos Gráficos Back
 	  $recor->ent_us = $_POST['id_us'];
 	  $recor->save();
 	}
+
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Alta Imagen DNI Back";
+	$histori->save();
+
 	header("location: $prox");
 }
 
@@ -405,7 +495,11 @@ if($_POST['paso']==2){ // Datos del Emprendimiento
 
 					  	$booki = Domicilio::last();
 						$ult_dom = $booki->dom_id;
+					} else {
+						$emp_rec = Emprendedor::find($_POST['em_id']);
+						$ult_dom = $emp_rec->em_domicilio;
 					}
+
 		$em_tipo_lugar = $_POST['em_tipo_lugar'];
 		$domicilio = $ult_dom;
 	}
@@ -417,8 +511,8 @@ if($_POST['paso']==2){ // Datos del Emprendimiento
 
 	if($filtro > 0){
 
-		$emprende = Emprendedor::find($_POST['em_id']);
-	//	$emprende->
+ 	 $emprende = Emprendedor::find($_POST['em_id']);
+
    $emprende->em_nombre = $_POST['em_nombre'];
    $emprende->em_fecha_inicio = $em_fecha_inicio;
    $emprende->em_rubro = $_POST['em_rubro'];
@@ -431,6 +525,12 @@ if($_POST['paso']==2){ // Datos del Emprendimiento
    $emprende->em_tipo_empresa = $_POST['em_tipo_empresa'];
 
    $emprende->save();
+
+	 $histori = new Historial();
+	 $histori->hi_us_id = $_POST['id_us'];
+	 $histori->hi_dp_id = $_POST['em_dp_id'];
+	 $histori->hi_detalle = "Modifica Datos Emprendimiento";
+	 $histori->save();
 
 	} else {
 
@@ -450,24 +550,27 @@ if($_POST['paso']==2){ // Datos del Emprendimiento
 
    $emprende->save();
 
-	$emp_ult = Emprendedor::last();
-	$em_id = $emp_ult->em_id;
+	 $histori = new Historial();
+	 $histori->hi_us_id = $_POST['id_us'];
+	 $histori->hi_dp_id = $_POST['em_dp_id'];
+	 $histori->hi_detalle = "Alta Datos Emprendimiento";
+	 $histori->save();
+
+	 $emp_ult = Emprendedor::last();
+	 $em_id = $emp_ult->em_id;
 	}
 
 	switch($_POST['em_tipo_empresa']){
 		case 1:
-		$prox = "../detalle_beneficiario.php?dp_id=$em_dp_id";
-   		$prox1 = "detalle_beneficiario.php?dp_id=$em_dp_id";
+			$prox = "detalle_persona.php?dp_id=$em_dp_id";
 		break;
 
 		case 2:
-		$prox = "../nuevo_registro1f.php?dp_id=$em_dp_id&em_id=$em_id";
-   		$prox1 = "nuevo_registro1f.php?dp_id=$em_dp_id&em_id=$em_id";
+			$prox = "datos_familiares_asoc.php?dp_id=$em_dp_id&em_id=$em_id";
 		break;
 
 		case 3:
-		$prox = "../nuevo_registro1a.php?dp_id=$em_dp_id&em_id=$em_id";
-   		$prox1 = "nuevo_registro1a.php?dp_id=$em_dp_id&em_id=$em_id";
+			$prox = "datos_emprendedores_asoc.php?dp_id=$em_dp_id&em_id=$em_id";
 		break;
 	}
 
@@ -476,8 +579,8 @@ if($_POST['paso']==2){ // Datos del Emprendimiento
    	if(isset($ent_id)){
     $recor = AltaEntrevista::find($ent_id);
     $recor->ent_fin = '1';
-/*sk01** $recor->ent_us = $_POST['id_us']; */
-/*sk01*/ $recor->ent_us =	$_SESSION["id_us"];
+
+    $recor->ent_us =	$_SESSION["id_us"];
 
     $recor->save();
 	}
@@ -486,7 +589,7 @@ if($_POST['paso']==2){ // Datos del Emprendimiento
 
 }
 
-if($_POST['paso']==3){
+if($_POST['paso']==3){ //Instituciones Asociadas
 
 	$asocia_em = new Asemprenorga();
 	$asocia_em->eo_dp_id = $_POST['dp_id'];
@@ -496,18 +599,17 @@ if($_POST['paso']==3){
 	$dp_id = $_POST['dp_id'];
 	$em_id = $_POST['em_id'];
 	if(empty($_POST['estado'])){
-	header("location: ../nuevo_registro2.php?dp_id=$dp_id&em_id=$em_id");
+	header("location: datos_instituciones_asoc.php?dp_id=$dp_id&em_id=$em_id");
 		} else {
-	header("location: ../nuevo_registro2.php?dp_id=$dp_id&em_id=$em_id&estado=E");
+	header("location: datos_instituciones_asoc.php?dp_id=$dp_id&em_id=$em_id&estado=E");
 		}
 }
 
-if($_POST['paso']==4){ //Instituciones Asociadas
+if($_POST['paso']==4){ //Update Entrevista - Instituciones Asociadas
 
 	 $dp_id = $_POST['dp_id'];
 
-	 $prox = "../detalle_beneficiario.php?dp_id=$dp_id";
-   $prox1 = "detalle_beneficiario.php?dp_id=$dp_id";
+	 $prox = "detalle_persona.php?dp_id=$dp_id";
 
 	 $entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Instituciones Asociadas");
    $ent_id = $entre->ent_id;
@@ -557,18 +659,17 @@ if($_POST['paso']==5){ // Alta Puntos de Venta
 	$dp_id = $_POST['dp_id'];
 	$em_id = $_POST['em_id'];
 	if(empty($_POST['estado'])){
-	header("location: ../nuevo_registro3.php?dp_id=$dp_id&em_id=$em_id");
+	header("location: datos_lugares_venta.php?dp_id=$dp_id&em_id=$em_id");
 	} else {
-		header("location: ../nuevo_registro3.php?dp_id=$dp_id&em_id=$em_id&estado=E");
+		header("location: datos_lugares_venta.php?dp_id=$dp_id&em_id=$em_id&estado=E");
 	}
 }
 
-if($_POST['paso']==6){ // Alta Lugares de Venta
+if($_POST['paso']==6){ // Update Entrevista - Alta Lugares de Venta
 
 	$dp_id = $_POST['dp_id'];
 
-	$prox = "../detalle_beneficiario.php?dp_id=$dp_id";
-  $prox1 = "detalle_beneficiario.php?dp_id=$dp_id";
+	$prox = "detalle_persona.php?dp_id=$dp_id";
 
 	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Lugares de Venta");
   $ent_id = $entre->ent_id;
@@ -581,13 +682,15 @@ if($_POST['paso']==6){ // Alta Lugares de Venta
 	header("location: $prox");
 }
 
-if($_POST['paso']==777){ // Alta Discapacidad
+if($_POST['paso']==777){ // Alta Salud/Discapacidad
 
 	$dp_id = $_POST['dp_id'];
 	$filtro = Salud::count(array("conditions" => "ds_dp_id = '$dp_id'"));
 
 	if($filtro > 0){
 		$sal = Salud::find($_POST['dp_id']);
+		$sal->ds_tiene_os = $_POST['ds_tiene_os'];
+		$sal->ds_os = $_POST['ds_os'];
 		$sal->ds_tiene_discapacidad = $_POST['ds_tiene_discapacidad'];
 		$sal->ds_nro_cud = $_POST['ds_nro_cud'];
 		if($_POST['ds_ley_cud']==22431){
@@ -602,16 +705,23 @@ if($_POST['paso']==777){ // Alta Discapacidad
 		if(isset($_POST['ds_tipo_discapacidad'])){
 			$sal->ds_tipo_discapacidad = $_POST['ds_tipo_discapacidad'];
 		}
-		if(isset($_POST['ds_origen_discapacidad']) or $_POST['ds_origen_discapacidad']==0){
-			$sal->ds_origen_discapacidad = $_POST['ds_origen_discapacidad'];
+		if(isset($_POST['ds_origen_discapacidad'])){
+			if ($_POST['ds_origen_discapacidad']==0) {
+				$sal->ds_origen_discapacidad = $_POST['ds_origen_discapacidad'];
+			}
 		}
-		if(isset($_POST['ds_tipo_retraso']) or $_POST['ds_tipo_retraso']==0){
-			$sal->ds_tipo_retraso = $_POST['ds_tipo_retraso'];
+		if(isset($_POST['ds_tipo_retraso'])){
+			if ($_POST['ds_tipo_retraso']==0) {
+				$sal->ds_tipo_retraso = $_POST['ds_tipo_retraso'];
+			}
 		}
-		if(isset($_POST['ds_situacion_discapacidad']) or $_POST['ds_situacion_discapacidad']==0){
-			$sal->ds_situacion_discapacidad = $_POST['ds_situacion_discapacidad'];
+		if(isset($_POST['ds_situacion_discapacidad'])){
+			if ($_POST['ds_situacion_discapacidad']==0) {
+				$sal->ds_situacion_discapacidad = $_POST['ds_situacion_discapacidad'];
+			}
 		}
 		$sal->ds_descripcion_diagnostico = $_POST['ds_descripcion_diagnostico'];
+		$sal->ds_observaciones = $_POST['ds_observaciones'];
 		$sal->ds_rehabilitacion = $_POST['ds_rehabilitacion'];
 		$sal->ds_toma_medicacion = $_POST['ds_toma_medicacion'];
 		if(isset($_POST['ds_frecuencia_medicacion'])){
@@ -634,23 +744,32 @@ if($_POST['paso']==777){ // Alta Discapacidad
 		}
 		$sal->ds_informacion_importante = $_POST['ds_informacion_importante'];
 		$sal->save();
+
+		$histori = new Historial();
+	 	$histori->hi_us_id = $_POST['id_us'];
+	 	$histori->hi_dp_id = $_POST['dp_id'];
+	 	$histori->hi_detalle = "Modifica Datos Clínicos";
+	 	$histori->save();
+
 	} else { // else filtro > 0
 		$sal = new Salud();
 		$sal->ds_dp_id = $_POST['dp_id'];
+		$sal->ds_tiene_os = $_POST['ds_tiene_os'];
+		$sal->ds_os = $_POST['ds_os'];
 		$sal->ds_tiene_discapacidad = $_POST['ds_tiene_discapacidad'];
 		$sal->ds_nro_cud = $_POST['ds_nro_cud'];
 		if($_POST['ds_ley_cud']==22431){
 				$sal->ds_ley_cud = $_POST['ds_ley_cud'];
-			} else {
+		} else {
 				$sal->ds_ley_cud = $_POST['ds_ley_cud1'];
-			}
+		}
 		$sal->ds_descripcion_cud = $_POST['ds_descripcion_cud'];
 
 		if(!empty($_POST['ds_desde_cud'])){
-		$sal->ds_desde_cud = $_POST['ds_desde_cud'];
+			$sal->ds_desde_cud = $_POST['ds_desde_cud'];
 		}
 		if(!empty($_POST['ds_vencimiento_cud'])){
-		$sal->ds_vencimiento_cud = $_POST['ds_vencimiento_cud'];
+			$sal->ds_vencimiento_cud = $_POST['ds_vencimiento_cud'];
 		}
     $sal->ds_ente_cud = $_POST['ds_ente_cud'];
 		if(isset($_POST['ds_tipo_discapacidad'])){
@@ -666,8 +785,11 @@ if($_POST['paso']==777){ // Alta Discapacidad
 			$sal->ds_situacion_discapacidad = $_POST['ds_situacion_discapacidad'];
 		}
 		if(isset($_POST['ds_descripcion_diagnostico'])){
-		$sal->ds_descripcion_diagnostico = $_POST['ds_descripcion_diagnostico'];
-	} // else filtro > 0
+			$sal->ds_descripcion_diagnostico = $_POST['ds_descripcion_diagnostico'];
+		}
+		if(isset($_POST['ds_observaciones'])){
+			$sal->ds_observaciones = $_POST['ds_observaciones'];
+		}
 		$sal->ds_rehabilitacion = $_POST['ds_rehabilitacion'];
 		$sal->ds_toma_medicacion = $_POST['ds_toma_medicacion'];
 		if(isset($_POST['ds_frecuencia_medicacion'])){
@@ -690,9 +812,16 @@ if($_POST['paso']==777){ // Alta Discapacidad
 		}
 		$sal->ds_informacion_importante = $_POST['ds_informacion_importante'];
 		$sal->save();
+
+		$histori = new Historial();
+	 	$histori->hi_us_id = $_POST['id_us'];
+	 	$histori->hi_dp_id = $_POST['dp_id'];
+	 	$histori->hi_detalle = "Alta Datos Clínicos";
+	 	$histori->save();
+
 	} // fin else filtro > 0
 
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Discapacidad");
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Datos Clínicos");
   $ent_id = $entre->ent_id;
 
   if(isset($ent_id)){
@@ -702,34 +831,91 @@ if($_POST['paso']==777){ // Alta Discapacidad
    $recor->save();
 	}
 
-	header("location: ../detalle_beneficiario.php?dp_id=$dp_id");
+	header("location: detalle_persona.php?dp_id=$dp_id");
 }
 
-if($_POST['paso']==7){
+if($_POST['paso']==7){ // Alta Capacitaciones Emprendedor
 
 	$capa = new EmpCapacitacion();
-		$capa->ec_dp_id = $_POST['dp_id'];
-		$capa->ec_or_id = $_POST['nro_org'];
-		$capa->ec_motivo = $_POST['nro_motivo'];
-		$capa->ec_anio = $_POST['ec_anio'];
-		$capa->save();
+	$capa->ec_dp_id = $_POST['dp_id'];
+	$capa->ec_or_id = $_POST['nro_org'];
+	$capa->ec_motivo = $_POST['nro_motivo'];
+	$capa->ec_anio = $_POST['ec_anio'];
+	$capa->save();
 
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Alta Capacitación Emprendedor";
+	$histori->save();
 
 	$dp_id = $_POST['dp_id'];
 	$em_id = $_POST['em_id'];
 	if(empty($_POST['estado'])){
-	header("location: ../nuevo_registro4.php?dp_id=$dp_id&em_id=$em_id");
+	header("location: datos_capacitaciones.php?dp_id=$dp_id&em_id=$em_id");
 	} else {
-	header("location: ../nuevo_registro4.php?dp_id=$dp_id&em_id=$em_id&estado=E");
+	header("location: datos_capacitaciones.php?dp_id=$dp_id&em_id=$em_id&estado=E");
 	}
 }
 
-if($_POST['paso']==8){ // Alta Capacitaciones Recibidas
+if($_POST['paso']==700){ //Update Entrevista Datos Laborales
+
+ 	$dp_id = $_POST['dp_id'];
+
+	$prox = "detalle_persona.php?dp_id=".$dp_id;
+
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Historia Laboral");
+ 	$ent_id = $entre->ent_id;
+
+  if(isset($ent_id)){
+	  $recor = AltaEntrevista::find($ent_id);
+	  $recor->ent_fin = '1';
+	  $recor->ent_us = $_POST['id_us'];
+	  $recor->save();
+	}
+	header("location: $prox");
+}
+
+if($_POST['paso']==70){ //Alta Datos Laborales
+
+	$capa = new AntecedenteLaboral();
+		$capa->al_dp_id = $_POST['dp_id'];
+		if(!empty($_POST['al_in'])){
+		$capa->al_in= $_POST['al_in'];
+	}
+
+	if(!empty($_POST['al_actual'])){
+		$capa->al_actual= $_POST['al_actual'];
+	}
+
+	if(!empty($_POST['al_out'])){
+		$capa->al_out= $_POST['al_out'];
+	}
+	$capa->al_tipo_trabajo= $_POST['al_tipo_trabajo'];
+	$capa->al_lugar_trabajo= $_POST['al_lugar_trabajo'];
+	$capa->al_puesto= $_POST['valor_puesto'];
+	$capa->al_actividad= $_POST['valor_actividad'];
+	$capa->al_categoria= $_POST['al_categoria'];
+	$capa->al_descripcion_puesto= $_POST['al_descripcion_puesto'];
+	$capa->al_referencias= $_POST['al_referencias'];
+	$capa->save();
+
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Alta Datos Laborales";
+	$histori->save();
 
 	$dp_id = $_POST['dp_id'];
 
-	$prox = "../detalle_beneficiario.php?dp_id=$dp_id";
-  $prox1 = "detalle_beneficiario.php?dp_id=$dp_id";
+	header("location: datos_laboral.php?dp_id=$dp_id");
+}
+
+if($_POST['paso']==18){ // Update entrevista - Capacitaciones Recibidas
+
+	$dp_id = $_POST['dp_id'];
+
+	$prox = "detalle_persona.php?dp_id=$dp_id";
 
 	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Capacitaciones Recibidas");
   $ent_id = $entre->ent_id;
@@ -739,11 +925,12 @@ if($_POST['paso']==8){ // Alta Capacitaciones Recibidas
    $recor->ent_us = $_POST['id_us'];
    $recor->save();
 	}
+
 	header("location: $prox");
 }
 
 
-if($_POST['paso']==9){ //Subsidios/Créditos Recibidos
+if($_POST['paso']==9){ // Emprendedores Subsidios/Créditos Recibidos
 	if($_POST['vigente']=="SI"){
 		$vig = "SI";
 	} else {
@@ -755,23 +942,29 @@ if($_POST['paso']==9){ //Subsidios/Créditos Recibidos
 	$recor->ec_mo = $_POST['nro_destino'];
 	$recor->ec_vigente = $vig;
 	$recor->ec_monto = $_POST['monto'];
-	$recor->ec_año = $_POST['ano'];
+	$recor->ec_ano = $_POST['ano'];
 	$recor->save();
 	$dp_id = $_POST['dp_id'];
 	$em_id = $_POST['em_id'];
+
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Alta Subsidios/Créditos Emprendedor";
+	$histori->save();
+
 	if(empty($_POST['estado'])){
-		header("location: ../nuevo_registro5.php?dp_id=$dp_id&em_id=$em_id");
+		header("location: datos_creditos.php?dp_id=$dp_id&em_id=$em_id");
 	} else {
-		header("location: ../nuevo_registro5.php?dp_id=$dp_id&em_id=$em_id&estado=E");
+		header("location: datos_creditos.php?dp_id=$dp_id&em_id=$em_id&estado=E");
 	}
 }
 
-if($_POST['paso']==10){ // Alta Subsidios/Créditos Recibidos
+if($_POST['paso']==10){ // Update entrevista - Emprendedores Subsidios/Créditos Recibidos
 
 	$dp_id = $_POST['dp_id'];
 
-	$prox = "../detalle_beneficiario.php?dp_id=$dp_id";
-  $prox1 = "detalle_beneficiario.php?dp_id=$dp_id";
+	$prox = "detalle_persona.php?dp_id=$dp_id";
 
 	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Subsidios/Créditos Recibidos");
   $ent_id = $entre->ent_id;
@@ -784,28 +977,33 @@ if($_POST['paso']==10){ // Alta Subsidios/Créditos Recibidos
 	header("location: $prox");
 }
 
-if($_POST['paso']==11){
+if($_POST['paso']==11){ // Emprendedores - Alta Necesidad de Crédito
 	$capa = new EmpCreditoNec();
 	$capa->ecn_dp_id = $_POST['dp_id'];
 	$capa->ecn_rubro = $_POST['nro_destino'];
 	$capa->ecn_rubro_cap = $_POST['nro_capacitacion'];
 	$capa->save();
 
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Alta Necesidad de Créditos Emprendedor";
+	$histori->save();
+
 	$dp_id = $_POST['dp_id'];
 	$em_id = $_POST['em_id'];
 	if(empty($_POST['estado'])){
-		header("location: ../nuevo_registro6.php?dp_id=$dp_id&em_id=$em_id");
+		header("location: datos_necesidades_emp.php?dp_id=$dp_id&em_id=$em_id");
 	} else {
-		header("location: ../nuevo_registro6.php?dp_id=$dp_id&em_id=$em_id&estado=E");
+		header("location: datos_necesidades_emp.php?dp_id=$dp_id&em_id=$em_id&estado=E");
 	}
 }
 
-if($_POST['paso']==12){ // Alta Necesidades del Emprendimiento
+if($_POST['paso']==12){ // Update Entrevista - Alta Necesidades del Emprendimiento
 
 	$dp_id = $_POST['dp_id'];
 
-	$prox = "../detalle_beneficiario.php?dp_id=$dp_id";
-  $prox1 = "detalle_beneficiario.php?dp_id=$dp_id";
+	$prox = "detalle_persona.php?dp_id=$dp_id";
 
 	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Necesidad del Emprendimiento");
   $ent_id = $entre->ent_id;
@@ -819,31 +1017,58 @@ if($_POST['paso']==12){ // Alta Necesidades del Emprendimiento
 }
 
 if($_POST['paso']==13){ // Alta Ingresos del Emprendimiento
-/*
-	$dp_id = $_POST['dp_id'];
-	$filtro = Ingresos::count(array("conditions" => "in_dp_id = '$dp_id'"));
 
-	if($filtro == 0){
+	$dp_id = $_POST['dp_id'];
+
+	$record = Ingresos::find($dp_id);
+	if(empty($record)){
 		$record = new Ingresos();
 		$record->in_dp_id = $dp_id;
-		$record->in_por = $_POST['nro_porcentaje'];
-		$record->in_efector = $_POST['efe_so'];
-		$record->in_efector = $_POST['efector_expediente'];
-
-		if(isset($_POST['de_continuar'])){
- 			$edu->de_continuar = $_POST['de_continuar'];
-		}
-		if(!empty($_POST['de_carnet'])){
-	   $edu->de_carnet = 1;
-		}
-	} else {
-		 $edu = Educativa::find($dp_id);
 	}
+	$record->in_por = $_POST['nro_porcentaje'];
+	if ($_POST['efe_so']=='si') {
+		$record->in_efector = 'si';
+		$record->in_efector_expediente = $_POST['efector_expediente'];
+	} else {
+		$record->in_efector = 'no';
+		$record->in_efector_expediente = "";
+	}
+	$record->save();
 
-	$prox = "../detalle_beneficiario.php?dp_id=$dp_id";
-  $prox1 = "detalle_beneficiario.php?dp_id=$dp_id";
+  $record2 = EstadoAfip::find($dp_id);
+	if(empty($record2)){
+		$record2 = new EstadoAfip();
+		$record2->ea_dp_id = $dp_id;
+	}
+	$record2->ea_tipo_relacion = $_POST['ea_tipo_relacion'];
+	$record2->ea_vencimiento = $_POST['ea_vencimiento'];
+	$record2->save();
 
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima(1, $dp_id,"Ingresos");
+	$tipo_ingresos = TipoIngresos::all();
+
+	foreach($tipo_ingresos as $tipo_ingreso){
+		$vara = $tipo_ingreso->ti_id;
+
+			if($_POST[$vara]=='si'){
+				$otros_ing = OtrosIngresos::find_by_io_dp_id_and_io_ti_id($dp_id,$vara);
+				if (empty($otros_ing)) {
+					$otros_ing = new OtrosIngresos;
+					$otros_ing->io_dp_id = $dp_id;
+				}
+				$otros_ing->io_ti_id = $vara;
+				$otros_ing->save();
+			} else {
+				$otros_ing = OtrosIngresos::find_by_io_dp_id_and_io_ti_id($dp_id,$vara);
+
+				if (!empty($otros_ing)) {
+					$otros_ing->Delete();
+				}
+			}
+	} //foreach
+
+	$prox = "detalle_persona.php?dp_id=$dp_id";
+
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Ingresos");
   $ent_id = $entre->ent_id;
   if(isset($ent_id)){
     $recor = AltaEntrevista::find($ent_id);
@@ -852,20 +1077,25 @@ if($_POST['paso']==13){ // Alta Ingresos del Emprendimiento
     $recor->save();
   }
 	header("location: $prox");
-	*/
 }
 
 
-if($_POST['paso']==14){ // Alta Familiar
+if($_POST['paso']==14){ // Alta Familiar Emprendedor
 	$fama = new Familiar();
 	$fama->fam_dp_id = $_POST['dp_id'];
 	$fama->fam_name = $_POST['fam_name'];
 	$fama->fam_parentesco = $_POST['fam_parentesco'];
 	$fama->save();
 
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Alta Familiar Emprendedor";
+	$histori->save();
+
 	$dp_id = $_POST['dp_id'];
 	$em_id = $_POST['em_id'];
-	header("location: ../nuevo_registro1f.php?dp_id=$dp_id&em_id=$em_id");
+	header("location: datos_familiares_asoc.php?dp_id=$dp_id&em_id=$em_id");
 }
 
 if($_POST['paso']==15){ // Datos de la Vivienda
@@ -962,36 +1192,54 @@ if($_POST['paso']==15){ // Datos de la Vivienda
 	} else {
 		$recor = new AltaEntrevista();
 		$recor->ent_fin = '0';
-		$recor->ent_sis = '3';
+		$recor->ent_sis = $_SESSION['sistema'];
 		$recor->ent_dp_id = $_POST['dp_id'];
 		$recor->ent_proxima = "Datos de la Vivienda";
 	}
 	$recor->ent_us = $_SESSION['id_us'];
 	$recor->save();
 
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Modifica Datos Vivienda";
+	$histori->save();
+
 	$dp_id = $_POST['dp_id'];
 	header("location: ../recorte_gral/detalle_persona.php?dp_id=$dp_id");
 }
 
-if($_POST['paso']==16){
+if($_POST['paso']==16){ // Alta Emprendedor Asociado
 	$aso = new EmpAsociado();
 	$aso->eas_dp_id = $_POST['dp_id'];
 	$aso->eas_name = $_POST['eas_name'];
 	$aso->save();
 
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Alta Emprendedor Asociado";
+	$histori->save();
+
 	$dp_id = $_POST['dp_id'];
 	$em_id = $_POST['em_id'];
-	header("location: ../nuevo_registro1a.php?dp_id=$dp_id&em_id=$em_id");
+	header("location: datos_emprendedores_asoc.php?dp_id=$dp_id&em_id=$em_id");
 }
 
-if($_POST['paso']==8){
-	include_once("../../recorte_gral/apertura_mod_domicilio.php");
+if($_POST['paso']==8){ // Modifica Domicilio
+	include_once("apertura_mod_domicilio.php");
+
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Modifica Domicilio";
+	$histori->save();
 
   $dp_id = $_POST['dp_id'];
-	header("location: ../detalle_beneficiario.php?dp_id=$dp_id");
+	header("location: detalle_persona.php?dp_id=$dp_id");
 }
 
-if($_POST['paso']==2002){
+if($_POST['paso']==2002){ // Alta Datos Educativos (Datos Educativos)
 
 	$edu = new DatosNivelEducativo();
  	$edu->dne_dp_id = $_POST['dne_dp_id'];
@@ -1000,10 +1248,6 @@ if($_POST['paso']==2002){
  		$edu->dne_termino = $_POST['dne_termino'];
   }
   if($_POST['dne_nivel']>4 and !empty($_POST['valor_titulo'])){
-
-  /* 	$secu = TituloEducativo::find_by_ts_name(utf8_decode($_POST['titulo_gral']));
-				$dne_titulo = $secu->ts_id;*/
-
    	$edu->dne_titulo = $_POST['valor_titulo'];
   }
   if(!empty($_POST['dne_modalidad'])){
@@ -1011,38 +1255,55 @@ if($_POST['paso']==2002){
   }
   $edu->save();
 
-  $prox = "../nuevo_registro_edu.php?dp_id=".$_POST['dne_dp_id'];
-  $prox1 = "nuevo_registro_edu.php?dp_id=".$_POST['dne_dp_id'];
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dne_dp_id'];
+	$histori->hi_detalle = "Formación Educativa";
+	$histori->save();
 
+  $prox = "datos_educativos.php?dp_id=".$_POST['dne_dp_id'];
   $dp_id = $_POST['dne_dp_id'];
 
 	header("location: $prox");
 }
 
-if($_POST['paso']==1005){
+if($_POST['paso']==1005){ // Alta Datos Formación Profesional (Datos Educativos)
 	$benfp = new BeneficiarioFormacionProfesional();
 	$benfp->bfp_fp_id = $_POST['valor_curso'];
 	$benfp->bfp_situacion = $_POST['bfp_situacion'];
   $benfp->bfp_dp_id = $_POST['dp_id'];
   $benfp->bfp_year = $_POST['bfp_year'];
 	$benfp->save();
+
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Alta Formación Profesional";
+	$histori->save();
+
 	$dp_id = $_POST['dp_id'];
-	header("location: ../nuevo_registro_edu.php?dp_id=$dp_id");
+	header("location: datos_educativos.php?dp_id=$dp_id");
 }
 
 
-if($_POST['paso']==1105){
+if($_POST['paso']==1105){ // Alta Idiomas (Datos Educativos)
 	$idi = new Idiomas();
 	$idi->bi_dp_id = $_POST['dp_id'];
 	$idi->bi_nivel = $_POST['bi_nivel'];
 	$idi->bi_idi_id = $_POST['bi_idi_id'];
 	$idi->save();
 
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Alta Idiomas";
+	$histori->save();
+
 	$dp_id = $_POST['dp_id'];
-	header("location: ../nuevo_registro_edu.php?dp_id=$dp_id");
+	header("location: datos_educativos.php?dp_id=$dp_id");
 }
 
-if($_POST['paso']==1205){
+if($_POST['paso']==1205){ //Alta Licencias (Datos Educativos)
 
 	$lic = new Licencias();
 	$lic->lb_dp_id = $_POST['dp_id'];
@@ -1061,12 +1322,17 @@ if($_POST['paso']==1205){
   }
 	$lic->save();
 
-	$dp_id = $_POST['dp_id'];
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Alta Licencias";
+	$histori->save();
 
-	header("location: ../nuevo_registro_edu.php?dp_id=$dp_id");
+	$dp_id = $_POST['dp_id'];
+	header("location: datos_educativos.php?dp_id=$dp_id");
 }
 
-if($_POST['paso']==444){ // Alta Datos Educativos
+if($_POST['paso']==444){ // Alta/Modificación Datos Educativos
 
 	$dp_id = $_POST['dp_id'];
 	$filtro = Educativa::count(array("conditions" => "de_dp_id = '$dp_id'"));
@@ -1104,6 +1370,13 @@ if($_POST['paso']==444){ // Alta Datos Educativos
       $edu->de_pc = $_POST['de_pc'];
       $edu->de_observaciones = $_POST['de_observaciones'];
 			$edu->save();
+
+			$histori = new Historial();
+			$histori->hi_us_id = $_POST['id_us'];
+			$histori->hi_dp_id = $_POST['dp_id'];
+			$histori->hi_detalle = "Alta Datos Educativos";
+			$histori->save();
+
 	} else {
 			$edu = Educativa::find($dp_id);
 			$edu->de_pc = $_POST['de_pc'];
@@ -1136,10 +1409,14 @@ if($_POST['paso']==444){ // Alta Datos Educativos
 		   $edu->de_fecha_actualizacion = $_POST['de_fecha_actualizacion'];
 			}
 				$edu->save();
+				$histori = new Historial();
+				$histori->hi_us_id = $_POST['id_us'];
+				$histori->hi_dp_id = $_POST['dp_id'];
+				$histori->hi_detalle = "Modifica Datos Educativos";
+				$histori->save();
 			}
 
-			$prox = "../detalle_beneficiario.php?dp_id=$dp_id";
- 			$prox1 = "detalle_beneficiario.php?dp_id=$dp_id";
+			$prox = "detalle_persona.php?dp_id=$dp_id";
 
    		$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Datos Educativos");
 	   	$ent_id = $entre->ent_id;
@@ -1152,5 +1429,55 @@ if($_POST['paso']==444){ // Alta Datos Educativos
 
 			header("location: $prox");
 }
+if($_POST['paso']==600){
+
+	$pos = new PostulacionesLaborales();
+	$pos->pl_dp_id = $_POST['dp_id'];
+	$pos->pl_puesto= $_POST['valor_puesto'];
+	$pos->save();
+
+	$dp_id = $_POST['dp_id'];
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Alta Postulación";
+	$histori->save();
+	header("location: datos_postulaciones.php?dp_id=$dp_id");
+}
+if($_POST['paso']==500){
+	$pecas = new PostulacionesCursos();
+
+	$pecas->pc_curso = $_POST['valor_curso'];
+
+  $pecas->pc_dp_id = $_POST['dp_id'];
+	$pecas->save();
+
+	$dp_id = $_POST['dp_id'];
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Alta Postulación Curso";
+	$histori->save();
+
+	header("location: datos_postulaciones.php?dp_id=$dp_id");
+}
+if($_POST['paso']==400){
+
+  $dp_id = $_POST['dp_id'];
+
+	$prox = "detalle_persona.php?dp_id=".$dp_id;
+
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Postulaciones");
+  $ent_id = $entre->ent_id;
+
+  if(isset($ent_id)){
+   $recor = AltaEntrevista::find($ent_id);
+   $recor->ent_fin = '1';
+   $recor->ent_us = $_POST['id_us'];
+   $recor->save();
+	}
+	header("location: $prox");
+}
+
 exit();
 ?>

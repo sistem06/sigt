@@ -38,7 +38,7 @@ include ("../funciones/funciones_generales.php");
       while($row = mysql_fetch_array($qe)){
 			  echo '<tr>';
 /*sk01** echo '<td><a href="detalle_beneficiario.php?dp_id='.$row['dp_id'].'" title="Ver detalles">'.utf8_encode($row['dp_name']).'</a></td>'; */
-/*sk01*/ echo '<td><a href="detalle_beneficiario.php?dp_id='.$row['dp_id'].'" title="Ver detalles">'.$row['dp_name'].'</a></td>';
+/*sk01*/ echo '<td><a href="../recorte_gral/detalle_persona.php?dp_id='.$row['dp_id'].'" title="Ver detalles">'.$row['dp_name'].'</a></td>';
 			  echo '<td align="right">'.BuscaRegistro ("tb_docs", "do_id", $row['dp_tipo_doc'], "do_name").' '.$row['dp_nro_doc'].'</td>';
 			  echo '<td>'.TirameDomicilio($row['dp_id']).'</td>';
 			  echo '<td>'.$row['dp_mail'].'</td>';

@@ -1,11 +1,14 @@
 <?php
 require_once '../_conexion.php';
 $ho_ben = HogarBeneficiario::find_by_hb_dp_id($_GET['dp_id']);
-$hogar_id = $ho_ben->hb_ho_id;
+$hogar_id = "";
+if (isset($ho_ben)) {
+  $hogar_id = $ho_ben->hb_ho_id;
+};
 
 echo '
 <div class="col-xs-12 col-sm-6 col-md-3">
-  <div class="panel panel-success">
+  <div class="panel panel-warning">
     <div class="panel-heading">
      <h3 class="panel-title"><span class="glyphicon glyphicon-picture"></span>Datos de la Vivienda</h3>
     </div>
@@ -23,7 +26,7 @@ echo '
       <p>Propiedad del Terreno: <strong>'.BuscaRegistro ("tb_tipo_propiedad", "tp_id", $prop, "tp_name").'</strong></p>
       <p>Condición de ocupación: <strong>'.BuscaRegistro ("tb_condicion_ocupacion", "co_id", $ocup, "co_name").'</strong></p>
       <p>Condición de uso: <strong>'.BuscaRegistro ("tb_condicion_uso", "cu_id", $uso, "cu_name").'</strong></p>
-      <a href="datos_vivienda.php?dp_id='.$_GET['dp_id'].'"><button type="button" class="btn btn-success">Modificar</button></a>
+      <a href="datos_vivienda.php?dp_id='.$_GET['dp_id'].'"><button type="button" class="btn btn-warning">Modificar</button></a>
     </div>
   </div>
 </div>';

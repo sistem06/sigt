@@ -18,8 +18,7 @@
         <ul class="dropdown-menu">
 
             <li><a href="../empleo/beneficiarios.php">Listado de Personas</a></li>
-            <li><a href="../empleo/nuevo_registro.php">Nueva Persona</a></li>
-
+            <li><a href="../recorte_gral/nuevo_persona.php">Nueva Persona</a></li>
           <li class="divider"></li>
           <?php
       iF($_SESSION['sector']==1){
@@ -34,10 +33,12 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prestaciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
-            <li><a href="../empleo/gestor_prestaciones.php">Gestión de Prestaciones</a></li>
+            <li><a href="../recorte_gral/gestor_prestaciones.php">Gestión de Prestaciones</a></li>
             <li class="divider"></li>
-            <li><a href="../empleo/alta_prestacion_individual.php">Asignación de Prestaciones Individuales</a></li>
-            <li><a href="../empleo/alta_prestacion_grupal.php">Asignación de Prestaciones Grupales</a></li>
+            <li><a href="../recorte_gral/alta_prestacion_individual.php">Asignación de Prestaciones Individuales</a></li>
+            <li><a href="../recorte_gral/alta_prestacion_grupal.php">Asignación de Prestaciones Grupales</a></li>
+            <li class="divider"></li>
+           <li><a href="../recorte_gral/listado_prestaciones.php">Listado de Prestaciones Asignadas</a></li>
         </ul>
       </li>
 

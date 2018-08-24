@@ -8,7 +8,10 @@ echo '
     <div class="panel-body">
       <table class="table table-striped">';
 
-        $ttx = "select * from tb_emprendedor_credito INNER JOIN tb_organizaciones ON tb_emprendedor_credito.ec_or = tb_organizaciones.or_id INNER JOIN tb_motivo_credito ON tb_emprendedor_credito.ec_mo = tb_motivo_credito.mc_id where tb_emprendedor_credito.ec_dp_id = ".$_GET['dp_id'];
+        $ttx = "select * from tb_emprendedor_credito
+               INNER JOIN tb_organizaciones ON tb_emprendedor_credito.ec_or = tb_organizaciones.or_id
+               INNER JOIN tb_motivo_credito ON tb_emprendedor_credito.ec_mo = tb_motivo_credito.mc_id
+               where tb_emprendedor_credito.ec_dp_id = ".$_GET['dp_id'];
         $list = mysql_query($ttx);
         while($lis_dat = mysql_fetch_array($list)){
           echo '
@@ -21,7 +24,7 @@ echo '
         }
       echo '
       </table>
-      <a href="nuevo_registro5.php?dp_id='.$_GET["dp_id"].'&em_id='.$em_id.'&estado=E"><button type="button" class="btn btn-danger">Modificar</button></a>
+      <a href="datos_creditos.php?dp_id='.$_GET["dp_id"].'&em_id='.$em_id.'&estado=E"><button type="button" class="btn btn-danger">Modificar</button></a>
     </div>
   </div>
 </div>';

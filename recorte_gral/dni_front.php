@@ -28,7 +28,7 @@ include ("../funciones/funciones_form.php");
 
 <!-- aca comienza el calendario -->
 
-<div class="paso_in">
+<div class="paso_in"> Documento de
 <span class="nombre_emp">
 <?php
 echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
@@ -67,7 +67,8 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
   <div style="padding:15px; margin:10px;float:left; border: solid 1px #ddd;">
 <img src="../imagenes/dni_th_<?php echo $_GET['dp_id']; ?>.jpg">
 <br><br>
-<a href="tools/quitar.php?val=<?php echo $_GET['dp_id']; ?>&id=img_id&tabla=tb_imagenes&img=front"  title="eliminar" class="fancybox fancybox.iframe"><button class="btn btn-danger">Quitar</button></a>
+<a href="tools/quitar.php?val=<?php echo $_GET['dp_id']; ?>&id=img_id&tabla=tb_imagenes&img=front"
+  title="eliminar" class="fancybox fancybox.iframe"><button class="btn btn-danger">Quitar</button></a>
 </div>
 <br clear="all">
 <?php
@@ -132,6 +133,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
         $(".fancybox").fancybox({
         afterClose  : function() {
             window.location.reload();
+            <?php clearstatcache(); ?>
         }
     });
 });

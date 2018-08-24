@@ -24,10 +24,10 @@ include ("../funciones/funciones_form.php");
 </div>
 <div class="container">
 
-<div class="paso_in">
+<div class="paso_in"> Miembros del Hogar de
 <span class="nombre_emp">
 <?php
-echo "Miembros del Hogar de ".DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
+echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
 ?>
 </span>
 
@@ -108,7 +108,8 @@ echo "Miembros del Hogar de ".DatoRegistro ('tb_datos_personales', 'dp_name', 'd
 <!-- Se ingresa una nueva persona al sistema porque no existía en la db -->
     <div id="respuesta_dni_nueva" style="display:none;"><?php include("datos_personales_familiar.php"); ?></div>
 <!-- Se asocia perona existente en la db como familiar -->
-    <div id="respuesta_dni_anterior" style="display:none;"><?php include("datos_personales_familiar_corto.php"); ?></div>
+    <div id="respuesta_dni_anterior" style="display:none;"><?php include("datos_personales_familiar_corto.php"); ?>
+		</div>
 
 
 </div>
@@ -144,7 +145,8 @@ echo "Miembros del Hogar de ".DatoRegistro ('tb_datos_personales', 'dp_name', 'd
 	                $("#respuesta_dni_anterior").remove();
 	                $("#nrodni").attr('disabled','disabled');
 									$("#pasa_tipo_doc").val($('select idtipodoc:first-child'))
-	                $("#idtipodoc").attr('disabled','disabled');
+									$("#pasa_tipo_doc").val('tipodocum');
+									$("#idtipodoc").attr('disabled','disabled');
 	                $("#nrodni").val(nro_doc);
 	                $("#pasa_dni").val(nro_doc);
                 } else {

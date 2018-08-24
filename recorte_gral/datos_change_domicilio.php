@@ -1,15 +1,28 @@
 <div class="container">
-  <h3>Modifica Domicilio de <?php echo BuscaRegistro("tb_datos_personales","dp_id",$_GET['dp_id'],"dp_name"); ?> (<?php echo BuscaRegistro("tb_datos_personales","dp_id",$_GET['dp_id'],"dp_nro_doc"); ?>)</h3>
+  <div class="paso_in">Modifica Domicilio de
+    <span class="nombre_emp">
+      <?php echo BuscaRegistro("tb_datos_personales","dp_id",$_GET['dp_id'],"dp_name"); ?> (<?php echo BuscaRegistro("tb_datos_personales","dp_id",$_GET['dp_id'],"dp_nro_doc"); ?>)
+    </span>
+  </div>
   <?php
   $ho_id = BuscaRegistro("tb_hogar_beneficiario","hb_dp_id",$_GET['dp_id'],"hb_ho_id");
   $dom_id = BuscaRegistro("tb_hogar","ho_id",$ho_id,"ho_dom_id");
 
   // SK: traigo los datos personales para inicializar formulario
   $regDp = mysql_fetch_array(mysql_query("select * from tb_datos_personales where dp_id = ".$_GET['dp_id']));
-  $regDom = mysql_fetch_array(mysql_query("select * from tb_domicilios where dom_id = ".$dom_id));
+  if (isset($dom_id)) {
+    $regDom = mysql_fetch_array(mysql_query("select * from tb_domicilios where dom_id = ".$dom_id));
+  } else {
+    // Persona sin domicilio, creo array y lo vacío para que los campos del formulario
+    // no tiren error al intentar recuperar un valor no existente.
+    $regDom = mysql_fetch_array(mysql_query("select * from tb_domicilios limit 1"));
+    foreach ($regDom as $i => $value) {
+        $regDom[$i] = "";
+    };
+  };
   ?>
 
-<form id="parte1" action="tools/add_registro.php" method="post" role="form">
+<form id="parte1" action="add_registro.php" method="post" role="form">
 <div class="panel panel-info">
   <div class="panel-heading">
   <h3 class="panel-title">
@@ -17,6 +30,7 @@
 </div>
 </div>
 
+<input type="hidden" id="lista_id_miembros" name="lista_id_miembros">
 
   <div class="row">
     <div class="col-xs-12 col-md-6">

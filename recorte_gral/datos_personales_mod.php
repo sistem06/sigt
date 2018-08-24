@@ -1,4 +1,4 @@
-<form id="parte1" action="tools/add_registro.php" method="post" role="form">
+<form id="parte1" action="add_registro.php" method="post" role="form">
 <div class="panel panel-info">
   <div class="panel-heading">
   <h3 class="panel-title">
@@ -32,7 +32,7 @@
 </div>
    </div>
    </div>
-   
+
 <div class="row">
   <div class="col-xs-12 col-md-6">
 <div class="form-group has-success">
@@ -41,7 +41,7 @@
   </div>
   </div>
   <div class="col-xs-12 col-md-6">
-      
+
       <div class="form-group has-success">
   <label class="control-label" for="has-success">Edad</label>
   <input type="text" class="form-control" id="muestra_edad" disabled="disabled">
@@ -63,18 +63,18 @@
 </div>
 <!-- Comienza Cuil -->
 
-    
+
   <div class="form-group has-success">
    <?php echo InputGeneralVal("text", "dp_cuil", "form-control", "nrocuil", "escriba el nro de CUIL", "Nro de CUIL:",BuscaRegistro ("tb_datos_personales", "dp_id", $_GET['dp_id'], "dp_cuil")); ?>
     <div class="requerido" id="falta_cuil">Falta completar este campo o nro incorrecto</div>
     </div>
-    
+
     <div class="form-group">
  <a href="https://micuilonline.com.ar/averiguar-cuil-cuit" target="blank"><button type="button" class="btn btn-warning">Ver en ANSES</button></a>
      </div>
 <!-- Comienza Cuil -->
 <div class="row">
-  
+
   <div class="col-xs-12 col-md-4">
   <div class="form-group">
     <?php echo SelectGeneralVal("dp_nacionalidad", "form-control", "idnacionalidad", "Nacionalidad:","tb_tipo_nacionalidad", "tn_id", "tn_name",BuscaRegistro ("tb_datos_personales", "dp_id", $_GET['dp_id'], "dp_nacionalidad")); ?>
@@ -86,7 +86,7 @@
   </div>
 </div>
 <div class="col-xs-12 col-md-4">
-  
+
 
 <div class="form-group">
    <?php echo InputGeneralVal("number", "dp_anos_residencia", "form-control", "anos_residencia", "Años de residencia en el pais", "Años de Residencia:",BuscaRegistro ("tb_datos_personales", "dp_id", $_GET['dp_id'], "dp_anos_residencia")); ?>
@@ -156,7 +156,7 @@
     <div class="col-xs-12 col-md-6">
         <div class="form-group">
           <label>Es Veterano de la Guerra de Malvinas?</label>
-    
+
           <div class="radio">
         <label>
           <input type="radio" name="dp_veterano" id="dp_veterano1" value="1" <?php if(BuscaRegistro ("tb_datos_personales", "dp_id", $_GET['dp_id'], "dp_veterano")==1) echo "checked"; ?> >
@@ -174,7 +174,7 @@
     <div class="col-xs-12 col-md-6">
       <div class="form-group">
           <label>Es Familiar de un Veterano de la Guerra de Malvinas?</label>
-    
+
           <div class="radio">
         <label>
           <input type="radio" name="dp_fam_veterano" id="dp_fam_vetenaro1" value="1" <?php if(BuscaRegistro ("tb_datos_personales", "dp_id", $_GET['dp_id'], "dp_fam_veterano")==1) echo "checked"; ?>>
@@ -196,7 +196,7 @@
     <div class="col-xs-12 col-md-6">
         <div class="form-group">
           <label>Se reconoce perteneciente a algún pueblo originario?</label>
-    
+
           <div class="radio">
         <label>
           <input type="radio" name="dp_pueblo_originario" id="dp_po1" value="1" class="po" <?php if(BuscaRegistro ("tb_datos_personales", "dp_id", $_GET['dp_id'], "dp_pueblo_originario")==1) echo "checked"; ?> >
@@ -228,7 +228,7 @@
     <label>Observaciones: </label>
     <textarea class="form-control" name="dp_observaciones"><?php echo BuscaRegistro ("tb_datos_personales", "dp_id", $_GET['dp_id'], "dp_observaciones"); ?></textarea>
   </div>
-  
+
 
 
 <div class="form-group">

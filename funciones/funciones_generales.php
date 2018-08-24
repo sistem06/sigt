@@ -28,6 +28,13 @@
  		return $ddat[$campo];
 	}
 
+	function BuscaRegistroTriple ($tabla, $valor_id, $valor, $valor_id1, $valor1, $valor_id2, $valor2, $campo){
+		$txt_q = "select ".$campo." from ".$tabla." where ".$valor_id."='".$valor."' and ".$valor_id1."='".$valor1."' and ".$valor_id2."='".$valor2."' LIMIT 1";
+		$result = mysql_query ($txt_q);
+		$ddat = mysql_fetch_array ($result);
+ 		return $ddat[$campo];
+	}
+
 	function NroRegistroDoble ($tabla, $valor1, $valorN1, $valor2, $valorN2){
 		$txt_q = "select * from ".$tabla." where ".$valor1."='".$valorN1."' and ".$valor2."='".$valorN2."'";
 		$result = mysql_query ($txt_q);
@@ -223,4 +230,10 @@ function Edad($fecha){
 	}
     return $edad;
 }
+function BajaPrestacion(){
+	$hoy = date("Y-m-d");
+   mysql_query("UPDATE tbp_prestaciones_lista SET tbp_pr_activo = '1' WHERE tbp_pr_fecha_out < '$hoy'");
+   mysql_query("UPDATE tbp_prestaciones_lista SET tbp_pr_activo = '0' WHERE tbp_pr_fecha_out >= '$hoy'");
+}
+
 ?>

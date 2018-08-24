@@ -5,7 +5,7 @@ include ("../../funciones/funciones_generales.php");
 	if ($n==0){
 		$res = "A";
 	} else {
-		$txt = "select bs_dp_id, bs_sis from tb_beneficiarios_sistema where (bs_dni = '".$_GET['dnii']."' and bs_sis = '1')";
+		$txt = "select bs_dp_id, bs_sis from tb_beneficiarios_sistema where (bs_dni = '".$_GET['dnii']."' and bs_sis = '".$_SESSION['sistema']."')";
 		$txt1 = "select bs_dp_id, bs_sis from tb_beneficiarios_sistema where (bs_dni = '".$_GET['dnii']."')";
 		$query = mysql_query($txt);
 		$query1 = mysql_query($txt1);

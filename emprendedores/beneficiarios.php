@@ -28,6 +28,7 @@ include ("../funciones/funciones_generales.php");
           <tr>
           <th>Nombre</th>
           <th>DNI</th>
+					<th>Emprendimiento</th>
           <th>Dirección</th>
           <th>Mail</th>
           <th>Teléfono</th>
@@ -41,20 +42,20 @@ include ("../funciones/funciones_generales.php");
       $qe=mysql_query("select * from tb_datos_personales INNER JOIN tb_beneficiarios_sistema ON tb_datos_personales.dp_id = tb_beneficiarios_sistema.bs_dp_id where tb_beneficiarios_sistema.bs_sis = '".$_SESSION["sistema"]."'");
         while($row = mysql_fetch_array($qe)){
   echo '<tr>';
-  echo '<td><a href="detalle_beneficiario.php?dp_id='.$row['dp_id'].'" title="Ver detalles">'.$row['dp_name'].'</a></td>';
-  echo '<td align="right">'.BuscaRegistro ("tb_docs", "do_id", $row['dp_tipo_doc'], "do_name").' '.$row['dp_nro_doc'].'</td>';
+  echo '<td width="15%"><a href="../recorte_gral/detalle_persona.php?dp_id='.$row['dp_id'].'" title="Ver detalles">'.$row['dp_name'].'</a></td>';
+  echo '<td width="10%" align="right">'.BuscaRegistro ("tb_docs", "do_id", $row['dp_tipo_doc'], "do_name").' '.$row['dp_nro_doc'].'</td>';
+	echo '<td width="10%">'.BuscaRegistro ("tb_datos_emprendimiento", "em_dp_id", $row['dp_id'], "em_nombre").'</td>';
   echo '<td>'.TirameDomicilio($row['dp_id']).'</td>';
-  echo '<td>'.$row['dp_mail'].'</td>';
+  echo '<td width="10%">'.$row['dp_mail'].'</td>';
   echo '<td>'.$row['dp_telefono'].'</td>';
-  echo '<td>'.$row['dp_movil'].'</td>';
+  echo '<td width="8%">'.$row['dp_movil'].'</td>';
   echo '</tr>';
   }
                ?>
 
-
             </tbody>
         </table>
-        <br><br><br><br>
+        <br><br><br><br><br>
   <!-- fin contenido -->
 </div>
 <?php include("../recorte_gral/pie.php"); ?>

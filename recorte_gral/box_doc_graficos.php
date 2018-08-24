@@ -37,7 +37,6 @@ echo '
       }
 
       echo '
-      <br><br>
   </div>
 </div>
 </div>';

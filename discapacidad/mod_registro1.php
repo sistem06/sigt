@@ -22,10 +22,10 @@ include ("../funciones/funciones_form.php");
 </div>
 <div class="container">
 
-      
+
 <!-- aca comienza el calendario -->
-          
-<div class="paso_in"> Datos de Salud 
+
+<div class="paso_in"> Datos de Salud
 <span class="nombre_emp">
 <?php
 echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
@@ -33,7 +33,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 </span>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-info">
   <div class="panel-heading">
   <h3 class="panel-title">
   <span class="glyphicon glyphicon-file"></span>  Datos de Salud</div>
@@ -48,7 +48,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <label>Tiene Obra Social:</label>
 <div class="radio">
   <label>
-<input name="ds_tiene_os" type="radio" value="1" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET["dp_id"], "ds_tiene_os")==1) echo 'checked="checked"'; ?>> Si | 
+<input name="ds_tiene_os" type="radio" value="1" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET["dp_id"], "ds_tiene_os")==1) echo 'checked="checked"'; ?>> Si |
 </label>
 <label>
 <input name="ds_tiene_os" type="radio" value="0" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET["dp_id"], "ds_tiene_os")==0) echo 'checked="checked"'; ?>> No
@@ -67,7 +67,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <label>Tiene Certificado de Discapacidad:</label>
 <div class="radio">
   <label>
-<input name="ds_tiene_cud" type="radio" value="1" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET["dp_id"], "ds_tiene_cud")==1) echo 'checked="checked"'; ?>> Si | 
+<input name="ds_tiene_cud" type="radio" value="1" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET["dp_id"], "ds_tiene_cud")==1) echo 'checked="checked"'; ?>> Si |
 </label>
 <label>
 <input name="ds_tiene_cud" type="radio" value="0" <?php if(BuscaRegistro ("tb_datos_salud", "ds_dp_id", $_GET["dp_id"], "ds_tiene_cud")==0) echo 'checked="checked"'; ?>> No
@@ -107,16 +107,16 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 
- 
+
   <script type="text/javascript" language="javascript">
     $(document).ready(function() {
 
       if($("input[name=ds_tiene_os]").val()==1){
-          $("#aa1").show(); 
+          $("#aa1").show();
       }
 
       if ($("input[name=ds_tiene_cud]").val()==1) {
-      $("#aa2").show(); 
+      $("#aa2").show();
       }
 
      $("#envia1").click(function() {
@@ -133,27 +133,27 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
       return false;
     }
   });
-  
-  $("input[name=ds_tiene_os]").change(function () {  
+
+  $("input[name=ds_tiene_os]").change(function () {
       if ($(this).val()==1) {
-      $("#aa1").show(); 
+      $("#aa1").show();
       } else {
-      $("#aa1").hide(); 
+      $("#aa1").hide();
       }
       });
-  
 
-  $("input[name=ds_tiene_cud]").change(function () {   
+
+  $("input[name=ds_tiene_cud]").change(function () {
       if ($(this).val()==1) {
-      $("#aa2").show(); 
+      $("#aa2").show();
       } else {
-      $("#aa2").hide(); 
+      $("#aa2").hide();
       }
       });
   });
-  
+
   </script>
-   
+
 
 
 </body>

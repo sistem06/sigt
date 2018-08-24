@@ -20,7 +20,7 @@ echo '
       }
       echo '
       </table>
-      <a href="nuevo_registro6.php?dp_id='.$_GET["dp_id"].'&em_id='.$em_id.'&estado=E"><button type="button" class="btn btn-warning">Modificar</button></a>
+      <a href="datos_necesidades_emp.php?dp_id='.$_GET["dp_id"].'&em_id='.$em_id.'&estado=E"><button type="button" class="btn btn-warning">Modificar</button></a>
     </div>
   </div>
 </div>';

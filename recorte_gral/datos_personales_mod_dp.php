@@ -1,4 +1,4 @@
-<form id="parte1" action="tools/add_registro.php" method="post" role="form">
+<form id="parte1" action="add_registro.php" method="post" role="form">
 <div class="panel panel-info">
   <div class="panel-heading">
   <h3 class="panel-title">
@@ -38,7 +38,7 @@
 </div>
    </div>
    </div>
-   
+
 <div class="form-group">
 <button type="submit" class="btn btn-info" id="envia1">Guardar</button>
 </div>

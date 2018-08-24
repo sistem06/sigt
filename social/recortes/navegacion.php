@@ -16,30 +16,32 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Secciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <?php
-            iF($_SESSION['sector']==1){
-          ?>
-            <li><a href="../recorte_gral/usuarios.php">Usuarios</a></li>
-          <?php
-            }
-          ?>
-        <li class="divider"></li>
-            <li><a href="../social/beneficiarios.php">Personas</a></li>
-            <li><a href="../recorte_gral/nuevo_persona.php">Alta de Persona</a></li>
-        <li class="divider"></li>
-            <li><a href="../social/hogares.php">Hogares</a></li>
-            <li><a href="../social/nuevo_registro.php">Nuevo Hogar</a></li>
+
+            <?php
+              iF($_SESSION['sector']==1){
+            ?>
+              <li><a href="../recorte_gral/usuarios.php">Usuarios</a></li>
+            <?php
+              }
+            ?>
+          <li class="divider"></li>
+              <li><a href="../social/beneficiarios.php">Personas</a></li>
+              <li><a href="../recorte_gral/nuevo_persona.php">Alta de Persona</a></li>
+          <!--
+              <li><a href="../social/hogares.php">Hogares</a></li>
+              <li><a href="../social/nuevo_registro.php">Nuevo Hogar</a></li>
+            -->
         </ul>
       </li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prestaciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
-
-            <li><a href="../social/beneficiarios.php">Emprendedores</a></li>
-
+            <li><a href="../recorte_gral/gestor_prestaciones.php">Gestión de Prestaciones</a></li>
             <li class="divider"></li>
-            <li><a href="../social/organizaciones.php">Organizaciones</a></li>
-
+            <li><a href="../recorte_gral/alta_prestacion_individual.php">Asignación de Prestaciones Individuales</a></li>
+            <li><a href="../recorte_gral/alta_prestacion_grupal.php">Asignación de Prestaciones Grupales</a></li>
+             <li class="divider"></li>
+            <li><a href="../recorte_gral/listado_prestaciones.php">Listado de Prestaciones Asignadas</a></li>
         </ul>
       </li>
 
@@ -76,6 +78,9 @@
         <ul class="dropdown-menu">
          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Mi Perfil</a></li>
                         <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Configurar</a></li>
+                        <li class="divider"></li>
+                        <li><a href="../recorte_gral/usuario_prestaciones_res.php"><span class="glyphicon glyphicon-folder-close"></span> Responsable en Prestaciones</a></li>
+                        <li><a href="../recorte_gral/usuario_prestaciones.php"><span class="glyphicon glyphicon-folder-open"></span> Participante en Prestaciones</a></li>
                         <li class="divider"></li>
                         <li><a href="../cerrar_sesion.php"><span class="glyphicon glyphicon-off"></span> Salir</a></li>
         </ul>

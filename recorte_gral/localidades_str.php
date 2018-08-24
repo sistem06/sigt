@@ -7,7 +7,7 @@ include ("../funciones/funciones_generales.php");
 		if(empty($_POST['es_calle']) or empty($_POST['es_nro'])){
 		$loc = $a['lo_name'].' , Rio Negro';
 	} else {
-		$calle = utf8_encode($_POST['es_calle']);
+		$calle = $_POST['es_calle'];
 		$query_cl = mysql_query("select * from tb_calle where ca_name = '$calle'");
 		$data_cl = mysql_fetch_array($query_cl);
 		if(!empty($data_cl['ca_gm'])){

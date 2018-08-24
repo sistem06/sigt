@@ -1,8 +1,9 @@
 <?php
-session_start();
+if (!isset($_SESSION)) { session_start(); }
 include("../".$_SESSION["dir_sis"]."/secure.php");
 include("../conecta.php");
 include("../funciones/funciones_generales.php");
+include ("../funciones/funciones_prestaciones.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -21,8 +22,42 @@ include("../funciones/funciones_generales.php");
 <div class="container-fluid">
 <?php include("../".$_SESSION["dir_sis"]."/recortes/navegacion.php"); ?>
 
-<!-- Nombre Emprendedor -->
-<h1><?php echo BuscaRegistro ("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_name"); ?> <small><?php echo BuscaRegistro ("tb_datos_emprendimiento", "em_dp_id", $_GET["dp_id"], "em_nombre"); ?></small></h1>
+<!-- Barra de Mensajes -->
+<div class="panel panel-default">
+	<!-- Msg última actualización de datos personales -->
+	<?php $url_dp = "nuevo_registro_mod.php?dp_id=".$_GET["dp_id"]; ?>
+	<button type="button" style="float: right; margin-top: 4px; margin-right: 4px; border: none; "
+		class="btn btn-link"
+	   onclick="location.href='<?php echo $url_dp; ?>'">
+		<span class="glyphicon glyphicon-map-marker btn-md"></span>
+		Última actualización de Datos Personales:
+		<strong><?php echo BuscaRegistro("tb_datos_personales", "dp_id", $_GET["dp_id"], "fecha_modificacion"); ?></strong>
+	</button>
+	<!-- Msg Falta Domicilio! -->
+	<?php $url_domi = "nuevo_domicilio_mod.php?dp_id=".$_GET["dp_id"];
+  	$id_dom = BuscaRegistro("tb_hogar_beneficiario", "hb_dp_id", $_GET["dp_id"], "hb_id");
+		if (!isset($id_dom)) {
+	?>
+		<button type="button" style="float: right; margin-top: 4px; margin-right: 4px; border: none; "
+			class="btn btn-danger btn-md"
+		   onclick="location.href='<?php echo $url_domi; ?>'">
+			<span class="glyphicon glyphicon-alert btn-md"></span>
+			Falta Domicilio
+		</button>
+	<?php }; ?>
+
+  <!-- Nombre de la Persona + Emprendimiento -->
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			Detalle de
+			<span class="nombre_emp">
+				<strong><?php echo BuscaRegistro ("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_name"); ?></strong>
+				<small><?php if ($_SESSION["sistema"] == 1) { echo BuscaRegistro ("tb_datos_emprendimiento", "em_dp_id", $_GET["dp_id"], "em_nombre"); } ?></small>
+			</span>
+		</h3>
+	</div>
+</div>
+
 
 <!-- Pestañas -->
 <ul class="nav nav-tabs">
@@ -85,21 +120,31 @@ include("../funciones/funciones_generales.php");
 	if (in_array(2,$data)) { include("box_datos_necesidades_emp.php"); $cant_box++; }
 	if ($cant_box==4) { echo '</div><div class="row">';	$cant_box=0;}
 
+	// Historial Laboral -->
+	if (in_array(7,$data)) { include("box_datos_laboral.php"); $cant_box++; }
+	if ($cant_box==4) { echo '</div><div class="row">';	$cant_box=0;}
+
 	// Ingresos del Hogar -->
 	if (in_array(8,$data)) { include("box_datos_ingresos.php"); $cant_box++; }
 	if ($cant_box==4) { echo '</div><div class="row">';	$cant_box=0;}
 
-	// Datos Discapacidad -->
-	if (in_array(5,$data)) { include("box_datos_discapacidad.php"); $cant_box++; }
+	// Datos Clínicos -->
+	if (in_array(5,$data)) { include("box_datos_clinicos.php"); $cant_box++; }
 	if ($cant_box==4) { echo '</div><div class="row">';	$cant_box=0;}
 
 	// Datos Educativos -->
 	if (in_array(3,$data)) { include("box_datos_educativos.php"); $cant_box++; }
 	if ($cant_box==4) { echo '</div><div class="row">';	$cant_box=0;}
 
+	// Datos Postulaciones -->
+	if (in_array(13,$data)) { include("box_datos_postulaciones.php"); $cant_box++; }
+	if ($cant_box==4) { echo '</div><div class="row">';	$cant_box=0;}
+
 	// Datos Vivienda -->
 	if (in_array(15,$data)) { include("box_datos_vivienda.php"); $cant_box++; }
-	if ($cant_box!==0) { echo '</div>';	unset($cant_box);}
+
+	echo '</div>';
+	unset($cant_box);
 
 	?>
 
@@ -115,7 +160,11 @@ include("../funciones/funciones_generales.php");
                 </div>
                 <div class="panel-body">
                  <?php
-                    $txt_pres_p = "SELECT * FROM tbp_prestaciones_beneficiarios INNER JOIN tbp_prestaciones ON tbp_prestaciones_beneficiarios.pb_pre_id = tbp_prestaciones.pre_id INNER JOIN tbp_prestaciones_lista ON tbp_prestaciones.pre_pr_id = tbp_prestaciones_lista.tbp_pr_id WHERE (tbp_prestaciones_beneficiarios.pb_dp_id = '".$_GET['dp_id']."' and tbp_prestaciones_lista.tbp_sis_id = '".$_SESSION['sistema']."')";
+                    $txt_pres_p = "SELECT * FROM tbp_prestaciones_beneficiarios
+										               INNER JOIN tbp_prestaciones ON tbp_prestaciones_beneficiarios.pb_pre_id = tbp_prestaciones.pre_id
+																	 INNER JOIN tbp_prestaciones_lista ON tbp_prestaciones.pre_pr_id = tbp_prestaciones_lista.tbp_pr_id
+																	 WHERE (tbp_prestaciones_beneficiarios.pb_dp_id = '".$_GET['dp_id']."'
+																		 and tbp_prestaciones_lista.tbp_sis_id = '".$_SESSION['sistema']."')";
                     $query_pre_p = mysql_query($txt_pres_p);
                     if(mysql_num_rows($query_pre_p)==0){
                         echo "<b> No hay prestaciones para mostrar </b>";
@@ -123,51 +172,121 @@ include("../funciones/funciones_generales.php");
                       while($data_pre_p = mysql_fetch_array($query_pre_p)){
                        echo "<h4>".$data_pre_p['tbp_pr_name']." (".BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_p['tbp_pt_id'],"pt_name").")</h4>";
                        echo "<i>Agregado por :".BuscaRegistro("tb_usuarios","us_id",$data_pre_p['pre_us_id'],"us_name")." - En la fecha: ".$data_pre_p['pre_fecha_alta']."</i><br>";
-
+                       echo '<p>';
+                       RetornaEstado ($data_pre_p['pb_id'], BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_p['tbp_pt_id'],"pt_id"));
+                       echo '</p>';
+                       echo "<i>Agregado por :".BuscaRegistro("tb_usuarios","us_id",$data_pre_p['pre_us_id'],"us_name")." - En la fecha: ".$data_pre_p['pre_fecha_alta']."</i><br>";
                             switch ($data_pre_p['tbp_pt_id']) {
                               case '1':
                                 echo "Motivo: <b>".$data_pre_p['pre_tema']."</b><br>";
-                                echo "Entrevistador: <b>".$data_pre_p['pre_responsable']."</b> - Ubicación: <b>".$data_pre_p['pre_ubicacion']."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b> - Hora: <b>".$data_pre_p['pre_hora']."</b><br>";
+                                echo "Entrevistador: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_p['pre_responsable'],"us_name")."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_p['pre_ubicacion'],"bar_name")."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b> - Hora: <b>".$data_pre_p['pre_hora']."</b><br>";
                                 echo "Observaciones: ".$data_pre_p['pre_observaciones'];
-                                break;
+                                 echo "<br>";
+                              break;
 
                               case '2':
                                 echo "Descripción: <b>".$data_pre_p['pre_tema']."</b><br>";
                                 echo "Monto: <b>$ ".$data_pre_p['pre_monto']."</b> - Cuotas: <b>".$data_pre_p['pre_cuotas']."</b> - Fecha Inicio: <b>".$data_pre_p['pre_fecha']."</b> - Fecha Fin: <b>".$data_pre_p['pre_fecha_out']."</b><br>";
                                 echo "Observaciones: ".$data_pre_p['pre_observaciones'];
-                                break;
+                                echo "<br>";
+                              break;
 
-                               case '10':
+                              case '3':
+                                echo "Tema: <b>".$data_pre_p['pre_tema']."</b><br>";
+                                echo "Responsable: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_p['pre_responsable'],"us_name")."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_p['pre_ubicacion'],"bar_name")."</b> - Fecha Inicio: <b>".$data_pre_p['pre_fecha']."</b> - Fecha Fin: <b>".$data_pre_p['pre_fecha_out']."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                echo "<br>";
+                              break;
+
+                              case '4':
+                                echo "Motivo: <b>".$data_pre_p['pre_tema']."</b><br>";
+                                echo "Area: <b>".BuscaRegistro("tb_sistemas","sis_id",$data_pre_p['pre_area'],"sis_name")."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                echo "<br>";
+                              break;
+
+                              case '5':
+                                echo "Motivo: <b>".$data_pre_p['pre_tema']."</b><br>";
+                                echo "Responsable: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_p['pre_responsable'],"us_name")."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_p['pre_ubicacion'],"bar_name")."</b> - Fecha Inicio: <b>".$data_pre_p['pre_fecha']."</b> - Fecha Fin: <b>".$data_pre_p['pre_fecha_out']."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                echo "<br>";
+                              break;
+
+                              case '6':
+                                echo "Motivo: <b>".$data_pre_p['pre_tema']."</b><br>";
+                                echo "Lider: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_p['pre_responsable'],"us_name")."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_p['pre_ubicacion'],"bar_name")."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b> - Hora: <b>".$data_pre_p['pre_hora']."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                echo "<br>";
+                              break;
+
+                              case '7':
+                                echo "Tema: <b>".$data_pre_p['pre_tema']."</b><br>";
+                                echo "Responsable: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_p['pre_responsable'],"us_name")."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_p['pre_ubicacion'],"bar_name")."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                echo "<br>";
+                              break;
+
+                              case '8':
+                                echo "Responsable: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_p['pre_responsable'],"us_name")."</b> - Destino: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_p['pre_ubicacion'],"bar_name")."</b><br>
+                                Fecha: <b>".$data_pre_p['pre_fecha']."</b> - Hora de Salida: <b>".$data_pre_p['pre_hora']."</b> - Hora de llegada: <b>".$data_pre_p['pre_hora_out']."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                echo "<br>";
+                              break;
+
+                              case '9':
+                                echo "Tema: <b>".$data_pre_p['pre_tema']."</b><br>";
+                                echo "Responsable: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_p['pre_responsable'],"us_name")."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_p['pre_ubicacion'],"bar_name")."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b> - Hora: <b>".$data_pre_p['pre_hora']."</b><br>";
+                                echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                echo "<br>";
+                              break;
+
+                              case '10':
                                 echo "Descripción: <b>".$data_pre_p['pre_tema']."</b><br>";
                                 echo "Monto: <b>$ ".$data_pre_p['pre_monto']."</b> - Cuotas: <b>".$data_pre_p['pre_cuotas']."</b> - Fecha Inicio: <b>".$data_pre_p['pre_fecha']."</b> - Fecha Fin: <b>".$data_pre_p['pre_fecha_out']."</b><br>";
                                 echo "Observaciones: ".$data_pre_p['pre_observaciones'];
-                                break;
+                                echo "<br>";
+                              break;
 
                               case '11':
                                 echo "Descripción: <b>".$data_pre_p['pre_tema']."</b><br>";
                                 echo "Monto: <b>$ ".$data_pre_p['pre_monto']."</b> - Cuotas: <b>".$data_pre_p['pre_cuotas']."</b> - Fecha Inicio: <b>".$data_pre_p['pre_fecha']."</b> - Fecha Fin: <b>".$data_pre_p['pre_fecha_out']."</b><br>";
                                 echo "Responsable: <b>".$data_pre_p['pre_fam_responsable']."</b> - DNI del Responsable: <b>".$data_pre_p['pre_dni_responsable']."</b><br>";
                                 echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                 echo "<br>";
+
                                 break;
 
                                case '12':
                                 echo "Motivo: <b>".$data_pre_p['pre_tema']."</b><br>";
-                                echo "Asesor: <b>".$data_pre_p['pre_responsable']."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b><br>";
+                                echo "Asesor: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_p['pre_responsable'],"us_name")."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_p['pre_ubicacion'],"bar_name")."</b><br>";
                                 echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                 echo "<br>";
                                 break;
 
                                  case '13':
                                 echo "Motivo: <b>".$data_pre_p['pre_tema']."</b><br>";
-                                echo "Asistente: <b>".$data_pre_p['pre_responsable']."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b><br>";
+                                echo "Asistente: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_p['pre_responsable'],"us_name")."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_p['pre_ubicacion'],"bar_name")."</b><br>";
                                 echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                 echo "<br>";
                                 break;
 
                                  case '14':
                                 echo "Motivo: <b>".$data_pre_p['pre_tema']."</b><br>";
-                                echo "Visitador: <b>".$data_pre_p['pre_responsable']."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b><br>";
+
+                                echo "Visitador: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_p['pre_responsable'],"us_name")."</b> - Fecha: <b>".$data_pre_p['pre_fecha']."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_p['pre_ubicacion'],"bar_name")."</b><br>";
                                 echo "Observaciones: ".$data_pre_p['pre_observaciones'];
+                                 echo "<br>";
                                 break;
+
                             }
+					    if(BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_p['tbp_pt_id'],"pt_temp")==1){
+					      LinkEstado ($data_pre_p['pb_id'], BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_p['tbp_pt_id'],"pt_id"));
+					      echo ' ';
+					    }
+					    echo '<button type="button" class="btn btn-info btn-sm">
+					    <span class="glyphicon glyphicon-pencil"></span></button> ';
+					    echo '<a href="tools/quitar_prestacion.php?tabla=tbp_prestaciones_beneficiarios&id=pb_id&val='.$data_pre_p['pb_id'].'&tipo='.BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_p['tbp_pt_id'],"pt_gr").'&pre_id='.$data_pre_p['pre_id'].'" class="fancybox fancybox.iframe"><button type="button" class="btn btn-warning btn-sm">
+					    <span class="glyphicon glyphicon-trash"></span></button></a> ';
 
                        echo "<hr>";
                       }
@@ -183,6 +302,131 @@ include("../funciones/funciones_generales.php");
                   <h3 class="panel-title"><span class="glyphicon glyphicon-share-alt"></span> Prestaciones de otras áreas</h3>
                 </div>
                 <div class="panel-body">
+                <?php
+                    $txt_pres_n = "SELECT * FROM tbp_prestaciones_beneficiarios INNER JOIN tbp_prestaciones ON tbp_prestaciones_beneficiarios.pb_pre_id = tbp_prestaciones.pre_id INNER JOIN tbp_prestaciones_lista ON tbp_prestaciones.pre_pr_id = tbp_prestaciones_lista.tbp_pr_id WHERE (tbp_prestaciones_beneficiarios.pb_dp_id = '".$_GET['dp_id']."' and tbp_prestaciones_lista.tbp_sis_id != '".$_SESSION['sistema']."' and tbp_prestaciones_lista.tbp_in_compartida = '1')";
+                    $query_pre_n = mysql_query($txt_pres_n);
+                    if(mysql_num_rows($query_pre_n)==0){
+                        echo "<b> No hay prestaciones para mostrar </b>";
+                    } else {
+                      while($data_pre_n = mysql_fetch_array($query_pre_n)){
+                       echo "<h4>".$data_pre_n['tbp_pr_name']." (".BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_n['tbp_pt_id'],"pt_name").")</h4>";
+
+                       echo '<p>';
+                       RetornaEstado ($data_pre_n['pb_id'], BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_n['tbp_pt_id'],"pt_id"));
+                       echo '</p>';
+                       echo "<i>Agregado por :".BuscaRegistro("tb_usuarios","us_id",$data_pre_n['pre_us_id'],"us_name")." - En la fecha: ".$data_pre_n['pre_fecha_alta']."</i><br>";
+                            switch ($data_pre_n['tbp_pt_id']) {
+                              case '1':
+                                echo "Motivo: <b>".$data_pre_n['pre_tema']."</b><br>";
+                                echo "Entrevistador: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_n['pre_responsable'],"us_name")."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_n['pre_ubicacion'],"bar_name")."</b> - Fecha: <b>".$data_pre_n['pre_fecha']."</b> - Hora: <b>".$data_pre_n['pre_hora']."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+                                break;
+
+                              case '2':
+                                echo "Descripción: <b>".$data_pre_n['pre_tema']."</b><br>";
+                                echo "Monto: <b>$ ".$data_pre_n['pre_monto']."</b> - Cuotas: <b>".$data_pre_n['pre_cuotas']."</b> - Fecha Inicio: <b>".$data_pre_n['pre_fecha']."</b> - Fecha Fin: <b>".$data_pre_n['pre_fecha_out']."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+
+                                break;
+
+                                 case '3':
+                                echo "Tema: <b>".$data_pre_n['pre_tema']."</b><br>";
+                                echo "Responsable: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_n['pre_responsable'],"us_name")."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_n['pre_ubicacion'],"bar_name")."</b> - Fecha Inicio: <b>".$data_pre_n['pre_fecha']."</b> - Fecha Fin: <b>".$data_pre_n['pre_fecha_out']."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+
+                                break;
+
+                                 case '4':
+                                echo "Motivo: <b>".$data_pre_n['pre_tema']."</b><br>";
+                                echo "Area: <b>".BuscaRegistro("tb_sistemas","sis_id",$data_pre_n['pre_area'],"sis_name")."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+
+                                break;
+
+                                case '5':
+                                echo "Motivo: <b>".$data_pre_n['pre_tema']."</b><br>";
+                                echo "Responsable: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_n['pre_responsable'],"us_name")."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_n['pre_ubicacion'],"bar_name")."</b> - Fecha Inicio: <b>".$data_pre_n['pre_fecha']."</b> - Fecha Fin: <b>".$data_pre_n['pre_fecha_out']."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+
+                                break;
+
+                              case '6':
+                                echo "Motivo: <b>".$data_pre_n['pre_tema']."</b><br>";
+                                echo "Lider: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_n['pre_responsable'],"us_name")."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_n['pre_ubicacion'],"bar_name")."</b> - Fecha: <b>".$data_pre_n['pre_fecha']."</b> - Hora: <b>".$data_pre_n['pre_hora']."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+                                break;
+
+                              case '7':
+                                echo "Tema: <b>".$data_pre_n['pre_tema']."</b><br>";
+                                echo "Responsable: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_n['pre_responsable'],"us_name")."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_n['pre_ubicacion'],"bar_name")."</b> - Fecha: <b>".$data_pre_n['pre_fecha']."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+                                break;
+
+                              case '8':
+                                echo "Responsable: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_n['pre_responsable'],"us_name")."</b> - Destino: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_n['pre_ubicacion'],"bar_name")."</b><br>
+                              Fecha: <b>".$data_pre_n['pre_fecha']."</b> - Hora de Salida: <b>".$data_pre_n['pre_hora']."</b> - Hora de llegada: <b>".$data_pre_n['pre_hora_out']."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+                                break;
+
+                              case '9':
+                                echo "Tema: <b>".$data_pre_n['pre_tema']."</b><br>";
+                                echo "Responsable: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_n['pre_responsable'],"us_name")."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_n['pre_ubicacion'],"bar_name")."</b> - Fecha: <b>".$data_pre_n['pre_fecha']."</b> - Hora: <b>".$data_pre_n['pre_hora']."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+                                break;
+
+                               case '10':
+                                echo "Descripción: <b>".$data_pre_n['pre_tema']."</b><br>";
+                                echo "Monto: <b>$ ".$data_pre_n['pre_monto']."</b> - Cuotas: <b>".$data_pre_n['pre_cuotas']."</b> - Fecha Inicio: <b>".$data_pre_n['pre_fecha']."</b> - Fecha Fin: <b>".$data_pre_n['pre_fecha_out']."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+
+                                break;
+
+                              case '11':
+                                echo "Descripción: <b>".$data_pre_n['pre_tema']."</b><br>";
+                                echo "Monto: <b>$ ".$data_pre_n['pre_monto']."</b> - Cuotas: <b>".$data_pre_n['pre_cuotas']."</b> - Fecha Inicio: <b>".$data_pre_n['pre_fecha']."</b> - Fecha Fin: <b>".$data_pre_n['pre_fecha_out']."</b><br>";
+                                echo "Responsable: <b>".$data_pre_n['pre_fam_responsable']."</b> - DNI del Responsable: <b>".$data_pre_n['pre_dni_responsable']."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+
+                                break;
+
+                               case '12':
+                                echo "Motivo: <b>".$data_pre_n['pre_tema']."</b><br>";
+                                echo "Asesor: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_n['pre_responsable'],"us_name")."</b> - Fecha: <b>".$data_pre_n['pre_fecha']."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_n['pre_ubicacion'],"bar_name")."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+                                break;
+
+                                 case '13':
+                                echo "Motivo: <b>".$data_pre_n['pre_tema']."</b><br>";
+                                echo "Asistente: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_n['pre_responsable'],"us_name")."</b> - Fecha: <b>".$data_pre_n['pre_fecha']."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_n['pre_ubicacion'],"bar_name")."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+                                break;
+
+                                 case '14':
+                                echo "Motivo: <b>".$data_pre_n['pre_tema']."</b><br>";
+
+                                echo "Visitador: <b>".BuscaRegistro("tb_usuarios","us_id",$data_pre_n['pre_responsable'],"us_name")."</b> - Fecha: <b>".$data_pre_n['pre_fecha']."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_n['pre_ubicacion'],"bar_name")."</b><br>";
+                                echo "Observaciones: ".$data_pre_n['pre_observaciones'];
+                                 echo "<br>";
+                                break;
+                            }
+
+                       echo "<hr>";
+                      }
+                    }
+                  ?>
                 </div>
             </div>
         </div>

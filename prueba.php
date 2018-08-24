@@ -1,10 +1,11 @@
 <?php
+/*
 $a = 5;
 $a++;
 echo "ahora?: " .$a."</br>";
 echo "ahora?: " .$a."</br>";
 echo "ahora?: " .$a."</br>";
-/*
+
 	require_once "modelo.php";
 
 	$db = new MySQL();
@@ -16,7 +17,7 @@ echo "ahora?: " .$a."</br>";
 	}
 
 include("conecta.php");
-
+*/
 echo $_SERVER['SERVER_NAME']."</br>";
 $base_dir = __DIR__;
 echo $base_dir."</br>";
@@ -35,7 +36,6 @@ echo $base_url."</br>";
   } else {
     echo "Producción!!";
   };
-*/
 
 //echo md5("admin")."</br>";
 /*

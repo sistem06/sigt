@@ -32,7 +32,7 @@ ul.dropdown-cart li .item-left span.item-info{
     float:left;
 }
 ul.dropdown-cart li .item-left span.item-info{
-    margin-left:10px;   
+    margin-left:10px;
 }
 ul.dropdown-cart li .item-left span.item-info span{
     display:block;
@@ -43,14 +43,14 @@ ul.dropdown-cart li .item-right{
 ul.dropdown-cart li .item-right button{
     margin-top:14px;
 }
-.label,.glyphicon { 
-	margin-right:5px; 
+.label,.glyphicon {
+	margin-right:5px;
 }
 .requerido {
    /* color:#8C0205;*/
     color:#fff;
     margin-left: 10px;
-    display:none;   
+    display:none;
     text-align:left;
     background: #f00;
     padding:5px;
@@ -136,7 +136,7 @@ ul.dropdown-cart li .item-right button{
 .cada_elemento {
     display: block;
     background: #fff;
-    
+
 }
 .cada_elemento a{
     padding:5px;

@@ -133,7 +133,7 @@
 			   $histori = new Historial();
 			   $histori->hi_us_id = $_POST['id_us'];
 			   $histori->hi_dp_id = $ult;
-			   $histori->hi_detalle = "Agrego este beneficiario";
+			   $histori->hi_detalle = "Alta de Persona";
 			   $histori->save();
 
 			   $alto = new BenSistema();

@@ -22,7 +22,10 @@ include ("../funciones/funciones_form.php");
 	<!-- comienza contenido -->
 </div>
 <div class="container">
-      <h3>Datos de la Vivienda</h3>
+
+	<div class="paso_in"> Datos de la Vivienda
+	<span class="nombre_emp"><small><?php echo TirameDomicilio($_GET["dp_id"]); ?></small></span>
+	</div>
 
 <!-- aca comienza el calendario -->
 <?php
@@ -546,6 +549,7 @@ if (isset($ho_id)) {
 	<button type="submit" class="btn btn-info" id="envia1">Guardar</button>
 	<input type="hidden" name="paso" value="15">
 	<input type="hidden" name="dp_id" value="<?php echo $_GET['dp_id']; ?>">
+	<input type="hidden" name="id_us" value="<?php echo $_SESSION["id_us"]; ?>">
 	<input type="hidden" name="nro_dom" value="<?php echo TirameDomicilioNro($_GET['dp_id']); ?>">
 	</form>
 

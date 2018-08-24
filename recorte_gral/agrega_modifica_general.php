@@ -1,5 +1,5 @@
 <?php
-	require_once '_conexion.php';
+	require_once '../_conexion.php';
 
 	header("Content-Type: text/html;charset=utf-8");
 	if($_POST['tabla']=="tb_usuarios"){
@@ -211,13 +211,13 @@
 		if($_POST['accion']=="A"){
 			$texto = "Se agrego la calle exitosamente";
 			$ca = new Calles();
-			$ca-> ca_gm = (utf8_decode($_POST['ca_gm']));
+			$ca-> ca_gm = $_POST['ca_gm'];
 			$ca-> ca_name = strtoupper($_POST['ca_name']);
 			$ca-> save();
 		} else {
 			$texto = "Se modifico la calle exitosamente";
 			$ca = Calles::find($_POST['ca_id']);
-			$ca-> ca_gm = (utf8_decode($_POST['ca_gm']));
+			$ca-> ca_gm = $_POST['ca_gm'];
 			$ca-> ca_name = strtoupper($_POST['ca_name']);
 			$ca-> save();
 		}

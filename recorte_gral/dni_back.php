@@ -28,7 +28,7 @@ include ("../funciones/funciones_form.php");
 
 <!-- aca comienza el calendario -->
 
-<div class="paso_in">
+<div class="paso_in"> Documento de
 <span class="nombre_emp">
 <?php
 echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
@@ -133,6 +133,7 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
         $(".fancybox").fancybox({
         afterClose  : function() {
             window.location.reload();
+						<?php clearstatcache(); ?>
         }
     });
 });

@@ -1,5 +1,6 @@
 <?php
 include ("../../conecta.php");
+
 $val = $_GET['val'];
 $id = $_GET['id'];
 $tabla = $_GET['tabla'];
@@ -121,7 +122,8 @@ switch($tabla){
 	break;
 
 	case 'tb_hogar_beneficiario':
-	$preg ="Desea quitar a este miembro del hogar?";
+	$preg ="Desea quitar a este miembro del hogar?
+	La persona quedará sin datos de Domicilio.";
 	break;
 
 	case 'tb_imagenes':
@@ -136,6 +138,21 @@ switch($tabla){
 	$preg ="Desea quitar esta licencia?</b> ?";
 	break;
 
+	case 'tb_beneficiario_formacion_profesional':
+	$preg ="Desea quitar este Curso?</b> ?";
+	break;
+
+	case 'tb_antecedentes_laborales':
+	$preg ="Desea quitar este Antecedente?</b> ?";
+	break;
+
+	case 'tb_postulaciones_laborales':
+	$preg ="Desea quitar esta postulación Laboral?</b> ?";
+	break;
+
+	case 'tb_postulaciones_cursos':
+	$preg ="Desea quitar esta postulación a Curso?</b> ?";
+	break;
 }
 echo $preg;
 ?>
@@ -175,7 +192,31 @@ echo $preg;
 
 			}
 
+			if($tabla=='tb_beneficiario_formacion_profesional'){
+
+					mysql_query($ttx1);
+
+				}
+
 			if($tabla=='tb_beneficiario_idioma'){
+
+				mysql_query($ttx1);
+
+			}
+
+			if($tabla=='tb_antecedentes_laborales'){
+
+				mysql_query($ttx1);
+
+			}
+
+			if($tabla=='tb_postulaciones_laborales'){
+
+				mysql_query($ttx1);
+
+			}
+
+			if($tabla=='tb_postulaciones_cursos'){
 
 				mysql_query($ttx1);
 
@@ -245,6 +286,7 @@ echo $preg;
 					unlink("../../imagenes/dni_".$val.".jpg");
 				}
 				mysql_query("$ttx2");
+				clearstatcache();
 			}
 
 		}

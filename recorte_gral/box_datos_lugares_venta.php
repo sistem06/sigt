@@ -45,7 +45,7 @@ echo '
       }
       echo '
       </table>
-      <a href="nuevo_registro3.php?dp_id='.$_GET["dp_id"].'&em_id='.$em_id.'&estado=E"><button type="button" class="btn btn-warning">Modificar</button></a>
+      <a href="datos_lugares_venta.php?dp_id='.$_GET["dp_id"].'&em_id='.$em_id.'&estado=E"><button type="button" class="btn btn-warning">Modificar</button></a>
     </div>
   </div>
 </div>';

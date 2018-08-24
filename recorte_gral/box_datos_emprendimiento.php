@@ -61,7 +61,7 @@ echo '
 		   </table>';
      }
 		 	  echo '
-        <a href="nuevo_registro1.php?dp_id='.$_GET["dp_id"].'&em_id='.$em_id.'&estado=E">
+        <a href="datos_emprendimiento.php?dp_id='.$_GET["dp_id"].'&em_id='.$em_id.'&estado=E">
 					<button type="button" class="btn btn-success">Modificar</button></a>
       </div>
     </div>

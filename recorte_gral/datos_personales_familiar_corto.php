@@ -64,6 +64,9 @@
 <input type="hidden" name="dp_id" value="<?php echo $_GET['dp_id']; ?>">
 <input type="hidden" name="id_us" value="<?php echo $_SESSION["id_us"]; ?>">
 <input type="hidden" name="dp_nro_doc1" id="pasa_dni">
+<input type="hidden" name="dp_tipo_doc1" id="pasa_tipo_doc">
 <input type="hidden" name="dp_id_fam" id="pasa_id">
+
+
 <input type="hidden" name="tratamiento" id="tratamiento" value="corto">
 </form>
