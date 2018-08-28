@@ -1,13 +1,12 @@
 <?php
-/*sk01**	error_reporting(0); */
-/*sk01*/  if ($_SERVER['SERVER_NAME'] == 'localhost') {
-/*sk01**    ini_set('display_errors', 'On'); */
-/*sk05*/    ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
-/*sk01*/    error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
-/*sk01*/  } else {
-/*sk01*/    ini_set('display_errors', 'Off');
-/*sk01*/    error_reporting(0);
-/*sk01*/  };
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+  ini_set('display_errors', 'On');
+  ini_set('error_reporting', E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
+  error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
+} else {
+  ini_set('display_errors', 'Off');
+  error_reporting(0);
+};
 
 $conn = mysql_connect("localhost","sistem06_admin","Bari2012");
 mysql_set_charset('utf8');

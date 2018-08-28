@@ -57,11 +57,11 @@ if(!empty($dom_id)){
        }
     });
 
-		/*
+
 		if ($("#iddepartamento").val()=="") {
 			$("#iddepartamento").selectedIndex = 3;
 			$("#iddepartamento").val(3);
-		}*/
+		};
 
 	  var elegido=$("#iddepartamento").val();
 		localidad=$("#idlocalidad").val();

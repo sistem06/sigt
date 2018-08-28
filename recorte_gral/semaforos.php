@@ -48,8 +48,8 @@
       break;
 
       case 7: //Antecedentes Laborales
-        $laboral = AntecedenteLaboral::find($dp_id);
-        if (!empty($laboral)) {
+        $laboral = AntecedenteLaboral::find_by_al_dp_id($dp_id);
+        if (isset($laboral)) {
           $entre2 = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,$seccion_dp->sa_ten_id);
           $entre2->ent_fin = 1;
           $entre2->save();
@@ -76,7 +76,7 @@
         // de la nueva vivienda o verde si la nueva dirección ya tiene
         // los datos de la vivienda.
         $hogar_gral = HogarGeneral::find_by_hog_ho_id($hb_ho_id);
-        if (empty($hogar_gral)) {
+        if (!isset($hogar_gral)) {
           $entre2 = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,$seccion_dp->sa_ten_id);
           $entre2->ent_fin = 0;
           $entre2->save();
@@ -100,7 +100,7 @@
           break;
 
           case 2: //Datos del Emprendimiento
-          $dir_entrev = "'nuevo_registro1.php?dp_id=".$dp_id."&em_id=".$em_id."'";
+          $dir_entrev = "'datos_emprendimiento.php?dp_id=".$dp_id."&em_id=".$em_id."'";
           break;
 
           case 3: //Datos Educativos

@@ -378,7 +378,7 @@ if($_POST['paso']==101){ // Update Entrevista - Miembros del Hogar
 	$prox = "detalle_persona.php?dp_id=$dp_id";
   $prox1 = "detalle_persona.php?dp_id=$dp_id";
 
-  $entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Miembros del Hogar");
+  $entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,11);
   $ent_id = $entre->ent_id;
   if(isset($ent_id)){
    $recor = AltaEntrevista::find($ent_id);
@@ -394,7 +394,7 @@ if($_POST['paso']==202){ // Alta Documentos Gráficos Frente
 
 	 $prox = "detalle_persona.php?dp_id=$dp_id";
 
-	 $entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Documentos Graficos");
+	 $entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,6);
    $ent_id = $entre->ent_id;
 
    if(isset($ent_id)){
@@ -418,7 +418,7 @@ if($_POST['paso']==102){ // Alta Documentos Gráficos Back
 
 	$prox = "detalle_persona.php?dp_id=$dp_id";
 
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Documentos Graficos");
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,6);
 	$ent_id = $entre->ent_id;
 	if(isset($ent_id)){
 		$recor = AltaEntrevista::find($ent_id);
@@ -574,7 +574,7 @@ if($_POST['paso']==2){ // Datos del Emprendimiento
 		break;
 	}
 
-   	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $em_dp_id,"Datos del Emprendimiento");
+   	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $em_dp_id,2);
    	$ent_id = $entre->ent_id;
    	if(isset($ent_id)){
     $recor = AltaEntrevista::find($ent_id);
@@ -611,7 +611,7 @@ if($_POST['paso']==4){ //Update Entrevista - Instituciones Asociadas
 
 	 $prox = "detalle_persona.php?dp_id=$dp_id";
 
-	 $entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Instituciones Asociadas");
+	 $entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,9);
    $ent_id = $entre->ent_id;
    if(isset($ent_id)){
 	   $recor = AltaEntrevista::find($ent_id);
@@ -671,7 +671,7 @@ if($_POST['paso']==6){ // Update Entrevista - Alta Lugares de Venta
 
 	$prox = "detalle_persona.php?dp_id=$dp_id";
 
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Lugares de Venta");
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,10);
   $ent_id = $entre->ent_id;
   if(isset($ent_id)){
    $recor = AltaEntrevista::find($ent_id);
@@ -821,7 +821,7 @@ if($_POST['paso']==777){ // Alta Salud/Discapacidad
 
 	} // fin else filtro > 0
 
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Datos Clínicos");
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,5);
   $ent_id = $entre->ent_id;
 
   if(isset($ent_id)){
@@ -864,7 +864,7 @@ if($_POST['paso']==700){ //Update Entrevista Datos Laborales
 
 	$prox = "detalle_persona.php?dp_id=".$dp_id;
 
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Historia Laboral");
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,7);
  	$ent_id = $entre->ent_id;
 
   if(isset($ent_id)){
@@ -917,7 +917,7 @@ if($_POST['paso']==18){ // Update entrevista - Capacitaciones Recibidas
 
 	$prox = "detalle_persona.php?dp_id=$dp_id";
 
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Capacitaciones Recibidas");
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,1);
   $ent_id = $entre->ent_id;
   if(isset($ent_id)){
    $recor = AltaEntrevista::find($ent_id);
@@ -966,9 +966,9 @@ if($_POST['paso']==10){ // Update entrevista - Emprendedores Subsidios/Créditos
 
 	$prox = "detalle_persona.php?dp_id=$dp_id";
 
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Subsidios/Créditos Recibidos");
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,14);
   $ent_id = $entre->ent_id;
-  if(isset($ent_id)){
+  if(!empty($ent_id)){
    $recor = AltaEntrevista::find($ent_id);
    $recor->ent_fin = '1';
    $recor->ent_us = $_POST['id_us'];
@@ -1005,7 +1005,7 @@ if($_POST['paso']==12){ // Update Entrevista - Alta Necesidades del Emprendimien
 
 	$prox = "detalle_persona.php?dp_id=$dp_id";
 
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Necesidad del Emprendimiento");
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,12);
   $ent_id = $entre->ent_id;
   if(isset($ent_id)){
     $recor = AltaEntrevista::find($ent_id);
@@ -1020,7 +1020,8 @@ if($_POST['paso']==13){ // Alta Ingresos del Emprendimiento
 
 	$dp_id = $_POST['dp_id'];
 
-	$record = Ingresos::find($dp_id);
+	$record = Ingresos::find_by_in_dp_id($dp_id);
+
 	if(empty($record)){
 		$record = new Ingresos();
 		$record->in_dp_id = $dp_id;
@@ -1035,7 +1036,7 @@ if($_POST['paso']==13){ // Alta Ingresos del Emprendimiento
 	}
 	$record->save();
 
-  $record2 = EstadoAfip::find($dp_id);
+  $record2 = EstadoAfip::find_by_ea_dp_id($dp_id);
 	if(empty($record2)){
 		$record2 = new EstadoAfip();
 		$record2->ea_dp_id = $dp_id;
@@ -1068,7 +1069,7 @@ if($_POST['paso']==13){ // Alta Ingresos del Emprendimiento
 
 	$prox = "detalle_persona.php?dp_id=$dp_id";
 
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Ingresos");
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,8);
   $ent_id = $entre->ent_id;
   if(isset($ent_id)){
     $recor = AltaEntrevista::find($ent_id);
@@ -1183,7 +1184,7 @@ if($_POST['paso']==15){ // Datos de la Vivienda
 	$enc->enc_hogar = $hogar_id;
 	$enc->save();
 
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $_POST['dp_id'],"Datos de la Vivienda");
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $_POST['dp_id'],15);
   $ent_id = $entre->ent_id;
   if(isset($ent_id)){
     $recor = AltaEntrevista::find($ent_id);
@@ -1418,7 +1419,7 @@ if($_POST['paso']==444){ // Alta/Modificación Datos Educativos
 
 			$prox = "detalle_persona.php?dp_id=$dp_id";
 
-   		$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Datos Educativos");
+   		$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,3);
 	   	$ent_id = $entre->ent_id;
 	   	if(isset($ent_id)){
 		   $recor = AltaEntrevista::find($ent_id);
@@ -1467,7 +1468,7 @@ if($_POST['paso']==400){
 
 	$prox = "detalle_persona.php?dp_id=".$dp_id;
 
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_proxima($_SESSION['sistema'], $dp_id,"Postulaciones");
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,13);
   $ent_id = $entre->ent_id;
 
   if(isset($ent_id)){

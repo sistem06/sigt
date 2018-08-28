@@ -31,8 +31,12 @@ include ("../funciones/funciones_form.php");
 <?php
 echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $conn).' ('.DatoRegistro ('tb_datos_personales', 'dp_nro_doc', 'dp_id', $_GET['dp_id'], $conn).')';
 ?>
-</span><?php
-echo ' "'.DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['em_id'], $conn).'"';
+</span>
+<?php
+if (!empty($_GET['em_id'])) {
+	$emp_nom = DatoRegistro ('tb_datos_emprendimiento', 'em_nombre', 'em_id', $_GET['em_id'], $conn);
+	echo ' "'.$emp_nom.'"';
+};
 ?>
 </div>
 

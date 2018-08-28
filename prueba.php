@@ -1,4 +1,9 @@
 <?php
+include ("conecta.php");
+include ("/funciones/funciones_generales.php");
+
+echo "domi 2952: ".TirameDomicilio(2952);
+
 /*
 $a = 5;
 $a++;
@@ -17,7 +22,7 @@ echo "ahora?: " .$a."</br>";
 	}
 
 include("conecta.php");
-*/
+
 echo $_SERVER['SERVER_NAME']."</br>";
 $base_dir = __DIR__;
 echo $base_dir."</br>";
@@ -38,8 +43,9 @@ echo $base_url."</br>";
   };
 
 //echo md5("admin")."</br>";
-/*
+
 sd000022_sigt
   pevituVO36
 */
+
 ?>
