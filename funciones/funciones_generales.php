@@ -113,6 +113,7 @@ function DatoRegistro ($tabla, $campo_muestra, $campo_id, $id){
 	}
 
 	function SiNoM ($valor){
+		$dev = "";
 		switch ($valor) {
 			case 0:
 			$dev = "NO";

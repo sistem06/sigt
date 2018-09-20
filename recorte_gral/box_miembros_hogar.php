@@ -17,7 +17,15 @@ echo '
       echo '</tr>';
     }
     echo '</table>';
-    echo '<a href="miembros_hogar.php?dp_id='.$_GET["dp_id"].'&ho_id='.$hb_ho_id.'&estado=E"><button type="button" class="btn btn-info">Modificar</button></a>
+    $disabled = "";
+    $btn_label = "Modificar";
+    $tiene_hogar = BuscaRegistro("tb_hogar_beneficiario","hb_dp_id",$_GET['dp_id'],"hb_ho_id");
+    if (!isset($tiene_hogar)) {
+      $disabled = "disabled";
+      $btn_label = "Falta Domicilio";
+    }
+    echo '<a href="miembros_hogar.php?dp_id='.$_GET["dp_id"].'&ho_id='.$hb_ho_id.'&estado=E">
+    <button type="button" '.$disabled.' class="btn btn-info">'.$btn_label.'</button></a>
   	</div>
 	</div>
 </div>';

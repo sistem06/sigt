@@ -1,6 +1,6 @@
 <?php
-session_start();
-include("../".$_SESSION["dir_sis"]."/secure1.php");
+if (!isset($_SESSION)) { session_start(); }
+include("../".$_SESSION["dir_sis"]."/secure.php");
 include ("../conecta.php");
 include ("../funciones/funciones_generales.php");
 ?>
@@ -14,7 +14,14 @@ include ("../funciones/funciones_generales.php");
   <link rel="stylesheet" href="../assets/estilos_ss.css">
   <link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.css">
   <link rel="stylesheet" type="text/css" href="../source/jquery.fancybox.css?v=2.1.5" media="screen" />
-  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+	<style>
+	#radioBtn .notActive{
+	    color: #3276b1;
+	    background-color: #fff;
+	}
+	</style>
+
 </head>
 <body>
 <?php include("encabezado.php"); ?>
@@ -23,6 +30,7 @@ include ("../funciones/funciones_generales.php");
 	<!-- comienza contenido -->
        <?php include("listado_usuarios.php"); ?>
   <!-- fin contenido -->
+	<br><br>
 </div>
 <br><br><br><br>
 <?php include("pie.php"); ?>
@@ -33,12 +41,16 @@ include ("../funciones/funciones_generales.php");
 
   <script type="text/javascript" language="javascript" class="init">
   $(document).ready(function() {
-  $('#list_emprendedores').DataTable();
-});
+	  $('#list_emprendedores').DataTable();
+	});
   </script>
+
   <script type="text/javascript" language="javascript">
     $('#list_emprendedores').DataTable( {
-        responsive: true
+        responsive: true ,
+				"language": {
+						"url": "../js/spanish.json"
+				}
     } );
   </script>
   <script type="text/javascript" language="javascript" src="../js/navbar.js"></script>
@@ -58,6 +70,18 @@ include ("../funciones/funciones_generales.php");
             window.location.reload();
         }
     });
+
+		$('#radioBtn a').on('click', function(){
+				var sel = $(this).data('title');
+				var tog = $(this).data('toggle');
+				$('#'+tog).prop('value', sel);
+
+				$('a[data-toggle="'+tog+'"]').not('[data-title="'+sel+'"]').removeClass('active').addClass('notActive');
+				$('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
+
+				location.href = "usuarios.php?verusr=" + $("#ver_usuarios").val();
+		})
+
 });
   </script>
 </body>

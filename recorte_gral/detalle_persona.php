@@ -18,6 +18,7 @@ include ("../funciones/funciones_prestaciones.php");
   <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"
 </head>
 <body>
+	<form>
 <?php include("encabezado.php"); ?>
 <div class="container-fluid">
 <?php include("../".$_SESSION["dir_sis"]."/recortes/navegacion.php"); ?>
@@ -106,10 +107,6 @@ include ("../funciones/funciones_prestaciones.php");
 
 	// Lugares de Venta -->
 	if (in_array(10,$data)) { include("box_datos_lugares_venta.php"); $cant_box++; }
-	if ($cant_box==4) { echo '</div><div class="row">';	$cant_box=0;}
-
-	// Lugares de Venta -->
-	if (in_array(1,$data)) { include("box_datos_capacitaciones.php"); $cant_box++; }
 	if ($cant_box==4) { echo '</div><div class="row">';	$cant_box=0;}
 
 	// Subsidios y Créditos -->
@@ -483,5 +480,7 @@ include ("../funciones/funciones_prestaciones.php");
     });
 });
   </script>
+	<?php include("../assets/usuario_lectura.php");	?>
+</form>
 </body>
 </html>

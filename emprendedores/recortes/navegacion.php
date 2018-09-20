@@ -16,25 +16,21 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Emprendedores <b class="caret"></b></a>
         <ul class="dropdown-menu">
-
             <li><a href="../emprendedores/beneficiarios.php">Listado Emprendedores</a></li>
-            <li><a href="../recorte_gral/nuevo_persona.php">Nuevo Emprendedor</a></li>
-            <li class="divider"></li>
-            <li><a href="../emprendedores/organizaciones.php">Organizaciones</a></li>
-            <li><a href="../emprendedores/ferias.php">Ferias</a></li>
-            <li><a href="../emprendedores/zonas.php">Zonas de Comercialización</a></li>
-            <li><a href="../emprendedores/comercios_list.php">Comercios</a></li>
-          <li class="divider"></li>
-          <?php
-      iF($_SESSION['sector']==1){
-        ?>
-            <li><a href="../recorte_gral/usuarios.php">Usuarios</a></li>
-            <?php
-      }
-      ?>
+            <?php if($_SESSION['sector']==1 || $_SESSION['sector']==5){ ?>
+              <li><a href="../recorte_gral/nuevo_persona.php">Nuevo Emprendedor</a></li>
+              <li class="divider"></li>
+              <li><a href="../recorte_gral/organizaciones.php">Organizaciones</a></li>
+              <li><a href="../recorte_gral/ferias.php">Ferias</a></li>
+              <li><a href="../recorte_gral/zonas.php">Zonas de Comercialización</a></li>
+              <li><a href="../recorte_gral/comercios_list.php">Comercios</a></li>
+              <li class="divider"></li>
+              <li><a href="../recorte_gral/usuarios.php">Usuarios</a></li>
+            <?php }; ?>
         </ul>
       </li>
 <!-- agregar en otros -->
+      <?php if($_SESSION['sector']<>4){ ?>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prestaciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -46,7 +42,8 @@
            <li><a href="../recorte_gral/listado_prestaciones.php">Listado de Prestaciones Asignadas</a></li>
         </ul>
       </li>
-
+     <?php }; ?>
+     <?php if($_SESSION['sector']<>4){ ?>
      <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Informes <b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -58,6 +55,7 @@
 
         </ul>
       </li>
+      <?php }; ?>
         <!--menu sistemas -->
         <?php include("../recorte_gral/menu_sistemas.php"); ?>
     <!--fin menu sistemas -->

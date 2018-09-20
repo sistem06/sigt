@@ -74,7 +74,21 @@ echo '
       echo '
       <p>Desea seguir estudiando: <strong>';
       $co = BuscaRegistro ("tb_datos_educativos", "de_dp_id", $_GET["dp_id"], "de_continuar");
-      echo SiNoM ($co);
+
+      switch ($co) {
+  			case 0:
+  			$dev = "";
+  			break;
+
+  			case 1:
+  			$dev = "SÍ";
+  			break;
+
+        case 2:
+  			$dev = "NO";
+  			break;
+  		}
+      echo $dev;
       echo '</strong></p>';
       echo '<p>Observaciones: <i>'.BuscaRegistroM("tb_datos_educativos", "de_dp_id", $_GET["dp_id"], "de_observaciones").'</i></p>';
       echo '<p>Fecha de Carga: <b>'.fecha_dev(BuscaRegistro ("tb_datos_educativos", "de_dp_id", $_GET["dp_id"], "de_fecha_actualizacion")).'</b></p>';

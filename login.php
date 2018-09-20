@@ -8,7 +8,7 @@ if (empty($usuario) or empty($clave)){
 header ("location: index.php?error=1");
 exit();
 } else {
-	$uv = mysql_query("select * from tb_usuarios where ((us_name='$usuario') and (us_pass='$clave'))");
+	$uv = mysql_query("select * from tb_usuarios where ((us_name='$usuario') and (us_pass='$clave') and us_login = 1)");
 	$nu = mysql_num_rows($uv);
 	if ($nu==0){
 	header("Location:index.php?error=1");

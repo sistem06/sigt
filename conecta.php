@@ -6,6 +6,13 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
 } else {
   ini_set('display_errors', 'Off');
   error_reporting(0);
+  if(!isset($_SERVER['HTTP_REFERER'])) {
+    //session_destroy();
+    //$index = __DIR__ .'/index.php';
+    //header('Location:'.$index);
+    echo "ACCESO DIRECTO RESTRINGIDO";
+    exit();
+  };
 };
 
 $conn = mysql_connect("localhost","sistem06_admin","Bari2012");

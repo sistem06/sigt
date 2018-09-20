@@ -14,7 +14,7 @@ echo '
         echo "Agregado por ".BuscaRegistro ("tb_usuarios", "us_id", $ah["hi_us_id"], "us_name");
     echo '
     </div>';
-        echo '<p><a href="../pdf/informe.php?dp_id='.$_GET['dp_id'].'" target="_blank"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-print"></span>Ver PDF</button></a></p>';
+        echo '<p><a href="tools/selector_pdf.php?dp_id='.$_GET['dp_id'].'" class="fancybox fancybox.iframe"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-print"></span>Ver Informe en PDF</button></a></p>';
         echo '<p>Nombre: <strong>'.BuscaRegistroM("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_name").'</strong></p>';
         echo '<p>Documento: <strong>'.BuscaRegistro("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_nro_doc").'</strong></p>';
         echo '<p>Nacimiento: <strong>'.fecha_dev(BuscaRegistro("tb_datos_personales", "dp_id", $_GET["dp_id"], "dp_nacimiento")).'</strong></p>';
@@ -48,10 +48,10 @@ echo '
         echo '<p><a href="nuevo_registro_mod.php?dp_id='.$_GET['dp_id'].'"><button type="button" class="btn btn-primary">Modificar Datos Personales</button></a></p>';
         echo '<p><a href="nuevo_domicilio_mod.php?dp_id='.$_GET['dp_id'].'"><button type="button" class="btn btn-primary">Modificar Domicilio</button></a></p>';
 
-        if($_SESSION["sector"]==5){
+        if($_SESSION["sector"]==5 || $_SESSION["sector"]==1){
           echo '<p><a href="nuevo_registro_mod_dp.php?dp_id='.$_GET['dp_id'].'"><button type="button" class="btn btn-primary">Modificar Nombre o DNI</button></a></p>';
         }
-    echo '    
+    echo '
     </div>
   </div>
 </div>';

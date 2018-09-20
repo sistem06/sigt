@@ -22,11 +22,20 @@ echo '
       $prop = BuscaRegistro("tb_hogar_propiedad", "pr_ho_id", $hogar_id, "pr_propiedad");
       $ocup = BuscaRegistro("tb_hogar_propiedad", "pr_ho_id", $hogar_id, "pr_ocupacion");
       $uso = BuscaRegistro("tb_hogar_propiedad", "pr_ho_id", $hogar_id, "pr_uso");
+
+      $disabled = "";
+      $btn_label = "Modificar";
+      $tiene_hogar = BuscaRegistro("tb_hogar_beneficiario","hb_dp_id",$_GET['dp_id'],"hb_ho_id");
+      if (!isset($tiene_hogar)) {
+        $disabled = "disabled";
+        $btn_label = "Falta Domicilio";
+      }
+
       echo '
       <p>Propiedad del Terreno: <strong>'.BuscaRegistro ("tb_tipo_propiedad", "tp_id", $prop, "tp_name").'</strong></p>
       <p>Condición de ocupación: <strong>'.BuscaRegistro ("tb_condicion_ocupacion", "co_id", $ocup, "co_name").'</strong></p>
       <p>Condición de uso: <strong>'.BuscaRegistro ("tb_condicion_uso", "cu_id", $uso, "cu_name").'</strong></p>
-      <a href="datos_vivienda.php?dp_id='.$_GET['dp_id'].'"><button type="button" class="btn btn-warning">Modificar</button></a>
+      <a href="datos_vivienda.php?dp_id='.$_GET['dp_id'].'"><button type="button" '.$disabled.' class="btn btn-warning">'.$btn_label.'</button></a>
     </div>
   </div>
 </div>';

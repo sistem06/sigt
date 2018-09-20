@@ -46,7 +46,7 @@ if (!empty($_GET['fp_id'])){
 }
 ?>
 
-    <form id="parte1" action="agrega_modifica_general.php" method="post" role="form">
+    <form id="parte1" action="../agrega_modifica_general.php" method="post" role="form">
 
     <div class="form-group has-success">
    <?php echo $us_form; ?>

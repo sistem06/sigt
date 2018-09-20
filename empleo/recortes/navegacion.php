@@ -16,20 +16,18 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Personas <b class="caret"></b></a>
         <ul class="dropdown-menu">
-
             <li><a href="../empleo/beneficiarios.php">Listado de Personas</a></li>
-            <li><a href="../recorte_gral/nuevo_persona.php">Nueva Persona</a></li>
-          <li class="divider"></li>
-          <?php
-      iF($_SESSION['sector']==1){
-        ?>
-            <li><a href="../recorte_gral/usuarios.php">Usuarios</a></li>
-            <?php
-      }
-      ?>
+            <?php if($_SESSION['sector']<>4){ ?>
+              <li><a href="../recorte_gral/nuevo_persona.php">Nueva Persona</a></li>
+              <li class="divider"></li>
+            <?php }; ?>
+            <?php if($_SESSION['sector']==1 || $_SESSION['sector']==5){ ?>
+              <li><a href="../recorte_gral/usuarios.php">Usuarios</a></li>
+            <?php }; ?>
         </ul>
       </li>
       <!-- agregar en otros -->
+      <?php if($_SESSION['sector']<>4){ ?>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prestaciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -41,43 +39,28 @@
            <li><a href="../recorte_gral/listado_prestaciones.php">Listado de Prestaciones Asignadas</a></li>
         </ul>
       </li>
-
-     <li class="dropdown">
+      <?php }; ?>
+      <?php if($_SESSION['sector']<>4){ ?>
+      <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Informes <b class="caret"></b></a>
         <ul class="dropdown-menu">
-
-
-
-
-            <li><a href="../empleo/informes.php">Informes de detalle</a></li>
-              <li class="divider"></li>
+          <li><a href="../empleo/informes.php">Informes de detalle</a></li>
         </ul>
       </li>
-
-      <?php
-        iF($_SESSION['sector']==5){
-      ?>
+      <?php }; ?>
+      <?php if($_SESSION['sector']==5){ ?>
         <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Supervisor <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <!--
-            <li><a href="duplicados.php">Duplicados</a></li>
-
-            <li class="divider"></li>
-            -->
-            <li><a href="../empleo/carreras.php">Carreras</a></li>
-            <li><a href="../empleo/cursos.php">Cursos</a></li>
-            <li><a href="../empleo/actividades.php">Actividades</a></li>
-            <li><a href="../empleo/puestos.php">Puestos</a></li>
-            <li><a href="../empleo/jerarquias.php">Jerarquias</a></li>
-            <li><a href="../empleo/calles.php">Calles</a></li>
-
+          <li><a href="../recorte_gral/carreras.php">Carreras</a></li>
+          <li><a href="../recorte_gral/cursos.php">Cursos</a></li>
+          <li><a href="../recorte_gral/actividades.php">Actividades</a></li>
+          <li><a href="../recorte_gral/puestos.php">Puestos</a></li>
+          <li><a href="../recorte_gral/jerarquias.php">Jerarquias</a></li>
+          <li><a href="../recorte_gral/calles.php">Calles</a></li>
         </ul>
       </li>
-
-       <?php
-        }
-      ?>
+      <?php }; ?>
         <!--menu sistemas -->
         <?php include("../recorte_gral/menu_sistemas.php"); ?>
     <!--fin menu sistemas -->

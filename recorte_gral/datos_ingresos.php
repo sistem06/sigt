@@ -48,8 +48,7 @@ if (!empty($_GET['em_id'])) {
 </div>
 
 
-
-          <form id="parte1" action="add_registro.php" method="post" role="form">
+<form id="parte1" action="add_registro.php" method="post" role="form">
 
 <div class="row">
   <div class="col-xs-12 col-md-4">
@@ -152,6 +151,7 @@ if (!empty($_GET['em_id'])) {
 <input type="hidden" name="em_id" value="<?php echo $_GET['em_id']; ?>">
 <input type="hidden" name="id_us" value="<?php echo $_SESSION["id_us"]; ?>">
 <button type="submit" class="btn btn-info" id="envia1">Guardar y Volver</button>
+
 </form>
 
 
@@ -227,7 +227,6 @@ if (!empty($_GET['em_id'])) {
         }
     });
 });
-  </script>
-
+</script>
 </body>
 </html>

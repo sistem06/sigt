@@ -1,6 +1,8 @@
 $(document).ready(function() {
 		 $("#idsexo").change(function(){
-          if($("#idsexo").val() != 3 && $("#idtipodoc").val()==1 && $("#nrodni").val().length ==8){
+          //if($("#idsexo").val() != 3 && $("#idtipodoc").val()==1 && $("#nrodni").val().length ==8){
+					if($("#idsexo").val() != 3 && $("#idtipodoc").val()==1 && ($("#nrodni").val().length ==8 || $("#nrodni").val().length ==7)){
+						if($("#nrodni").val().length ==7) {var nrodoc = '0'+ $("#nrodni").val();} else { var nrodoc = $("#nrodni").val();}
             if($("#idsexo").val() == 1){
               var nro_in = 27;
               var pte1 = 38;
@@ -35,7 +37,7 @@ $(document).ready(function() {
                   }
               }
 
-            $("#nrocuil").val(nro_in+'-'+$("#nrodni").val()+'-'+zz);
+            $("#nrocuil").val(nro_in+'-'+nrodoc+'-'+zz);
           }
       });
 });

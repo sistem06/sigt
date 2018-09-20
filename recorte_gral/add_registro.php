@@ -68,7 +68,7 @@ if($_POST['paso']==1){
 				$recor->ent_fin = '0';
 				$recor->ent_dp_id = $ult;
 				$recor->ent_ten_id = 5;
-				$recor->ent_proxima = "Discapacidad";
+				$recor->ent_proxima = "Datos Clínicos";
 				$recor->ent_us = $_POST['id_us'];
 				$recor->save();
 				break;
@@ -307,35 +307,32 @@ if($_POST['paso']==100){ //Alta Miembro Hogar
 					$histori->save();
 
 		} else {
-
 			 	  $ho_id = $_POST['ho_id'];
 	 			  $beneho = HogarBeneficiario::find_by_hb_dp_id($_POST['dp_id_fam']);
-					if (empty($beneho)) {
+					if (!isset($beneho)) {
 						$beneho = new HogarBeneficiario();
 						$beneho->hb_dp_id = $_POST['dp_id_fam'];
 					} else {
-						//Elimino Domicilio de la persona si no hay más
-						//integrantes del grupo hogar anterior
+						//Elimino Hogar y Domicilio anterior de la persona si no hay más
+						//integrantes del grupo hogar anterior asociados a los mismos.
 						$hb_ho_id_ante = $beneho->hb_ho_id;
-						$cant_miembros_hogar_ant = HogarBeneficiario::count(array("conditions" => "hb_ho_id = '$hb_ho_id_ante'"));
-						if ($cant_miembros_hogar_ant = 1) {
-							$ho_ant = Hogar::find($beneho->hb_ho_id);
-							$dom_ant = Domicilio::find($ho_ant->ho_dom_id);
-							$dom_ant->Delete();
+						if ($hb_ho_id_ante <> 0) { // Evito error por Hogar inexistente
+							$cant_miembros_hogar_ant = HogarBeneficiario::count(array("conditions" => "hb_ho_id = '$hb_ho_id_ante'"));
+							if (isset($cant_miembros_hogar_ant) && ($cant_miembros_hogar_ant == 1)) {
+								$ho_ant = Hogar::find($hb_ho_id_ante);
+								if (isset($ho_ant)) {
+									$dom_ant = Domicilio::find($ho_ant->ho_dom_id);
+									if (isset($dom_ant)) {
+										$dom_ant->Delete();
+										$ho_ant->Delete();
+									}
+								}
+							}
 						}
 					};
+
  		      $beneho->hb_ho_id = $_POST['ho_id'];
  		      $beneho->save();
-
-
-					/*
-					$ho_id = BuscaRegistro("tb_hogar_beneficiario", "hb_dp_id", $val, "hb_id");
-					$r_cant_benef_hogar = mysql_query("select count(*) from tb_hogar_beneficiario where hb_ho_id = '".$ho_id."'");
-					$q_cant_benef_hogar = mysql_num_rows($r_cant_benef_hogar);
-					if ($q_cant_benef_hogar > 1) {
-						$id_dom = BuscaRegistro("tb_hogar_beneficiario", "hb_dp_id", $val, "hb_ho_id");
-						mysql_query("delete from tb_domicilios where dom_id = '".$id_dom."'");
-					}	*/
 
 					$alto = BenSistema::find_by_bs_dp_id_and_bs_sis($_POST['dp_id_fam'],$_SESSION['sistema']);
 					if (empty($alto)) {
@@ -834,30 +831,6 @@ if($_POST['paso']==777){ // Alta Salud/Discapacidad
 	header("location: detalle_persona.php?dp_id=$dp_id");
 }
 
-if($_POST['paso']==7){ // Alta Capacitaciones Emprendedor
-
-	$capa = new EmpCapacitacion();
-	$capa->ec_dp_id = $_POST['dp_id'];
-	$capa->ec_or_id = $_POST['nro_org'];
-	$capa->ec_motivo = $_POST['nro_motivo'];
-	$capa->ec_anio = $_POST['ec_anio'];
-	$capa->save();
-
-	$histori = new Historial();
-	$histori->hi_us_id = $_POST['id_us'];
-	$histori->hi_dp_id = $_POST['dp_id'];
-	$histori->hi_detalle = "Alta Capacitación Emprendedor";
-	$histori->save();
-
-	$dp_id = $_POST['dp_id'];
-	$em_id = $_POST['em_id'];
-	if(empty($_POST['estado'])){
-	header("location: datos_capacitaciones.php?dp_id=$dp_id&em_id=$em_id");
-	} else {
-	header("location: datos_capacitaciones.php?dp_id=$dp_id&em_id=$em_id&estado=E");
-	}
-}
-
 if($_POST['paso']==700){ //Update Entrevista Datos Laborales
 
  	$dp_id = $_POST['dp_id'];
@@ -909,24 +882,6 @@ if($_POST['paso']==70){ //Alta Datos Laborales
 	$dp_id = $_POST['dp_id'];
 
 	header("location: datos_laboral.php?dp_id=$dp_id");
-}
-
-if($_POST['paso']==18){ // Update entrevista - Capacitaciones Recibidas
-
-	$dp_id = $_POST['dp_id'];
-
-	$prox = "detalle_persona.php?dp_id=$dp_id";
-
-	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,1);
-  $ent_id = $entre->ent_id;
-  if(isset($ent_id)){
-   $recor = AltaEntrevista::find($ent_id);
-   $recor->ent_fin = '1';
-   $recor->ent_us = $_POST['id_us'];
-   $recor->save();
-	}
-
-	header("location: $prox");
 }
 
 
@@ -1118,7 +1073,9 @@ if($_POST['paso']==15){ // Datos de la Vivienda
 	$sal->hog_ho_id = $hogar_id;
 	$sal->hog_miembros = $_POST['hog_miembros'];
   $sal->hog_habitaciones = $_POST['hog_habitaciones'];
-  $sal->hog_ubicacion_urbana = $_POST['hog_ubicacion_urbana'];
+  if (isset($_POST['hog_ubicacion_urbana'])) {
+		$sal->hog_ubicacion_urbana = $_POST['hog_ubicacion_urbana'];
+  }
   $sal->hog_tipo_casa = $_POST['hog_tipo_casa'];
   $sal->hog_material_piso = $_POST['hog_material_piso'];
   $sal->hog_material_paredes = $_POST['hog_material_paredes'];
@@ -1128,10 +1085,10 @@ if($_POST['paso']==15){ // Datos de la Vivienda
 	if($_POST['hog_revestimiento_techo'] != ""){
 	  $sal->hog_revestimiento_techo = $_POST['hog_revestimiento_techo'];
 	}
-	if($_POST['hog_sup_pb'] != ""){
+	if(isset($_POST['hog_sup_pb']) && ($_POST['hog_sup_pb'] != "")){
 	  $sal->hog_sup_pb = $_POST['hog_sup_pb'];
 	}
-	if($_POST['hog_sup_viv'] != ""){
+	if(isset($_POST['hog_sup_viv']) && ($_POST['hog_sup_viv'] != "")){
 	  $sal->hog_sup_viv = $_POST['hog_sup_viv'];
 	}
 	if (isset($_POST['hog_cielorraso'])) {
@@ -1143,6 +1100,7 @@ if($_POST['paso']==15){ // Datos de la Vivienda
 	if (!isset($servi)) {$servi = new HogarServicio();}
   $servi->hos_ho_id = $hogar_id;
   if(isset($_POST['hos_electricidad'])) {$servi->hos_electricidad = $_POST['hos_electricidad'];}
+
   if(isset($_POST['hos_telefono'])) {$servi->hos_telefono = $_POST['hos_telefono'];}
   $servi->hos_acceso_agua = $_POST['hos_acceso_agua'];
   $servi->hos_fuente_agua = $_POST['hos_fuente_agua'];
@@ -1207,7 +1165,7 @@ if($_POST['paso']==15){ // Datos de la Vivienda
 	$histori->save();
 
 	$dp_id = $_POST['dp_id'];
-	header("location: ../recorte_gral/detalle_persona.php?dp_id=$dp_id");
+	header("location: detalle_persona.php?dp_id=$dp_id");
 }
 
 if($_POST['paso']==16){ // Alta Emprendedor Asociado
@@ -1274,6 +1232,7 @@ if($_POST['paso']==1005){ // Alta Datos Formación Profesional (Datos Educativos
 	$benfp->bfp_situacion = $_POST['bfp_situacion'];
   $benfp->bfp_dp_id = $_POST['dp_id'];
   $benfp->bfp_year = $_POST['bfp_year'];
+	$benfp->bfp_entidad = $_POST['bfp_entidad'];
 	$benfp->save();
 
 	$histori = new Historial();
@@ -1366,7 +1325,9 @@ if($_POST['paso']==444){ // Alta/Modificación Datos Educativos
 		   $edu->de_vencimiento_libreta_construccion = $_POST['de_vencimiento_libreta_construccion'];
 			}
 			if(!empty($_POST['de_fecha_actualizacion'])){
-		   $edu->de_fecha_actualizacion = $_POST['de_fecha_actualizacion'];
+				$edu->de_fecha_actualizacion = $_POST['de_fecha_actualizacion'];
+			} else {
+				$edu->de_fecha_actualizacion = date("Y-m-d H:i:s");
 			}
       $edu->de_pc = $_POST['de_pc'];
       $edu->de_observaciones = $_POST['de_observaciones'];
@@ -1406,9 +1367,13 @@ if($_POST['paso']==444){ // Alta/Modificación Datos Educativos
 			if(!empty($_POST['de_vencimiento_libreta_construccion'])){
 		   $edu->de_vencimiento_libreta_construccion = $_POST['de_vencimiento_libreta_construccion'];
 			}
+
 			if(!empty($_POST['de_fecha_actualizacion'])){
-		   $edu->de_fecha_actualizacion = $_POST['de_fecha_actualizacion'];
+				$edu->de_fecha_actualizacion = $_POST['de_fecha_actualizacion'];
+			} else {
+				$edu->de_fecha_actualizacion = date("Y-m-d H:i:s");
 			}
+
 				$edu->save();
 				$histori = new Historial();
 				$histori->hi_us_id = $_POST['id_us'];
@@ -1427,7 +1392,6 @@ if($_POST['paso']==444){ // Alta/Modificación Datos Educativos
 		   $recor->ent_us = $_POST['id_us'];
 		   $recor->save();
 			}
-
 			header("location: $prox");
 }
 if($_POST['paso']==600){

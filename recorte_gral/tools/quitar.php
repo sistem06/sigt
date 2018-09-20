@@ -98,27 +98,27 @@ switch($tabla){
 	break;
 
 	case 'tb_emprendedor_ventas':
-	$preg ="Desea quitar el punto de venta";
+	$preg ="Desea quitar el punto de venta?";
 	break;
 
 	case 'tb_emprendedor_capacitaciones':
-	$preg ="Desea quitar esta capacitación";
+	$preg ="Desea quitar esta capacitación?";
 	break;
 
 	case 'tb_emprendedor_credito':
-	$preg ="Desea quitar este credito";
+	$preg ="Desea quitar este credito?";
 	break;
 
 	case 'tb_emprendedor_credito_nec':
-	$preg ="Desea quitar esta necesidad de credito";
+	$preg ="Desea quitar esta necesidad de credito?";
 	break;
 
 	case 'tb_familiares':
-	$preg ="Desea quitar a este familiar";
+	$preg ="Desea quitar a este familiar?";
 	break;
 
 	case 'tb_emprendedores_asociados':
-	$preg ="Desea quitar a este emprendedor asociado";
+	$preg ="Desea quitar a este emprendedor asociado?";
 	break;
 
 	case 'tb_hogar_beneficiario':
@@ -135,23 +135,43 @@ switch($tabla){
 	break;
 
 	case 'tb_licencias_beneficiario':
-	$preg ="Desea quitar esta licencia?</b> ?";
+	$preg ="Desea quitar esta licencia?";
 	break;
 
 	case 'tb_beneficiario_formacion_profesional':
-	$preg ="Desea quitar este Curso?</b> ?";
+	$preg ="Desea quitar este Curso?";
 	break;
 
 	case 'tb_antecedentes_laborales':
-	$preg ="Desea quitar este Antecedente?</b> ?";
+	$preg ="Desea quitar este Antecedente?";
 	break;
 
 	case 'tb_postulaciones_laborales':
-	$preg ="Desea quitar esta postulación Laboral?</b> ?";
+	$preg ="Desea quitar esta postulación Laboral?";
 	break;
 
 	case 'tb_postulaciones_cursos':
-	$preg ="Desea quitar esta postulación a Curso?</b> ?";
+	$preg ="Desea quitar esta postulación a Curso?";
+	break;
+
+	case 'tb_actividades':
+	$preg ="Desea quitar esta Actividad?";
+	break;
+
+	case 'tb_formacion_profesional':
+	$preg ="Desea quitar este Curso?";
+	break;
+
+	case 'tb_categorias':
+	$preg ="Desea quitar esta Jerarquía?";
+	break;
+
+	case 'tb_titulo_secundario':
+	$preg ="Desea quitar esta Carrera?";
+	break;
+
+	case 'tb_puestos':
+	$preg ="Desea quitar este Puesto?";
 	break;
 }
 echo $preg;
@@ -264,6 +284,25 @@ echo $preg;
 				mysql_query($ttx1);
 			}
 
+			if($tabla=='tb_actividades'){
+				mysql_query($ttx1);
+			}
+
+			if($tabla=='tb_categorias'){
+				mysql_query($ttx1);
+			}
+
+			if($tabla=='tb_titulo_secundario'){
+				mysql_query($ttx1);
+			}
+			
+			if($tabla=='tb_formacion_profesional'){
+				mysql_query($ttx1);
+			}
+
+			if($tabla=='tb_puestos'){
+				mysql_query($ttx1);
+			}
 
 			if($tabla=='tb_familiares'){
 				mysql_query($ttx1);

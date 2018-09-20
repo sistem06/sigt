@@ -38,13 +38,12 @@ if (isset($ho_id)) {
 
 <form id="parte1" action="add_registro.php" method="post" role="form">
 
-<div class="form-group has-success">
+<div class="form-group">
 <?php
 	$prev = BuscaRegistro("tb_encuestas", "enc_hogar", $ho_id, "enc_caat");
 	echo SelectGeneralVal("enc_caat", "form-control", "idcaat", "CAAT que realiza la encuesta:","tb_caats", "ca_id", "ca_name",$prev);
 	unset($prev);
 ?>
-<div class="requerido" id="falta_caat">Falta completar este campo</div>
 </div>
 
 
@@ -157,38 +156,37 @@ if (isset($ho_id)) {
 </div>
 
 <div class="row">
-	<div class="col-xs-12 col-md-6">
+	<div class="col-xs-12 col-md-4">
   	<div class="form-group">
 			<?php
  			 $prev = BuscaRegistro("tb_hogar_general", "hog_ho_id", $ho_id, "hog_miembros");
  			 echo InputGeneralVal("text", "hog_miembros", "form-control", "idmiembros", "escriba el numero de miembros del hogar", "Nro de personas que componen el hogar:",$prev);
  			 unset($prev);
 			?>
-			<div class="requerido" id="falta_nromiembros">Falta completar este campo</div>
 		</div>
 	</div>
-	<div class="col-xs-12 col-md-6">
+	<div class="col-xs-12 col-md-4">
   	<div class="form-group">
 			<?php
  			 $prev = BuscaRegistro("tb_hogar_general", "hog_ho_id", $ho_id, "hog_habitaciones");
  			 echo InputGeneralVal("text", "hog_habitaciones", "form-control", "idhabitaciones", "escriba el numero de habitaciones del hogar", "Nro de habitaciones exclusivas que tiene el hogar:",$prev);
  			 unset($prev);
 			?>
-			<div class="requerido" id="falta_nrohabitaciones">Falta completar este campo</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-md-4">
+  	<div class="form-group">
+			<label>En el techo ¿Tiene cielorraso o revestimiento?</label>
+			<div class="radio">
+				<label><input name="hog_cielorraso" type="radio" value="1" <?php if(BuscaRegistro ("tb_hogar_general", "hog_ho_id", $ho_id, "hog_cielorraso")==1) echo 'checked'; ?>> Si | </label>
+				<label><input name="hog_cielorraso" type="radio" value="0" <?php if(BuscaRegistro ("tb_hogar_general", "hog_ho_id", $ho_id, "hog_cielorraso")==0) echo 'checked'; ?>> No | </label>
+				<label><input name="hog_cielorraso" type="radio" value="3" <?php if(BuscaRegistro ("tb_hogar_general", "hog_ho_id", $ho_id, "hog_cielorraso")==3) echo 'checked'; ?>> Ignorado </label>
+			</div>
 		</div>
 	</div>
 </div>
+
 <div class="row">
-	<div class="col-xs-12 col-md-4">
-  	<div class="form-group">
-			<?php
-				$prev = BuscaRegistro("tb_hogar_general", "hog_ho_id", $ho_id, "hog_ubicacion_urbana");
-				echo SelectGeneralVal("hog_ubicacion_urbana", "form-control", "uu", "Ubicacion:","tb_ubicaciones_urbanas", "uu_id", "uu_name",$prev);
-				unset($prev);
-			?>
-  		<div class="requerido" id="falta_uu">Falta completar este campo</div>
-		</div>
-	</div>
 	<div class="col-xs-12 col-md-4">
   	<div class="form-group">
 			<?php
@@ -196,7 +194,6 @@ if (isset($ho_id)) {
 				echo SelectGeneralVal("hog_tipo_casa", "form-control", "idtipocasa", "Este hogar vive en:","tb_tipo_casa", "tc_id", "tc_name",$prev);
 				unset($prev);
 			?>
-  		<div class="requerido" id="falta_tipo_casa">Falta completar este campo</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-md-4">
@@ -206,7 +203,6 @@ if (isset($ho_id)) {
 				echo SelectGeneralVal("hog_material_piso", "form-control", "idmpiso", "Material predominante en los pisos:","tb_material_piso", "mp_id", "mp_name",$prev);
 				unset($prev);
 			?>
-  		<div class="requerido" id="falta_mpiso">Falta completar este campo</div>
 		</div>
 	</div>
 </div>
@@ -218,7 +214,6 @@ if (isset($ho_id)) {
 				echo SelectGeneralVal("hog_material_paredes", "form-control", "idmparedes", "Material predominante en las paredes exteriores:","tb_material_paredes", "mpe_id", "mpe_name",$prev);
 				unset($prev);
 			?>
-  		<div class="requerido" id="falta_mparedes">Falta completar este campo</div>
 		</div>
 	</div>
   <div class="col-xs-12 col-md-4">
@@ -231,44 +226,14 @@ if (isset($ho_id)) {
 				</div>
 			</div>
   	</div>
-  	<div id="aa2" style="display:none;">
-	  	<div class="form-group">
+		<div id="aa2" style="display:none;">
+			<div class="form-group">
 				<?php
 					$prev = BuscaRegistro("tb_hogar_general", "hog_ho_id", $ho_id, "hog_revestimiento_techo");
 					echo SelectGeneralVal("hog_revestimiento_techo", "form-control", "oss", "Cual es el material predominante en el techo:","tb_cubierta_techo", "ct_id", "ct_name",$prev);
 					unset($prev);
-				?>			</div>
-  	</div>
-	</div>
-	<div class="col-xs-12 col-md-4">
-  	<div class="form-group">
-			<label>En el techo ¿Tiene cielorraso o revestimiento?</label>
-			<div class="radio">
-				<label><input name="hog_cielorraso" type="radio" value="1" <?php if(BuscaRegistro ("tb_hogar_general", "hog_ho_id", $ho_id, "hog_cielorraso")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="hog_cielorraso" type="radio" value="0" <?php if(BuscaRegistro ("tb_hogar_general", "hog_ho_id", $ho_id, "hog_cielorraso")==0) echo 'checked'; ?>> No | </label>
-				<label><input name="hog_cielorraso" type="radio" value="3" <?php if(BuscaRegistro ("tb_hogar_general", "hog_ho_id", $ho_id, "hog_cielorraso")==3) echo 'checked'; ?>> Ignorado </label>
+				?>
 			</div>
-  		<div class="requerido" id="falta_cielorraso">Falta completar este campo</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-12 col-md-6">
-	  <div class="form-group">
-		<?php
-		 $prev = BuscaRegistro("tb_hogar_general", "hog_ho_id", $ho_id, "hog_sup_pb");
-		 echo InputGeneralVal("text", "hog_sup_pb", "form-control", "idsuppb", "Superficie de la planta baja en metros cuadrados", "Superficie de la planta baja (m2):",$prev);
-		 unset($prev);
-		?>
-		</div>
-	</div>
-	<div class="col-xs-12 col-md-6">
-  	<div class="form-group">
-			<?php
-			 $prev = BuscaRegistro("tb_hogar_general", "hog_ho_id", $ho_id, "hog_sup_viv");
-			 echo InputGeneralVal("text", "hog_sup_viv", "form-control", "idsupviv", "Superficie total de la vivienda en metros cuadrados", "Superficie total de la vivienda (m2):",$prev);
-			 unset($prev);
-			?>
 		</div>
 	</div>
 </div>
@@ -289,17 +254,6 @@ if (isset($ho_id)) {
 				<label><input name="hos_electricidad" type="radio" value="1" <?php if(BuscaRegistro ("tb_hogar_servicios", "hos_ho_id", $ho_id, "hos_electricidad")==1) echo 'checked'; ?>> Si | </label>
 				<label><input name="hos_electricidad" type="radio" value="0" <?php if(BuscaRegistro ("tb_hogar_servicios", "hos_ho_id", $ho_id, "hos_electricidad")==0) echo 'checked'; ?>> No </label>
 			</div>
-		<div class="requerido" id="falta_electricidad">Falta completar este campo</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-md-6">
-  	<div class="form-group">
-			<label>Tiene Teléfono?</label>
-			<div class="radio">
-				<label><input name="hos_telefono" type="radio" value="1" <?php if(BuscaRegistro ("tb_hogar_servicios", "hos_ho_id", $ho_id, "hos_telefono")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="hos_telefono" type="radio" value="0" <?php if(BuscaRegistro ("tb_hogar_servicios", "hos_ho_id", $ho_id, "hos_telefono")==0) echo 'checked'; ?>> No </label>
-			</div>
-			<div class="requerido" id="falta_telefono">Falta completar este campo</div>
 		</div>
 	</div>
 </div>
@@ -311,7 +265,6 @@ if (isset($ho_id)) {
 				echo SelectGeneralVal("hos_acceso_agua", "form-control", "idaccesoagua", "Acceso al Agua:","tb_acceso_agua", "aa_id", "aa_name",$prev);
 				unset($prev);
 			?>
-  		<div class="requerido" id="falta_accesoagua">Falta completar este campo</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-md-4">
@@ -321,7 +274,6 @@ if (isset($ho_id)) {
 				echo SelectGeneralVal("hos_fuente_agua", "form-control", "idfuenteagua", "Fuente de agua que usa para beber o cocinar:","tb_fuente_agua", "fa_id", "fa_name",$prev);
 				unset($prev);
 			?>
-  		<div class="requerido" id="falta_fuente_agua">Falta completar este campo</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-md-4">
@@ -331,7 +283,6 @@ if (isset($ho_id)) {
 				echo SelectGeneralVal("hos_combustible_cocina", "form-control", "idcoco", "Principal combustible que usa para cocinar:","tb_combustible_cocina", "coco_id", "coco_name",$prev);
 				unset($prev);
 			?>
-  		<div class="requerido" id="falta_coco">Falta completar este campo</div>
 		</div>
 	</div>
 </div>
@@ -343,7 +294,6 @@ if (isset($ho_id)) {
 				echo SelectGeneralVal("hos_combustible_calefaccion", "form-control", "idcoca", "Principal combustible que usa para calefaccionar:","tb_combustible_cocina", "coco_id", "coco_name",$prev);
 				unset($prev);
 			?>
-  		<div class="requerido" id="falta_coca">Falta completar este campo</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-md-4">
@@ -353,7 +303,6 @@ if (isset($ho_id)) {
 				echo SelectGeneralVal("hos_desague", "form-control", "iddesague", "Tipo de desagüe del Inodoro:","tb_desagues", "de_id", "de_name",$prev);
 				unset($prev);
 			?>
-  		<div class="requerido" id="falta_desague">Falta completar este campo</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-md-4">
@@ -363,7 +312,6 @@ if (isset($ho_id)) {
 				echo SelectGeneralVal("hos_banio", "form-control", "idbanio", "Baño (Tipo):","tb_banios", "ban_id", "ban_name",$prev);
 				unset($prev);
 			?>
-  		<div class="requerido" id="falta_banio">Falta completar este campo</div>
 		</div>
 	</div>
 </div>
@@ -384,7 +332,6 @@ if (isset($ho_id)) {
 				<label><input name="eq_heladera" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_heladera")==1) echo 'checked'; ?>> Si | </label>
 				<label><input name="eq_heladera" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_heladera")==0) echo 'checked'; ?>> No </label>
 			</div>
-			<div class="requerido" id="falta_heladera">Falta completar este campo</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-md-3">
@@ -394,7 +341,6 @@ if (isset($ho_id)) {
 				<label><input name="eq_cocina" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_cocina")==1) echo 'checked'; ?>> Si | </label>
 				<label><input name="eq_cocina" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_cocina")==0) echo 'checked'; ?>> No </label>
 			</div>
-			<div class="requerido" id="falta_cocina">Falta completar este campo</div>
 		</div>
 	</div>
   <div class="col-xs-12 col-md-3">
@@ -404,7 +350,6 @@ if (isset($ho_id)) {
 				<label><input name="eq_salamandra" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_salamandra")==1) echo 'checked'; ?>> Si | </label>
 				<label><input name="eq_salamandra" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_salamandra")==0) echo 'checked'; ?>> No </label>
 			</div>
-			<div class="requerido" id="falta_salamandra">Falta completar este campo</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-md-3">
@@ -414,7 +359,6 @@ if (isset($ho_id)) {
 				<label><input name="eq_telefono" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_telefono")==1) echo 'checked'; ?>> Si | </label>
 				<label><input name="eq_telefono" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_telefono")==0) echo 'checked'; ?>> No </label>
 			</div>
-			<div class="requerido" id="falta_telefono">Falta completar este campo</div>
 		</div>
 	</div>
 </div>
@@ -426,69 +370,6 @@ if (isset($ho_id)) {
 				<label><input name="eq_celular" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_celular")==1) echo 'checked'; ?>> Si | </label>
 				<label><input name="eq_celular" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_celular")==0) echo 'checked'; ?>> No </label>
 			</div>
-			<div class="requerido" id="falta_celular">Falta completar este campo</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-md-3">
-  	<div class="form-group">
-			<label>Tiene Lavarropas?</label>
-			<div class="radio">
-				<label><input name="eq_lavarropa" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_lavarropa")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="eq_lavarropa" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_lavarropa")==0) echo 'checked'; ?>> No </label>
-			</div>
-			<div class="requerido" id="falta_lavarropa">Falta completar este campo</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-md-3">
-  	<div class="form-group">
-			<label>Tiene DVD o Videocassetera?</label>
-			<div class="radio">
-				<label><input name="eq_dvd" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="eq_dvd" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==0) echo 'checked'; ?>> No </label>
-			</div>
-			<div class="requerido" id="falta_dvd">Falta completar este campo</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-md-3">
-		<div class="form-group">
-			<label>Tiene Televisión por cable?</label>
-			<div class="radio">
-				<label><input name="eq_tvcable" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="eq_tvcable" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==0) echo 'checked'; ?>> No </label>
-			</div>
-			<div class="requerido" id="falta_tvcable">Falta completar este campo</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-  <div class="col-xs-12 col-md-3">
-  	<div class="form-group">
-			<label>Tiene Direct TV?</label>
-			<div class="radio">
-				<label><input name="eq_directv" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="eq_directv" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==0) echo 'checked'; ?>> No </label>
-			</div>
-			<div class="requerido" id="falta_directv">Falta completar este campo</div>
-		</div>
-	</div>
-	<div class="col-xs-12 col-md-3">
-  	<div class="form-group">
-			<label>Tiene Horno microondas?</label>
-			<div class="radio">
-				<label><input name="eq_hornom" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="eq_hornom" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==0) echo 'checked'; ?>> No </label>
-			</div>
-			<div class="requerido" id="falta_hornom">Falta completar este campo</div>
-		</div>
-	</div>
-  <div class="col-xs-12 col-md-3">
-  	<div class="form-group">
-			<label>Tiene Computadora con Internet?</label>
-			<div class="radio">
-				<label><input name="eq_pc_web" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="eq_pc_web" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==0) echo 'checked'; ?>> No </label>
-			</div>
-			<div class="requerido" id="falta_pc_web">Falta completar este campo</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-md-3">
@@ -498,7 +379,6 @@ if (isset($ho_id)) {
 				<label><input name="eq_pc" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==1) echo 'checked'; ?>> Si | </label>
 				<label><input name="eq_pc" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==0) echo 'checked'; ?>> No </label>
 			</div>
-			<div class="requerido" id="falta_pc">Falta completar este campo</div>
 		</div>
 	</div>
 </div>
@@ -519,7 +399,6 @@ if (isset($ho_id)) {
 				echo SelectGeneralVal("pr_propiedad", "form-control", "idpropiedad", "Propiedad del terreno:","tb_tipo_propiedad", "tp_id", "tp_name",$prev);
 				unset($prev);
 			?>
-			<div class="requerido" id="falta_propiedad">Falta completar este campo</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-md-4">
@@ -529,7 +408,6 @@ if (isset($ho_id)) {
 				echo SelectGeneralVal("pr_ocupacion", "form-control", "idocupacion", "Condición de ocupación:","tb_condicion_ocupacion", "co_id", "co_name",$prev);
 				unset($prev);
 			?>
-  		<div class="requerido" id="falta_ocupacion">Falta completar este campo</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-md-4">
@@ -540,7 +418,6 @@ if (isset($ho_id)) {
 				echo SelectGeneralVal("pr_uso", "form-control", "iduso", "Condición de uso:","tb_condicion_uso", "cu_id", "cu_name",$prev);
 				unset($prev);
 			?>
-  		<div class="requerido" id="falta_uso">Falta completar este campo</div>
 		</div>
 	</div>
 </div>
@@ -570,134 +447,6 @@ if (isset($ho_id)) {
 			 });
 
 			 $("#envia1").click(function() {
-				 if($("#idcaat").val()==""){
-					 $("#falta_caat").show();
-					 $("#falta_caat").focus();
-					 return false;
-				 }
-
-				 if($("#idmiembros").val()==""){
-		       $("#falta_nromiembros").show();
-		       return false;
-		     }
-		     if($("#idhabitaciones").val()==""){
-		       $("#falta_nrohabitaciones").show();
-		       return false;
-		     }
-
-		     if($("#uu").val()==""){
-		       $("#falta_uu").show();
-		       return false;
-		     }
-		     if($("#idtipocasa").val()==""){
-		       $("#falta_tipo_casa").show();
-		       return false;
-		     }
-		     if($("#idmpiso").val()==""){
-		       $("#falta_mpiso").show();
-		       return false;
-		     }
-		     if($("#idmparedes").val()==""){
-		       $("#falta_mparedes").show();
-		       return false;
-		     }
-		     if(typeof $("input[name='hog_cielorraso']:checked").val() === "undefined"){
-		                       $("#falta_cielorraso").show();
-		                       return false;
-		                     }
-		     if(typeof $("input[name='hos_electricidad']:checked").val() === "undefined"){
-		                       $("#falta_electricidad").show();
-		                       return false;
-		                     }
-		     if(typeof $("input[name='hos_telefono']:checked").val() === "undefined"){
-		                       $("#falta_telefono").show();
-		                       return false;
-		                     }
-		     if($("#idaccesoagua").val()==""){
-		       $("#falta_accesoagua").show();
-		       return false;
-		     }
-		     if($("#idfuenteagua").val()==""){
-		       $("#falta_fuente_agua").show();
-		       return false;
-		     }
-		     if($("#idcoco").val()==""){
-		       $("#falta_coco").show();
-		       return false;
-		     }
-		     if($("#idcoca").val()==""){
-		       $("#falta_coca").show();
-		       return false;
-		     }
-		     if($("#iddesague").val()==""){
-		       $("#falta_desague").show();
-		       return false;
-		     }
-		     if($("#idbanio").val()==""){
-		       $("#falta_banio").show();
-		       return false;
-		     }
-
-				 if(typeof $("input[name='eq_heladera']:checked").val() === "undefined"){
-		                       $("#falta_heladera").show();
-		                       return false;
-		                     }
-		     if(typeof $("input[name='eq_cocina']:checked").val() === "undefined"){
-		                       $("#falta_cocina").show();
-		                       return false;
-		                     }
-		     if(typeof $("input[name='eq_salamandra']:checked").val() === "undefined"){
-		                       $("#falta_salamandra").show();
-		                       return false;
-		                     }
-		     if(typeof $("input[name='eq_telefono']:checked").val() === "undefined"){
-		                       $("#falta_telefono").show();
-		                       return false;
-		                     }
-		     if(typeof $("input[name='eq_celular']:checked").val() === "undefined"){
-		                       $("#falta_celular").show();
-		                       return false;
-		                     }
-		     if(typeof $("input[name='eq_lavarropa']:checked").val() === "undefined"){
-		                       $("#falta_lavarropa").show();
-		                       return false;
-		                     }
-		     if(typeof $("input[name='eq_dvd']:checked").val() === "undefined"){
-		                       $("#falta_dvd").show();
-		                       return false;
-		                     }
-		     if(typeof $("input[name='eq_tvcable']:checked").val() === "undefined"){
-		                       $("#falta_tvcable").show();
-		                       return false;
-		                     }
-		     if(typeof $("input[name='eq_directv']:checked").val() === "undefined"){
-		                       $("#falta_directv").show();
-		                       return false;
-		                     }
-		     if(typeof $("input[name='eq_hornom']:checked").val() === "undefined"){
-		                       $("#falta_hornom").show();
-		                       return false;
-		                     }
-		     if(typeof $("input[name='eq_pc_web']:checked").val() === "undefined"){
-		                       $("#falta_pc_web").show();
-		                       return false;
-		                     }
-		     if(typeof $("input[name='eq_pc']:checked").val() === "undefined"){
-		                       $("#falta_pc").show();
-		                       return false;
-		                     }
-		     if($("#idpropiedad").val()==""){
-		       $("#falta_propiedad").show();
-		       return false;
-		     }
-		     if($("#idocupacion").val()==""){
-		       $("#falta_ocupacion").show();
-		       return false;
-		     }
-		     if($("#iduso").val()==""){
-		       $("#falta_uso").show();
-		       return false;
-		     }
 
 		   }); /* $("#envia1").click(function() */
 
@@ -715,12 +464,6 @@ if (isset($ho_id)) {
          if(tecla.charCode < 48 || tecla.charCode > 57) return false;
 	     });
 	       $("#idhabitaciones").keypress(function(tecla) {
-	         if(tecla.charCode < 48 || tecla.charCode > 57) return false;
-	     });
-	       $("#idsupviv").keypress(function(tecla) {
-	         if(tecla.charCode < 48 || tecla.charCode > 57) return false;
-	     });
-	       $("#idsuppb").keypress(function(tecla) {
 	         if(tecla.charCode < 48 || tecla.charCode > 57) return false;
 	     });
 
