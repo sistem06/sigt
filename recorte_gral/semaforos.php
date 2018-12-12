@@ -95,8 +95,8 @@
   while($a_ent = mysql_fetch_array($q_ent)){
 
     switch($a_ent['ent_ten_id']){
-          case 1: //
-          $dir_entrev = "";
+          case 1: //Capacitaciones Recibidas
+          $dir_entrev = "'datos_capacitaciones.php?dp_id=".$dp_id."&em_id=".$em_id."'";
           break;
 
           case 2: //Datos del Emprendimiento
@@ -120,6 +120,10 @@
           break;
 
           case 7: //Historia Laboral
+          // no se carga Laboral para Emprendimientos y el archivo nuevo_registro2.php
+          // se usa para cargar Organizaciones Asoc. case 9
+          //$dir_entrev = "'nuevo_registro2.php?dp_id=".$dp_id."&em_id=".$em_id."&acc=M'";
+          //10.08.2018 SK: unifico código, case 7 -> Historia Laboral
           $dir_entrev = "'datos_laboral.php?dp_id=".$dp_id."&estado=E'";
           break;
 

@@ -18,42 +18,40 @@
         <ul class="dropdown-menu">
 
             <li><a href="../discapacidad/beneficiarios.php">Beneficiarios</a></li>
-            <li><a href="../discapacidad/nuevo_registro.php">Nuevo Beneficiario</a></li>
+            <?php if($_SESSION['sector']<>4){ ?>
+              <li><a href="../recorte_gral/nuevo_persona.php">Nueva Persona</a></li>
+              <li class="divider"></li>
+            <?php }; ?>
 
-          <li class="divider"></li>
-          <?php
-      iF($_SESSION['sector']==1){
-        ?>
-            <li><a href="../recorte_gral/usuarios.php">Usuarios</a></li>
-            <?php
-      }
-      ?>
+          <?php if($_SESSION['sector']==1 || $_SESSION['sector']==5){ ?>
+              <li><a href="../recorte_gral/usuarios.php">Usuarios</a></li>
+            <?php }; ?>
         </ul>
       </li>
 <!-- agregar en otros -->
+     <?php if($_SESSION['sector']<>4){ ?>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Prestaciones <b class="caret"></b></a>
         <ul class="dropdown-menu">
-
-            <li><a href="../discapacidad/beneficiarios.php">Emprendedores</a></li>
-
+            <li><a href="../recorte_gral/gestor_prestaciones.php">Gestión de Prestaciones</a></li>
             <li class="divider"></li>
-            <li><a href="../discapacidad/organizaciones.php">Organizaciones</a></li>
-
+            <li><a href="../recorte_gral/alta_prestacion_individual.php">Asignación de Prestaciones Individuales</a></li>
+            <li><a href="../recorte_gral/alta_prestacion_grupal.php">Asignación de Prestaciones Grupales</a></li>
+            <li class="divider"></li>
+           <li><a href="../recorte_gral/listado_prestaciones.php">Listado de Prestaciones Asignadas</a></li>
         </ul>
       </li>
+      <?php }; ?>
 
-     <li class="dropdown">
+      <?php if($_SESSION['sector']<>4){ ?>
+      <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Informes <b class="caret"></b></a>
         <ul class="dropdown-menu">
-
-            <li><a href="../discapacidad/beneficiarios.php">Emprendedores</a></li>
-
-            <li class="divider"></li>
-            <li><a href="../discapacidad/organizaciones.php">Organizaciones</a></li>
-
+          <li><a href="../recorte_gral/informes.php">Informes de Detalle</a></li>
+          <li><a href="../recorte_gral/informes_grupales.php">Informes Grupales</a></li>
         </ul>
       </li>
+      <?php }; ?>
         <?php
         $txt_que_user = "select * from tb_usuarios_sistemas where uss_us_id = ".$_SESSION["id_us"]." and uss_sistema != ".$_SESSION["sector"] ;
         $que_user = mysql_query($txt_que_user);

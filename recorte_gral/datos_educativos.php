@@ -137,7 +137,6 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
               <th>Nombre del Curso</th>
               <th>Situación</th>
               <th>Año</th>
-							<th>Instituo/Entidad</th>
               <th></th>
             </tr>
            </thead>
@@ -152,7 +151,6 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 						  <td><?php echo BuscaRegistro ("tb_formacion_profesional", "fp_id", $lis_dat['bfp_fp_id'], "fp_name"); ?></td>
 						  <td><?php echo (BuscaRegistro ("tb_situaciones_curso", "sc_id", $lis_dat['bfp_situacion'], "sc_name")); ?></td>
 						  <td><?php echo $lis_dat['bfp_year']; ?> </td>
-							<td><?php echo $lis_dat['bfp_entidad']; ?> </td>
 							<td><a href="tools/quitar.php?val=<?php echo $lis_dat['bfp_id']; ?>&id=bfp_id&tabla=tb_beneficiario_formacion_profesional"  title="eliminar" class="fancybox fancybox.iframe" id="quita_curso"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a></td>
             </tr>
             <?php
@@ -174,33 +172,27 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
 	                  <div class="requerido" id="falta_curso_propio">Falta completar este campo</div>
                 </div>
                 </div>
-                <div class="col-xs-12 col-md-3">
+                <div class="col-xs-12 col-md-4">
                 <div class="form-group">
                 <?php echo SelectGeneral("bfp_situacion", "form-control", "situado", "Situación:", "tb_situaciones_curso", "sc_id", "sc_name"); ?>
                 </div>
                 </div>
-                <div class="col-xs-12 col-md-2">
-	                <div class="form-group">
-		                <label>Año</label>
-		                <select name="bfp_year" class="form-control" id="motivoins">
-		                <option></option>
-		                   <?php
-		                   $ano = date("Y");
-		                      while($ano > 1959){
-		                        echo '<option value="'.$ano.'">'.$ano.'</option>';
-		                        $ano--;
-		                      }
-		                      ?>
-		                </select>
-									</div>
+                <div class="col-xs-12 col-md-4">
+                <div class="form-group">
+                <label>Año</label>
+                <select name="bfp_year" class="form-control" id="motivoins">
+                <option></option>
+                   <?php
+                   $ano = date("Y");
+                      while($ano > 1959){
+                        echo '<option value="'.$ano.'">'.$ano.'</option>';
+                        $ano--;
+                      }
+                      ?>
+                   </select>
+
                 </div>
-
-								<div class="col-xs-12 col-md-3">
-									 <div class="form-group">
-										 <?php echo InputGeneral("text", "bfp_entidad", "form-control", "entidad", "curso realizado en..", "Instituto / Entidad:"); ?>
-									 </div>
-								</div>
-
+                </div>
                 </div>
                 <input type="hidden" name="paso" value="1005">
 								<input type="hidden" name="id_us" value="<?php echo $_SESSION["id_us"]; ?>">

@@ -831,6 +831,30 @@ if($_POST['paso']==777){ // Alta Salud/Discapacidad
 	header("location: detalle_persona.php?dp_id=$dp_id");
 }
 
+if($_POST['paso']==7){ // Alta Capacitaciones Emprendedor
+
+	$capa = new EmpCapacitacion();
+	$capa->ec_dp_id = $_POST['dp_id'];
+	$capa->ec_or_id = $_POST['nro_org'];
+	$capa->ec_motivo = $_POST['nro_motivo'];
+	$capa->ec_anio = $_POST['ec_anio'];
+	$capa->save();
+
+	$histori = new Historial();
+	$histori->hi_us_id = $_POST['id_us'];
+	$histori->hi_dp_id = $_POST['dp_id'];
+	$histori->hi_detalle = "Alta Capacitación Emprendedor";
+	$histori->save();
+
+	$dp_id = $_POST['dp_id'];
+	$em_id = $_POST['em_id'];
+	if(empty($_POST['estado'])){
+	header("location: datos_capacitaciones.php?dp_id=$dp_id&em_id=$em_id");
+	} else {
+	header("location: datos_capacitaciones.php?dp_id=$dp_id&em_id=$em_id&estado=E");
+	}
+}
+
 if($_POST['paso']==700){ //Update Entrevista Datos Laborales
 
  	$dp_id = $_POST['dp_id'];
@@ -882,6 +906,24 @@ if($_POST['paso']==70){ //Alta Datos Laborales
 	$dp_id = $_POST['dp_id'];
 
 	header("location: datos_laboral.php?dp_id=$dp_id");
+}
+
+if($_POST['paso']==18){ // Update entrevista - Capacitaciones Recibidas
+
+	$dp_id = $_POST['dp_id'];
+
+	$prox = "detalle_persona.php?dp_id=$dp_id";
+
+	$entre = AltaEntrevista::find_by_ent_sis_and_ent_dp_id_and_ent_ten_id($_SESSION['sistema'], $dp_id,1);
+  $ent_id = $entre->ent_id;
+  if(isset($ent_id)){
+   $recor = AltaEntrevista::find($ent_id);
+   $recor->ent_fin = '1';
+   $recor->ent_us = $_POST['id_us'];
+   $recor->save();
+	}
+
+	header("location: $prox");
 }
 
 
@@ -1094,12 +1136,17 @@ if($_POST['paso']==15){ // Datos de la Vivienda
 	if (isset($_POST['hog_cielorraso'])) {
   	$sal->hog_cielorraso = $_POST['hog_cielorraso'];
 	}
+	if (isset($_POST['hog_revoque'])) {
+  	$sal->hog_revoque = $_POST['hog_revoque'];
+	}
  	$sal->save();
 
 	$servi = HogarServicio::find_by_hos_ho_id($hogar_id);
 	if (!isset($servi)) {$servi = new HogarServicio();}
   $servi->hos_ho_id = $hogar_id;
-  if(isset($_POST['hos_electricidad'])) {$servi->hos_electricidad = $_POST['hos_electricidad'];}
+  if(isset($_POST['hos_electricidad'])) {$servi->hos_electricidad = $_POST['hos_electricidad'];} else {
+  	$servi->hos_electricidad = "";
+  }
 
   if(isset($_POST['hos_telefono'])) {$servi->hos_telefono = $_POST['hos_telefono'];}
   $servi->hos_acceso_agua = $_POST['hos_acceso_agua'];
@@ -1130,10 +1177,24 @@ if($_POST['paso']==15){ // Datos de la Vivienda
 	$prop = HogarPropiedad::find_by_pr_ho_id($hogar_id);
 	if (!isset($prop)) {$prop = new HogarPropiedad();}
 	$prop->pr_ho_id = $hogar_id;
-	$prop->pr_propiedad = $_POST['pr_propiedad'];
+//	$prop->pr_propiedad = $_POST['pr_propiedad'];
 	$prop->pr_ocupacion = $_POST['pr_ocupacion'];
 	$prop->pr_uso = $_POST['pr_uso'];
+	$prop->pr_documentacion = $_POST['pr_documentacion'];
 	$prop->save();
+
+	$histLoc = LocacionesViviendas::find_by_hi_ho_id($hogar_id);
+	if (!isset($histLoc)) {$histLoc = new LocacionesViviendas();
+		$histLoc->hi_ho_id = $hogar_id;}
+	if(isset($_POST['hi_years_lote'])){$histLoc->hi_years_lote = $_POST['hi_years_lote'];}
+	if(isset($_POST['hi_years_barrio'])){$histLoc->hi_years_barrio = $_POST['hi_years_barrio'];}
+	if(isset($_POST['hi_razon_mudar'])){$histLoc->hi_razon_mudar = $_POST['hi_razon_mudar'];}
+	if(isset($_POST['hi_conquien_vivia'])){$histLoc->hi_conquien_vivia = $_POST['hi_conquien_vivia'];}
+	if(isset($_POST['hi_estado_vivia'])){$histLoc->hi_estado_vivia = $_POST['hi_estado_vivia'];}
+	if(isset($_POST['hi_provincia_vivia'])){$histLoc->hi_provincia_vivia = $_POST['hi_provincia_vivia'];}
+	if(isset($_POST['hi_localidad_vivia'])){$histLoc->hi_localidad_vivia = $_POST['hi_localidad_vivia'];}
+	if(isset($_POST['hi_barrio_vivia'])){$histLoc->hi_barrio_vivia = $_POST['hi_barrio_vivia'];}
+	$histLoc->save();
 
 	$enc = Encuesta::find_by_enc_hogar($hogar_id);
 	if (!isset($enc)) {$enc = new Encuesta();}
@@ -1232,7 +1293,6 @@ if($_POST['paso']==1005){ // Alta Datos Formación Profesional (Datos Educativos
 	$benfp->bfp_situacion = $_POST['bfp_situacion'];
   $benfp->bfp_dp_id = $_POST['dp_id'];
   $benfp->bfp_year = $_POST['bfp_year'];
-	$benfp->bfp_entidad = $_POST['bfp_entidad'];
 	$benfp->save();
 
 	$histori = new Historial();

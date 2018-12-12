@@ -1,9 +1,11 @@
 $(document).ready(function() {
+    var ruta_autocomp = window.location.origin + "/sigt/recorte_gral/tools/autocom.php"
+		var ruta_autocomp1 = window.location.origin + "/sigt/recorte_gral/tools/autocom1.php"
 		$("#dpcalle").keyup(function(){
 			  if($("#dpcalle").val().length>1){
                 $("#listado_calles").show();
 
-                  $.post("../recorte_gral/tools/autocom.php",{busca: $("#dpcalle").val()}, function(htmlexterno){
+                  $.post(ruta_autocomp,{busca: $("#dpcalle").val()}, function(htmlexterno){
                       $("#listado_calles").html(htmlexterno);
                   });
 
@@ -13,7 +15,7 @@ $(document).ready(function() {
                         $("#listado_calles").hide();
                         $("#falta_calle").hide();
                         $("#geoloc").removeAttr("disabled");
-                        $.post("../recorte_gral/tools/autocom1.php",{busca: $("#dpcalle").val()},function(result){
+                        $.post(ruta_autocomp1,{busca: $("#dpcalle").val()},function(result){
                     $("#valor_calle").val(result);
                 });
                         return false;

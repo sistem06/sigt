@@ -44,7 +44,8 @@
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Informes <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a href="../empleo/informes.php">Informes de detalle</a></li>
+          <li><a href="../recorte_gral/informes.php">Informes de Detalle</a></li>
+          <li><a href="../recorte_gral/informes_grupales.php">Informes Grupales</a></li>
         </ul>
       </li>
       <?php }; ?>

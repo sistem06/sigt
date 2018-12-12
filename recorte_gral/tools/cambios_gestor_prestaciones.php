@@ -21,8 +21,10 @@ include ("../../funciones/funciones_form.php");
 if (!empty($_GET['tbp_pr_id'])){
   $titulo = "Modificar Prestación";
   $titulo_boton = "Hacer Cambios";
-  $select_car = "<option></option>";
-  $select_tipo = '<option value="'.BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_GET['tbp_pr_id'],"tbp_pt_id").'">'.BuscaRegistro("tbp_prestacion_type","pt_id",BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_GET['tbp_pr_id'],"tbp_pt_id"),"pt_name").'</option>';
+  if(BuscaRegistro("tbp_prestacion_type","pt_id",BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_GET['tbp_pr_id'],"tbp_pt_id"),"pt_gr")==0){
+  $select_car = '<option value="0">Individual</option>'; } else { $select_car = '<option value="1">Grupal</option>'; }
+  $select_tipo = "<option></option>";
+ // $select_tipo = '<option value="'.BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_GET['tbp_pr_id'],"tbp_pt_id").'">'.BuscaRegistro("tbp_prestacion_type","pt_id",BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_GET['tbp_pr_id'],"tbp_pt_id"),"pt_name").'</option>';
   $input_name = BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_GET['tbp_pr_id'],"tbp_pr_name");
   if(BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_GET['tbp_pr_id'],"tbp_in_compartida")==1){$input_comparte = " checked ";} else {$input_comparte = "";}
   $fechin = BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_GET['tbp_pr_id'],"tbp_pr_fecha_in");
@@ -103,6 +105,9 @@ if (!empty($_GET['tbp_pr_id'])){
 <input type="hidden" name="usuario" value="<?php echo $_SESSION['id_us']; ?>" />
 
 <input type="hidden" name="tabla" value="tbp_prestaciones_lista" />
+
+<input type="hidden" id="estipo" value="<?php echo BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_GET['tbp_pr_id'],"tbp_pt_id"); ?>" />
+
 </form>
 </div>
    <script type="text/javascript" src="../../js/jquery.js"></script>
@@ -158,6 +163,15 @@ if (!empty($_GET['tbp_pr_id'])){
             $("#tipo").html(tipos);
           });
         });
+
+        if($("#caracteristicas").val() != ""){
+          var car = $("#caracteristicas").val();
+          var estipo = $("#estipo").val();
+        //  alert(car);
+          $.get("busca_car.php",{car:car, estipo:estipo},function(tipos){
+            $("#tipo").html(tipos);
+          });
+        }
     });
 </script>
 </body>

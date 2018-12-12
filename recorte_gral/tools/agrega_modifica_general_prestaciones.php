@@ -61,20 +61,32 @@
 		if(isset($_POST['finaliza'])){
 			$txt = "UPDATE tbp_capacitaciones SET pbcap_estado = '9' where pcap_pb_id = '".$_POST['pb_id']."'";
 			mysql_query($txt);
+			$txt = "UPDATE tbp_prestaciones_beneficiarios SET pb_state = '9' where pb_id = '".$_POST['pb_id']."'";
+			mysql_query($txt);
 		}
 
 	}
 
 	if($_POST['tabla']=="tbp_seg_temp"){
 
-		$texto = "Se completarion los datos de la capacitación exitosamente";
+		$texto = "Se completaron los datos de la capacitación exitosamente";
 		$error = "";
 
 		$txt = "UPDATE tbp_seg_temp SET st_estado = '".$_POST['st_estado']."' where st_pb_id = '".$_POST['pb_id']."'";
 			mysql_query($txt);
 
+		$txt = "UPDATE tbp_prestaciones_beneficiarios SET pb_state = '".$_POST['st_estado']."' where pb_id = '".$_POST['pb_id']."'";
+			mysql_query($txt);
+
 		$txt = "UPDATE tbp_seg_temp SET st_detalle = '".$_POST['st_detalle']."' where st_pb_id = '".$_POST['pb_id']."'";
 			mysql_query($txt);
+
+	}
+
+	if($_POST['tabla']=="tbp_creditos"){
+
+		$texto = "Se completaron los datos del credito exitosamente";
+		$error = "";
 
 	}
 	?>

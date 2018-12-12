@@ -85,18 +85,49 @@
 			 mysql_query("UPDATE tbp_prestaciones SET pre_hora = '$pre_hora' WHERE pre_id = '$pre_id'");
 			}
 
-			$text_add = "INSERT INTO tbp_prestaciones_beneficiarios (pb_pre_id, pb_dp_id) VALUES ('".$pre_id."', '".$dp_id."')";
+			if(isset($_POST['il_actividad'])){
+				$il_actividad = $_POST['il_actividad'];
+				mysql_query("INSERT INTO tbp_intermediacion_laboral (il_pb_id) VALUES ('$pre_id')");
+			 mysql_query("UPDATE tbp_intermediacion_laboral SET il_actividad = '$il_actividad' WHERE il_pb_id = '$pre_id'");
+			}
+
+			if(isset($_POST['il_rubro'])){
+				$il_rubro = $_POST['il_rubro'];
+			 mysql_query("UPDATE tbp_intermediacion_laboral SET il_rubro = '$il_rubro' WHERE il_pb_id = '$pre_id'");
+			}
+
+			if(isset($_POST['il_subrubro'])){
+				$il_subrubro = $_POST['il_subrubro'];
+			 mysql_query("UPDATE tbp_intermediacion_laboral SET il_subrubro = '$il_subrubro' WHERE il_pb_id = '$pre_id'");
+			}
+
+			if(isset($_POST['il_direccion_empresa'])){
+				$il_direccion_empresa = $_POST['il_direccion_empresa'];
+			 mysql_query("UPDATE tbp_intermediacion_laboral SET il_direccion_empresa = '$il_direccion_empresa' WHERE il_pb_id = '$pre_id'");
+			}
+
+			if(BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_POST['prestacion'],"tbp_pt_id") != 4 and BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_POST['prestacion'],"tbp_pt_id") != 10 and BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_POST['prestacion'],"tbp_pt_id") != 11 and BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_POST['prestacion'],"tbp_pt_id") != 2){
+
+			$text_add = "INSERT INTO tbp_prestaciones_beneficiarios (pb_pre_id, pb_dp_id, pb_state) VALUES ('".$pre_id."', '".$dp_id."', '9')";
 			mysql_query($text_add);
 
-			if(BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_POST['prestacion'],"tbp_pt_id") == 4 or BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_POST['prestacion'],"tbp_pt_id") == 10 or BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_POST['prestacion'],"tbp_pt_id") == 11){
+				} else {
+			$text_add = "INSERT INTO tbp_prestaciones_beneficiarios (pb_pre_id, pb_dp_id, pb_state) VALUES ('".$pre_id."', '".$dp_id."', '0')";
+			mysql_query($text_add);
+
+				}
+
+			// busco el ultimo
 				$dat = mysql_fetch_array(mysql_query("SELECT pb_id FROM tbp_prestaciones_beneficiarios order by pb_id desc limit 1"));
-			$pb_id = $dat['pb_id'];
+				$pb_id = $dat['pb_id'];
+			// fin
+
+			if(BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_POST['prestacion'],"tbp_pt_id") == 4 or BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_POST['prestacion'],"tbp_pt_id") == 10 or BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_POST['prestacion'],"tbp_pt_id") == 11){
+				
 			mysql_query("INSERT INTO tbp_seg_temp (st_pb_id) VALUES ('$pb_id')");
 			}
 
 			if(BuscaRegistro("tbp_prestaciones_lista","tbp_pr_id",$_POST['prestacion'],"tbp_pt_id") == 2){
-				$dat = mysql_fetch_array(mysql_query("SELECT pb_id FROM tbp_prestaciones_beneficiarios order by pb_id desc limit 1"));
-				$pb_id = $dat['pb_id'];
 
 				$i=1;
 				$aa = substr($_POST['pre_fecha'],0,4);
@@ -115,6 +146,8 @@
 				}
 				mysql_query("UPDATE tbp_prestaciones SET pre_fecha_out = '$fecha' WHERE pre_id = '$pre_id'");
 			}
+
+
 
 			header("Location: ../detalle_persona.php?dp_id=$dp_id");
 

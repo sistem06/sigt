@@ -41,7 +41,7 @@
     </div>
    </div>
    <div class="col-xs-12 col-md-4">
-  <div class="form-group has-success">
+  <div class="form-group">
    <?php echo SelectGeneral("dp_parentesco", "form-control", "dpparentesco", "Parentesco:","tb_parentesco", "par_id", "par_name"); ?>
    <div class="requerido" id="falta_parentesco">Falta completar este campo</div>
   </div>

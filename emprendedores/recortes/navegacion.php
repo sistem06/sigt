@@ -43,16 +43,12 @@
         </ul>
       </li>
      <?php }; ?>
-     <?php if($_SESSION['sector']<>4){ ?>
-     <li class="dropdown">
+      <?php if($_SESSION['sector']<>4){ ?>
+      <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Informes <b class="caret"></b></a>
         <ul class="dropdown-menu">
-
-            <li><a href="../emprendedores/beneficiarios.php">Emprendedores</a></li>
-
-            <li class="divider"></li>
-            <li><a href="../emprendedores/organizaciones.php">Organizaciones</a></li>
-
+          <li><a href="../recorte_gral/informes.php">Informes de Detalle</a></li>
+          <li><a href="../recorte_gral/informes_grupales.php">Informes Grupales</a></li>
         </ul>
       </li>
       <?php }; ?>

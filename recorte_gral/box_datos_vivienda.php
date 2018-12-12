@@ -19,7 +19,7 @@ echo '
       <p>Cant. de Hogares en el Lote: <strong>'.BuscaRegistro ("tb_hogar", "ho_id", $hogar_id, "ho_hogares_lote").'</strong></p>
       <p>Fecha de fijación del domicilio: <strong>'.BuscaRegistro ("tb_hogar", "ho_id", $hogar_id, "ho_inicio").'</strong></p>';
 
-      $prop = BuscaRegistro("tb_hogar_propiedad", "pr_ho_id", $hogar_id, "pr_propiedad");
+      $documentacion = BuscaRegistro("tb_hogar_propiedad", "pr_ho_id", $hogar_id, "pr_documentacion");
       $ocup = BuscaRegistro("tb_hogar_propiedad", "pr_ho_id", $hogar_id, "pr_ocupacion");
       $uso = BuscaRegistro("tb_hogar_propiedad", "pr_ho_id", $hogar_id, "pr_uso");
 
@@ -32,9 +32,10 @@ echo '
       }
 
       echo '
-      <p>Propiedad del Terreno: <strong>'.BuscaRegistro ("tb_tipo_propiedad", "tp_id", $prop, "tp_name").'</strong></p>
-      <p>Condición de ocupación: <strong>'.BuscaRegistro ("tb_condicion_ocupacion", "co_id", $ocup, "co_name").'</strong></p>
-      <p>Condición de uso: <strong>'.BuscaRegistro ("tb_condicion_uso", "cu_id", $uso, "cu_name").'</strong></p>
+      <p>La vivienda que ocupa es?: <strong>'.BuscaRegistro ("tb_condicion_uso", "cu_id", $uso, "cu_name").'</strong></p>
+
+      <p>El terreno es..: <strong>'.BuscaRegistro ("tb_condicion_ocupacion", "co_id", $ocup, "co_name").'</strong></p>
+      <p>Documentación de la Vivienda: <strong>'.BuscaRegistro ("tb_documentacion_vivienda", "dv_id", $documentacion, "dv_name").'</strong></p>
       <a href="datos_vivienda.php?dp_id='.$_GET['dp_id'].'"><button type="button" '.$disabled.' class="btn btn-warning">'.$btn_label.'</button></a>
     </div>
   </div>

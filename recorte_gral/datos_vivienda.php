@@ -13,7 +13,7 @@ include ("../funciones/funciones_form.php");
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../css/bootstrap.min.css">
   <link rel="stylesheet" href="../assets/estilos_ss.css">
-  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
 </head>
 <body>
 <?php include("encabezado.php"); ?>
@@ -66,11 +66,12 @@ if (isset($ho_id)) {
       }
 			if(isset($ho_id)) {
 		 		$prev = BuscaRegistro("tb_hogar", "ho_id", $ho_id, "ho_inicio");
-		 		$inicio = new \DateTime($prev);
-		 		$month = $inicio->format('m');
-		 		$year = $inicio->format('Y');
+		 		$inicio = explode('-', $prev);
+		 		if($inicio[1] != '00') { $month = $inicio[1]; } else { $month = "";}
 		 		echo '<option value="'.$month.'" selected = "selected">'.$month.'</option>';
 				unset($prev);
+	 	  } else {
+	 	  	echo '<option value="" selected = "selected"></option>';
 	 	  }
     ?>
    </select>
@@ -86,11 +87,12 @@ if (isset($ho_id)) {
       }
 			if(isset($ho_id)) {
 		 		$prev = BuscaRegistro("tb_hogar", "ho_id", $ho_id, "ho_inicio");
-		 		$inicio = new \DateTime($prev);
-		 		$month = $inicio->format('m');
-		 		$year = $inicio->format('Y');
+		 		$inicio = explode('-', $prev);
+		 		if($inicio[0] != '0000') { $year = $inicio[0]; } else { $year = ""; }
 		 		echo '<option value="'.$year.'" selected = "selected">'.$year.'</option>';
 				unset($prev);
+	 	  } else {
+	 	  	echo '<option value="" selected = "selected"></option>';
 	 	  }
       ?>
    </select>
@@ -205,6 +207,17 @@ if (isset($ho_id)) {
 			?>
 		</div>
 	</div>
+
+	<div class="col-xs-12 col-md-4">
+  	<div class="form-group">
+			<label>¿Las paredes externas tienen revoque o revestimiento externo?</label>
+			<div class="radio">
+				<label><input name="hog_revoque" type="radio" value="1" <?php if(BuscaRegistro ("tb_hogar_general", "hog_ho_id", $ho_id, "hog_revoque")==1) echo 'checked'; ?>> Si | </label>
+				<label><input name="hog_revoque" type="radio" value="0" <?php if(BuscaRegistro ("tb_hogar_general", "hog_ho_id", $ho_id, "hog_revoque")==0) echo 'checked'; ?>> No | </label>
+				<label><input name="hog_revoque" type="radio" value="3" <?php if(BuscaRegistro ("tb_hogar_general", "hog_ho_id", $ho_id, "hog_revoque")==3) echo 'checked'; ?>> Ignorado </label>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="row">
 	<div class="col-xs-12 col-md-4">
@@ -216,8 +229,9 @@ if (isset($ho_id)) {
 			?>
 		</div>
 	</div>
-  <div class="col-xs-12 col-md-4">
-    <div id="aa1" style="display:none;">
+ 
+    <div id="aa1" style="display:none;"> 
+    <div class="col-xs-12 col-md-4">
 			<div class="form-group">
 				<label>Las paredes exteriores tienen revestimiento?</label>
 				<div class="radio">
@@ -226,7 +240,10 @@ if (isset($ho_id)) {
 				</div>
 			</div>
   	</div>
-		<div id="aa2" style="display:none;">
+  </div>
+
+  <div class="col-xs-12 col-md-4">
+		<div id="aa2">
 			<div class="form-group">
 				<?php
 					$prev = BuscaRegistro("tb_hogar_general", "hog_ho_id", $ho_id, "hog_revestimiento_techo");
@@ -392,36 +409,178 @@ if (isset($ho_id)) {
 </div>
 
 <div class="row">
-	<div class="col-xs-12 col-md-4">
-  	<div class="form-group">
-			<?php
-				$prev = BuscaRegistro("tb_hogar_propiedad", "pr_ho_id", $ho_id, "pr_propiedad");
-				echo SelectGeneralVal("pr_propiedad", "form-control", "idpropiedad", "Propiedad del terreno:","tb_tipo_propiedad", "tp_id", "tp_name",$prev);
-				unset($prev);
-			?>
-		</div>
-	</div>
-	<div class="col-xs-12 col-md-4">
-  	<div class="form-group">
-			<?php
-				$prev = BuscaRegistro("tb_hogar_propiedad", "pr_ho_id", $ho_id, "pr_ocupacion");
-				echo SelectGeneralVal("pr_ocupacion", "form-control", "idocupacion", "Condición de ocupación:","tb_condicion_ocupacion", "co_id", "co_name",$prev);
-				unset($prev);
-			?>
-		</div>
-	</div>
+
 	<div class="col-xs-12 col-md-4">
   	<div class="form-group">
 			<?php //echo SelectGeneral("pr_uso", "form-control", "iduso", "Condición de uso:", "tb_condicion_uso", "cu_id", "cu_name"); ?>
 			<?php
 				$prev = BuscaRegistro("tb_hogar_propiedad", "pr_ho_id", $ho_id, "pr_uso");
-				echo SelectGeneralVal("pr_uso", "form-control", "iduso", "Condición de uso:","tb_condicion_uso", "cu_id", "cu_name",$prev);
+				echo SelectGeneralVal("pr_uso", "form-control", "iduso", "La vivienda que ocupa es?","tb_condicion_uso", "cu_id", "cu_name",$prev);
 				unset($prev);
 			?>
 		</div>
 	</div>
+
+	<div class="col-xs-12 col-md-4">
+  	<div class="form-group">
+			<?php
+				$prev = BuscaRegistro("tb_hogar_propiedad", "pr_ho_id", $ho_id, "pr_ocupacion");
+				echo SelectGeneralVal("pr_ocupacion", "form-control", "idocupacion", "El terreno es..","tb_condicion_ocupacion", "co_id", "co_name",$prev);
+				unset($prev);
+			?>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-md-4">
+  	<div class="form-group">
+			<?php
+				$prev = BuscaRegistro("tb_hogar_propiedad", "pr_ho_id", $ho_id, "pr_documentacion");
+				echo SelectGeneralVal("pr_documentacion", "form-control", "iddocumentacion", "Documentación de la Vivienda:","tb_documentacion_vivienda", "dv_id", "dv_name",$prev);
+				unset($prev);
+			?>
+		</div>
+	</div>
+	
+	
 </div>
 	<!-- Fin contenido -->
+
+<!-- nuevo historial -->
+<div class="panel panel-info">
+  <div class="panel-heading">
+  <h3 class="panel-title">
+  <span class="glyphicon glyphicon-time"></span>  Historial de Locaciones </div>
+  </h3>
+</div>
+
+<div class="row">
+	<div class="col-xs-12 col-md-6">
+  	<div class="form-group">
+			<?php
+				$prev = BuscaRegistro("tb_historial_locaciones", "hi_ho_id", $ho_id, "hi_years_lote");
+				?>
+				<label>¿Cuantos años vive en este lote?</label>
+				<select name="hi_years_lote" class="form form-control">
+					<?php
+					echo '<option value="'.$prev.'">'.$prev.'</option>';
+						$i=0;
+						while($i<81){
+							echo '<option value="'.$i.'">'.$i.'</option>';
+							$i++;
+						}
+					?>
+				</select>
+				<?php
+				unset($prev);
+			?>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-md-6">
+  	<div class="form-group">
+			<?php
+				$prev = BuscaRegistro("tb_historial_locaciones", "hi_ho_id", $ho_id, "hi_years_barrio");
+				?>
+				<label>¿Cuantos años vive en este barrio?</label>
+				<select name="hi_years_barrio" id="years_barrio" class="form form-control">
+					<?php
+					echo '<option value="'.$prev.'">'.$prev.'</option>';
+					echo '<option value="999">Desde Siempre</option>';
+						$i=0;
+						while($i<81){
+							echo '<option value="'.$i.'">'.$i.'</option>';
+							$i++;
+						}
+					?>
+				</select>
+				<?php
+				unset($prev);
+			?>
+		</div>
+	</div>
+
+
+</div>
+
+<div id="mas_historial" style="display:none;">
+	<div class="row">
+		
+		<div class="col-xs-12 col-md-4">
+  	<div class="form-group">
+			<?php
+				$prev = BuscaRegistro("tb_historial_locaciones", "hi_ho_id", $ho_id, "hi_razon_mudar");
+				echo SelectGeneralVal("hi_razon_mudar", "form-control", "idmudar", "Se mudo porque...","tb_razones_mudar", "rm_id", "rm_name",$prev);
+				unset($prev);
+			?>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-md-4">
+  	<div class="form-group">
+			<?php
+				$prev = BuscaRegistro("tb_historial_locaciones", "hi_ho_id", $ho_id, "hi_conquien_vivia");
+				echo SelectGeneralVal("hi_conquien_vivia", "form-control", "idconquien", "Con quien vivia?","tb_conquien_vivia", "cqv_id", "cqv_name",$prev);
+				unset($prev);
+			?>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-md-4">
+  	<div class="form-group">
+			<?php
+				$prev = BuscaRegistro("tb_historial_locaciones", "hi_ho_id", $ho_id, "hi_estado_vivia");
+				echo SelectGeneralVal("hi_estado_vivia", "form-control", "idestado", "En el lugar donde vivia","tb_lugar_vivia", "lv_id", "lv_name",$prev);
+				unset($prev);
+			?>
+		</div>
+	</div>
+
+	</div>
+
+	<div class="row">
+		
+		<div class="col-xs-12 col-md-4">
+  	<div class="form-group">
+			<?php
+				$prev = BuscaRegistro("tb_historial_locaciones", "hi_ho_id", $ho_id, "hi_provincia_vivia");
+				echo SelectGeneralVal("hi_provincia_vivia", "form-control", "provincia_vivia", "Provincia donde vivia anteriormente","tb_provincias", "pr_id", "pr_name",$prev);
+				unset($prev);
+			?>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-md-4">
+  	<div class="form-group">
+  		<label>Ciudad donde vivia anteriormente</label>
+  		<select name = "hi_localidad_vivia" class="form-control" id="localidad_vivia">
+  			<?php
+				$prev = BuscaRegistro("tb_historial_locaciones", "hi_ho_id", $ho_id, "hi_localidad_vivia");
+				$prev1 = BuscaRegistro("tb_localidades_pais", "loc_id", $prev, "loc_name");
+				echo '<option value="'.$prev.'">'.$prev1.'</option>';
+				unset($prev);
+				unset($prev1);
+			?>
+
+  		</select>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-md-4">
+  	<div class="form-group">
+			<?php
+				$prev = BuscaRegistro("tb_historial_locaciones", "hi_ho_id", $ho_id, "hi_barrio_vivia");
+				echo InputGeneralVal("text", "hi_barrio_vivia", "form-control", "ubicacion", "escriba el barrio donde vivia", "Barrio donde vivia anteriormente:",$prev);
+				unset($prev);
+			?>
+			<div id="listado_barrios" class="listado_rubros"></div>
+		</div>
+	</div>
+
+	</div>
+
+</div>
+
+<!-- fin historial -->
 
 	<button type="submit" class="btn btn-info" id="envia1">Guardar</button>
 	<input type="hidden" name="paso" value="15">
@@ -440,6 +599,53 @@ if (isset($ho_id)) {
 	<script type="text/javascript" language="javascript">
 		 $(document).ready(function() {
 
+		 	if($("#years_barrio").val()!="" && $("#years_barrio").val()!=999){
+		 			$("#mas_historial").show();
+		 		} else {
+		 			$("#mas_historial").hide();
+		 		}
+
+		 	$("#provincia_vivia").change(function(){
+		 		var prov = $("#provincia_vivia").val();
+		 		$.get("tools/busca_localidad.php",{loc_pr_id : prov}, function(datos_loc){
+		 			$("#localidad_vivia").html(datos_loc);
+		 		});
+		 	});
+
+		/* 	$("#localidad_vivia").change(function(){
+		 		alert($("#localidad_vivia").val());
+		 	});*/
+
+		 	if($("#localidad_vivia").val()==3708){
+
+		 		$("#ubicacion").keyup(function(){
+            if($("#ubicacion").val().length>1){
+                $("#listado_barrios").show();
+                 $.get("tools/busca_ubi_barrio.php",{busca: $("#ubicacion").val()}, function(htmlexterno1){
+                      $("#listado_barrios").html(htmlexterno1);
+                  });
+                 $("#listado_barrios").on("click", ".cada_elemento a", function(){
+                      var dato = $(this).attr("value");
+                      var parte_dato = dato.split('|');
+                        $("#ubicacion").val(parte_dato[0]);
+                        $("#listado_barrios").hide();
+
+                        return false;
+                 });
+            } else {
+              $("#listado_barrios").hide();
+            }
+          });
+		 	}
+
+		 	$("#years_barrio").change(function(){
+		 		if($("#years_barrio").val()!="" && $("#years_barrio").val()!=999){
+		 			$("#mas_historial").show();
+		 		} else {
+		 			$("#mas_historial").hide();
+		 		}
+		 	});
+
 			 $("#parte1").keypress(function(e) {
 					 if (e.which == 13) {
 					 return false;
@@ -453,10 +659,10 @@ if (isset($ho_id)) {
 		   $("#idmparedes").change(function () {
 	       if ($(this).val()==1) {
 		       $("#aa1").show();
-		       $("#aa2").hide();
+		      
 		       } else {
 		       $("#aa1").hide();
-		       $("#aa2").show();
+		       
 	       }
        });
 

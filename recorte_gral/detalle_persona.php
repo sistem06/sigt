@@ -275,15 +275,23 @@ include ("../funciones/funciones_prestaciones.php");
                                  echo "<br>";
                                 break;
 
+                                case '15':
+
+                                echo "Fecha: <b>".$data_pre_p['pre_fecha']."</b> - Ubicación: <b>".BuscaRegistro("tb_barrios_gloc","bar_id",$data_pre_p['pre_ubicacion'],"bar_name")."</b><br>";
+                                echo "Dirección de la empresa: <b>".BuscaRegistro("tbp_intermediacion_laboral","il_pb_id",$data_pre_p['pre_id'],"il_direccion_empresa")."</b>";
+                                 echo "<br>";
+                                 echo "Actividad: <b>".BuscaRegistro("tbp_actividades","act_id",BuscaRegistro("tbp_intermediacion_laboral","il_pb_id",$data_pre_p['pre_id'],"il_actividad"),"act_name")."</b> - Rubro: <b>".BuscaRegistro("tbp_rubro1","rb1_id",BuscaRegistro("tbp_intermediacion_laboral","il_pb_id",$data_pre_p['pre_id'],"il_rubro"),"rb1_name")."</b> - Subrubro: <b>".BuscaRegistro("tbp_rubro2","rb2_id",BuscaRegistro("tbp_intermediacion_laboral","il_pb_id",$data_pre_p['pre_id'],"il_subrubro"),"rb2_name")."</b>";
+                                 echo "<br>";
+                                break;
+
                             }
-					    if(BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_p['tbp_pt_id'],"pt_temp")==1){
-					      LinkEstado ($data_pre_p['pb_id'], BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_p['tbp_pt_id'],"pt_id"));
-					      echo ' ';
-					    }
-					    echo '<button type="button" class="btn btn-info btn-sm">
-					    <span class="glyphicon glyphicon-pencil"></span></button> ';
-					    echo '<a href="tools/quitar_prestacion.php?tabla=tbp_prestaciones_beneficiarios&id=pb_id&val='.$data_pre_p['pb_id'].'&tipo='.BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_p['tbp_pt_id'],"pt_gr").'&pre_id='.$data_pre_p['pre_id'].'" class="fancybox fancybox.iframe"><button type="button" class="btn btn-warning btn-sm">
-					    <span class="glyphicon glyphicon-trash"></span></button></a> ';
+              if(BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_p['tbp_pt_id'],"pt_temp")==1){
+                LinkEstado ($data_pre_p['pb_id'], BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_p['tbp_pt_id'],"pt_id"));
+                echo ' ';
+              }
+          
+              echo '<a href="tools/quitar_prestacion.php?tabla=tbp_prestaciones_beneficiarios&id=pb_id&val='.$data_pre_p['pb_id'].'&tipo='.BuscaRegistro("tbp_prestacion_type","pt_id",$data_pre_p['tbp_pt_id'],"pt_gr").'&pre_id='.$data_pre_p['pre_id'].'" class="fancybox fancybox.iframe"><button type="button" class="btn btn-warning btn-sm">
+              <span class="glyphicon glyphicon-trash"></span></button></a> ';
 
                        echo "<hr>";
                       }

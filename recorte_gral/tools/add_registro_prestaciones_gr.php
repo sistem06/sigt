@@ -80,6 +80,27 @@
 			 mysql_query("UPDATE tbp_prestaciones SET pre_hora = '$pre_hora' WHERE pre_id = '$pre_id'");
 			}
 
+			if(isset($_POST['il_actividad'])){
+				$il_actividad = $_POST['il_actividad'];
+				mysql_query("INSERT INTO tbp_intermediacion_laboral (il_pb_id) VALUES ('$pre_id')");
+			 mysql_query("UPDATE tbp_intermediacion_laboral SET il_actividad = '$il_actividad' WHERE il_pb_id = '$pre_id'");
+			}
+
+			if(isset($_POST['il_rubro'])){
+				$il_rubro = $_POST['il_rubro'];
+			 mysql_query("UPDATE tbp_intermediacion_laboral SET il_rubro = '$il_rubro' WHERE il_pb_id = '$pre_id'");
+			}
+
+			if(isset($_POST['il_subrubro'])){
+				$il_subrubro = $_POST['il_subrubro'];
+			 mysql_query("UPDATE tbp_intermediacion_laboral SET il_subrubro = '$il_subrubro' WHERE il_pb_id = '$pre_id'");
+			}
+
+			if(isset($_POST['il_direccion_empresa'])){
+				$il_direccion_empresa = $_POST['il_direccion_empresa'];
+			 mysql_query("UPDATE tbp_intermediacion_laboral SET il_direccion_empresa = '$il_direccion_empresa' WHERE il_pb_id = '$pre_id'");
+			}
+
 		
 
 			header("Location: ../alta_prestacion_grupal.php?pre_id=$pre_id");
@@ -94,8 +115,18 @@
 			$dp_id = BuscaRegistro("tb_datos_personales","dp_nro_doc",$_POST['dni'],"dp_id");
 				$pre_query = mysql_query("SELECT pb_id FROM tbp_prestaciones_beneficiarios WHERE (pb_pre_id = '$pre_id' and pb_dp_id = '$dp_id')");
 					if(mysql_num_rows($pre_query)==0){
-			$text_add = "INSERT INTO tbp_prestaciones_beneficiarios (pb_pre_id, pb_dp_id) VALUES ('".$pre_id."', '".$dp_id."')";
+
+						if($_POST['pt_id'] != 3 and $_POST['pt_id'] != 5 and $_POST['pt_id'] != 10 and $_POST['pt_id'] != 2){
+
+			$text_add = "INSERT INTO tbp_prestaciones_beneficiarios (pb_pre_id, pb_dp_id, pb_state) VALUES ('".$pre_id."', '".$dp_id."', '9')";
 			mysql_query($text_add);
+
+		} else {
+
+			$text_add = "INSERT INTO tbp_prestaciones_beneficiarios (pb_pre_id, pb_dp_id, pb_state) VALUES ('".$pre_id."', '".$dp_id."', '0')";
+			mysql_query($text_add);
+
+		}
 
 			$dat = mysql_fetch_array(mysql_query("SELECT pb_id FROM tbp_prestaciones_beneficiarios order by pb_id desc limit 1"));
 				$pb_id = $dat['pb_id'];

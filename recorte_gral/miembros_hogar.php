@@ -185,11 +185,11 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
           return false;
         }
       }
-        if($("#dpparentesco").val()== ""){
-          $("#falta_parentesco").show();
-          $("#dpparentesco").focus();
-          return false;
-        }
+        // if($("#dpparentesco").val()== ""){
+        //   $("#falta_parentesco").show();
+        //   $("#dpparentesco").focus();
+        //   return false;
+        // }
       });
 
       $("#nrodni").keypress(function(tecla) {

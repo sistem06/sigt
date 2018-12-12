@@ -57,7 +57,7 @@ include ("../../funciones/funciones_generales.php");
   				<option></option>
   				<?php
   					$i=1;
-  					while($i < 49){
+  					while($i < 121){
   						echo '<option>'.$i.'</option>';
   						$i++;
   					}
@@ -440,6 +440,63 @@ include ("../../funciones/funciones_generales.php");
 			<textarea id="observaciones" class="form-control" name="pre_observaciones"></textarea>
 		</div>
 	</div>
+</div>
+<?php
+			break;
+
+			case '15':
+?>
+<div class="row">
+	<div class="col-xs-12 col-md-12">
+		<div class="form-group has-success">
+		<label>Dirección de la Empresa:</label>
+  			<input type="text" id="direccion" name="il_direccion_empresa" class="form-control" autocomplete="off">
+ 				<div class="requerido" id="falta_direccion">Falta completar este campo</div>
+	</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-md-4">
+	<div class="form-group has-success">
+		<label>Actividad:</label>
+  			<select id="actividad" name="il_actividad" class="form-control">
+  				<option></option>
+  				<?php
+  				$qa = mysql_query("SELECT * FROM tbp_actividades order by act_name");
+  					while ($aa = mysql_fetch_array($qa)) {
+  						echo '<option value="'.$aa['act_id'].'">'.$aa['act_name'].'</option>';
+  					}
+  				?>
+  			</select>
+  			<div class="requerido" id="falta_actividad">Falta completar este campo</div>
+	</div>
+	</div>
+
+	<div class="col-xs-12 col-md-4">
+	<div class="form-group has-success">
+		<label>Rubro:</label>
+  			<select id="rubro" name="il_rubro" class="form-control">
+  				<option></option>
+  				<?php
+  				$qa = mysql_query("SELECT * FROM tbp_rubro1 order by rb1_name");
+  					while ($aa = mysql_fetch_array($qa)) {
+  						echo '<option value="'.$aa['rb1_id'].'">'.$aa['rb1_name'].'</option>';
+  					}
+  				?>
+  			</select>
+  			<div class="requerido" id="falta_rubro">Falta completar este campo</div>
+	</div>
+	</div>
+
+	<div class="col-xs-12 col-md-4">
+	<div class="form-group has-success">
+		<label>Subrubro:</label>
+  			<select id="subrubro" name="il_subrubro" class="form-control">
+  			</select>
+  			<div class="requerido" id="falta_subrubro">Falta completar este campo</div>
+	</div>
+	</div>
+
 </div>
 <?php
 			break;

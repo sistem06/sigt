@@ -45,8 +45,8 @@ include ("../funciones/funciones_generales.php");
       $qe=mysql_query("select * from tb_calle");
         while($row = mysql_fetch_array($qe)){
   echo '<tr>';
-  echo '<td>'.utf8_encode($row['ca_name']).'</td>';
-  echo '<td>'.utf8_encode($row['ca_gm']).'</td>';
+  echo '<td>'.$row['ca_name'].'</td>';
+  echo '<td>'.$row['ca_gm'].'</td>';
  echo '<td><a href="tools/cambios_calles.php?ca_id='.$row['ca_id'].'"  title="modificar" class="fancybox fancybox.iframe" id="modifica"><button type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></button></a></td>';
  echo '<td>';
    if(NroRegistro ("tb_domicilios", "dom_calle", $row['ca_name'])>0){

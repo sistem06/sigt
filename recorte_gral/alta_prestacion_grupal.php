@@ -410,10 +410,31 @@ include ("../funciones/funciones_form.php");
 
       break;
 
+      case '15':
+            if($("#direccion").val()==""){
+                $("#falta_direccion").show();
+                event.preventDefault();
+              }
+
+            if($("#actividad").val()==""){
+                $("#falta_actividad").show();
+                event.preventDefault();
+              }
+
+            if($("#rubro").val()==""){
+                $("#falta_rubro").show();
+                event.preventDefault();
+              }
+
+            if($("#subrubro").val()==""){
+                $("#falta_subrubro").show();
+                event.preventDefault();
+              }
+
+      break;
 
     }
   });
-
 
 
           $("#prestacion").change(function(){
@@ -425,6 +446,13 @@ include ("../funciones/funciones_form.php");
                       $("#tipo").val(data1);
                   });
                   $("#cont_ubica").show();
+          });
+
+          $("#agrega").on('change', '#rubro', function(){
+              var rubro = $("#rubro").val();
+              $.get("tools/busca_subr.php",{rubro:rubro},function(srb){
+                  $("#subrubro").html(srb);
+              });
           });
 
           $("#beneficiario").keyup(function(){

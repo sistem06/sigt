@@ -38,7 +38,7 @@ if (!empty($_GET['ca_id'])){
   ?>
   <div class="container">
   <h3><?php echo $titulo; ?></h3>
-    <form id="parte1" action="agrega_modifica_general.php" method="post" role="form">
+    <form id="parte1" action="../agrega_modifica_general.php" method="post" role="form">
 
      <div class="form-group has-success">
    <?php echo $calle; ?>
