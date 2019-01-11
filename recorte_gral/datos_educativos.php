@@ -482,11 +482,11 @@ echo DatoRegistro ('tb_datos_personales', 'dp_name', 'dp_id', $_GET['dp_id'], $c
                 $("#falta_nivel").show();
                 event.preventDefault();
               }
-          if($("#valor_titulo").val()=="" && $("#denivel").val() > 4){
-            $("#falta_titulo").show();
-            $("#falta_titulo").text("no ha elegido un elemento de la lista");
-            event.preventDefault();
-          }
+          // if($("#valor_titulo").val()=="" && $("#denivel").val() > 4){
+          //   $("#falta_titulo").show();
+          //   $("#falta_titulo").text("no ha elegido un elemento de la lista");
+          //   event.preventDefault();
+          // }
       });
 
        $("#parte2").submit(function(event) {

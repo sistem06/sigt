@@ -96,13 +96,15 @@ if (!empty($_GET['em_id'])) {
 <div class="requerido" id="falta_iva">Falta completar este campo</div>
 </div>
   </div>
-      <div class="col-xs-12 col-md-4">
-      <div id="aa1" style="display:none">
-  <div class="form-group">
-<?php echo InputGeneralVal("date", "ea_vencimiento", "form-control", "ea_vencimiento", "escriba el vencimiento", "Vigencia del Comprobante:",BuscaRegistro("tb_estado_afip","ea_dp_id",$_GET['dp_id'],"ea_vencimiento")); ?>
-</div>
-</div>
-      </div>
+
+<!-- RF055 -->
+<!-- <div class="col-xs-12 col-md-4">
+	<div id="aa1" style="display:none">
+	  <div class="form-group">
+	<?php //echo InputGeneralVal("date", "ea_vencimiento", "form-control", "ea_vencimiento", "escriba el vencimiento", "Vigencia del Comprobante:",BuscaRegistro("tb_estado_afip","ea_dp_id",$_GET['dp_id'],"ea_vencimiento")); ?>
+	</div>
+	</div>
+</div> -->
 
   </div>
 
@@ -192,23 +194,26 @@ if (!empty($_GET['em_id'])) {
       }
     });
 
-  $("#estadoiva").change(function () {
-      if ($(this).val() == 99) {
-      $("#aa1").hide();
-      } else {
-      $("#aa1").show();
-      }
-      });
+	// RF055
+  // $("#estadoiva").change(function () {
+  //     if ($(this).val() == 99) {
+  //     $("#aa1").hide();
+  //     } else {
+  //     $("#aa1").show();
+  //     }
+  //     });
+
   $("#porcentaje").keypress(function(tecla) {
         if(tecla.charCode < 48 || tecla.charCode > 57) return false;
     });
 
-  if ($("#estadoiva").val() == 99) {
-      $("#aa1").hide();
-      } else {
-      $("#aa1").show();
-      }
-  });
+	// RF055
+  // if ($("#estadoiva").val() == 99) {
+  //     $("#aa1").hide();
+  //     } else {
+  //     $("#aa1").show();
+  //     }
+  // });
   </script>
   <script type="text/javascript" src="../source/jquery.fancybox.js?v=2.1.5"></script>
     <script type="text/javascript">

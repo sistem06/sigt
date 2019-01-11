@@ -99,6 +99,7 @@
 		$cliente->dp_mail = $_POST['dp_mail'];
 		$cliente->dp_busqueda = $dp_busqueda;
 		$cliente->dp_facebook = $_POST['dp_facebook'];
+		$cliente->dp_us_relevamiento = $_POST['us_relevamiento'];
 		$cliente->save();
 
 		$book = DatosPersonales::last();

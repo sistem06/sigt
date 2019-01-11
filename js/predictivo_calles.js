@@ -1,6 +1,7 @@
 $(document).ready(function() {
     var ruta_autocomp = window.location.origin + "/sigt/recorte_gral/tools/autocom.php"
 		var ruta_autocomp1 = window.location.origin + "/sigt/recorte_gral/tools/autocom1.php"
+
 		$("#dpcalle").keyup(function(){
 			  if($("#dpcalle").val().length>1){
                 $("#listado_calles").show();

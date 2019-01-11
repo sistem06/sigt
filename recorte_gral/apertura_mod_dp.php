@@ -4,10 +4,10 @@
 				   $cliente->dp_cuil = $_POST['dp_cuil'];
 				   $cliente->dp_estado_civil = $_POST['dp_estado_civil'];
 				   $cliente->dp_nacionalidad = $_POST['dp_nacionalidad'];
-            if($_POST['dp_nacionalidad']==1){ 
+            if($_POST['dp_nacionalidad']==1){
                $cliente->dp_pais_nacimiento = 13;
             } else {
-           
+
                if(!empty($_POST['dp_pais_nacimiento'])){
                $cliente->dp_pais_nacimiento = $_POST['dp_pais_nacimiento'];
             }}
@@ -44,5 +44,6 @@
 				   $cliente->dp_observaciones = $_POST['dp_observaciones'];
 				   $cliente->dp_mail = $_POST['dp_mail'];
 				   $cliente->dp_facebook = $_POST['dp_facebook'];
+				   $cliente->dp_us_relevamiento = $_POST['us_relevamiento'];
 				   $cliente->save();
 ?>

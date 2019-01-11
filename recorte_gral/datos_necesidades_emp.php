@@ -44,39 +44,49 @@ if (!empty($_GET['em_id'])) {
 <div class="panel panel-info">
   <div class="panel-heading">
   <h3 class="panel-title">
-  <span class="glyphicon glyphicon-barcode"></span>  Necesidades del Emprendimiento</div>
+  	<span class="glyphicon glyphicon-barcode"></span>  Necesidades del Emprendimiento</div>
   </h3>
 
-
-
-
-          <form id="parte1" action="add_registro.php" method="post" role="form" class="form-inline" style="padding:10px;">
-
-
-<div class="form-group">
-<label>Necesita Préstamo para:</label>
-<select name="nro_destino" class="form-control" id="destino">
-</select>
-<div class="requerido" id="falta_destino">Falta completar este campo</div>
+<form id="parte1" action="add_registro.php" method="post" role="form" class="form-inline" style="padding:10px;">
+<!-- <div class="row">
+	<div class="col-xs-12 col-md-6"> -->
+		<div class="form-group">
+			<label>Necesita Asistencia para:</label>
+			<select name="nro_destino" class="form-control" id="destino"></select>
+			<div class="requerido" id="falta_destino">Falta completar este campo</div>
+		</div>
+		<!-- RF057 -->
+		<!-- <a href="tools/cambios_motivo_credito.php" class="fancybox fancybox.iframe" id="agregadestino" style="display:none;">destino</a> -->
+		<div id="op1" style="display:none;">
+			<div class="form-group">
+				<label>Aspecto a Capacitarse:</label>
+				<select name="nro_capacitacion" class="form-control" id="capacitacion"></select>
+				<div class="requerido" id="falta_capacitacion">Falta completar este campo</div>
+			</div>
+			<a href="tools/cambios_motivo_capacitacion.php" class="fancybox fancybox.iframe" id="agregacapa" style="display:none;">capa</a>
+		</div>
+	<!-- </div>
+</div> -->
+</br>
+</br>
+<div class="row">
+	<div class="col-xs-12 col-md-6">
+		<div class="form-group">
+			<textarea class="form-control" rows="2" cols="142" placeholder="observaciones" name="observaciones"></textarea>
+		</div>
+	</div>
 </div>
-<a href="tools/cambios_motivo_credito.php" class="fancybox fancybox.iframe" id="agregadestino" style="display:none;">destino</a>
-<div id="op1" style="display:none;">
-<div class="form-group">
-<label>Aspecto a Capacitarse:</label>
-<select name="nro_capacitacion" class="form-control" id="capacitacion">
-</select>
-<div class="requerido" id="falta_capacitacion">Falta completar este campo</div>
-</div>
-<a href="tools/cambios_motivo_capacitacion.php" class="fancybox fancybox.iframe" id="agregacapa" style="display:none;">capa</a>
-</div>
+</br>
 
 
-<input type="hidden" name="paso" value="11">
-<input type="hidden" name="dp_id" value="<?php echo $_GET['dp_id']; ?>">
-<input type="hidden" name="em_id" value="<?php echo $_GET['em_id']; ?>">
-<input type="hidden" name="id_us" value="<?php echo $_SESSION["id_us"]; ?>">
-<button type="submit" class="btn btn-success" id="envia1">Agregar</button>
-<input type="hidden" name="estado" value="<?php echo $_GET['estado']; ?>">
+	<input type="hidden" name="paso" value="11">
+	<input type="hidden" name="dp_id" value="<?php echo $_GET['dp_id']; ?>">
+	<input type="hidden" name="em_id" value="<?php echo $_GET['em_id']; ?>">
+	<input type="hidden" name="id_us" value="<?php echo $_SESSION["id_us"]; ?>">
+	<button type="submit" class="btn btn-success" id="envia1">Agregar</button>
+	<input type="hidden" name="estado" value="<?php echo $_GET['estado']; ?>">
+
+
 </form>
 </div>
 
@@ -91,6 +101,7 @@ while($lis_dat = mysql_fetch_array($list)){
 <tr><td><?php echo $lis_dat['mc_name']; ?></td>
 	<td><?php if ($lis_dat['ecn_rubro_cap'] >0){
   echo DatoRegistro ('tb_tipo_capacitaciones', 'tc_name', 'tc_id', $lis_dat['ecn_rubro_cap']); } ?></td>
+	<td><?php echo $lis_dat['ecn_observaciones'] ?></td>
 	<td><a href="tools/quitar.php?val=<?php echo $lis_dat['ecn_id']; ?>&id=ecn_id&tabla=tb_emprendedor_credito_nec"  title="eliminar" class="fancybox fancybox.iframe" id="quita_org"><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button></a></td>
 </tr>
 <?php
@@ -131,26 +142,27 @@ while($lis_dat = mysql_fetch_array($list)){
 
 
      $.post("tools/motivo_creditos.php",  function(datamotivo){
-            $("#destino").html(datamotivo);
-            });
+        $("#destino").html(datamotivo);
+      });
      $.post("tools/motivo_capacitaciones.php",  function(datacurso){
             $("#capacitacion").html(datacurso);
             });
 
   $("#destino").change(function() {
-      if($("#destino").val()==1){
+    if($("#destino").val()==1){
       $("#op1").css("display", "inline");
     } else {
-      $("#op1").css("display", "none");
+			$("#op1").css("display", "none");
     }
 
   });
 
-  $("#destino").change(function(){
-      if($("#destino").val()=="Agregar"){
-          $("#agregadestino").trigger("click");
-      }
-    });
+	// RF057
+  // $("#destino").change(function(){
+  //     if($("#destino").val()=="Agregar"){
+  //         $("#agregadestino").trigger("click");
+  //     }
+  //   });
 
   $("#capacitacion").change(function(){
       if($("#capacitacion").val()=="Agregar"){
@@ -171,21 +183,24 @@ while($lis_dat = mysql_fetch_array($list)){
           padding : 5
         });
       });
-        $("#agregacapa").fancybox({
-        afterClose  : function() {
-           $.post("tools/motivo_capacitaciones.php",  function(datacurso){
-            $("#capacitacion").html(datacurso);
-            });
-        }
+    $("#agregacapa").fancybox({
+      afterClose  : function() {
+         $.post("tools/motivo_capacitaciones.php",  function(datacurso){
+          $("#capacitacion").html(datacurso);
+          });
+      }
     });
-        $("#agregadestino").fancybox({
-        afterClose  : function() {
-            $.post("tools/motivo_creditos.php",  function(datamotivo){
-            $("#destino").html(datamotivo);
-            });
-        }
-    });
-        $("#quita_org").fancybox({
+
+		// RF057
+    // $("#agregadestino").fancybox({
+    //     afterClose  : function() {
+    //         $.post("tools/motivo_creditos.php",  function(datamotivo){
+    //         $("#destino").html(datamotivo);
+    //       });
+    //     }
+    // });
+
+      $("#quita_org").fancybox({
         afterClose  : function() {
             window.location.reload();
         }

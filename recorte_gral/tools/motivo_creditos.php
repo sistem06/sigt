@@ -6,8 +6,9 @@ include ("../../funciones/funciones_generales.php");
 			$res = "";
 			$res .= '<option></option>';
 
-			$res .= '<optgroup label="Accion">';
-			$res .= '<option>Agregar</option>';
+			// RF057
+			// $res .= '<optgroup label="Accion">';
+			// $res .= '<option>Agregar</option>';
 
 			$res .= '<optgroup label="Destino">';
 			while($a=mysql_fetch_array($query)){

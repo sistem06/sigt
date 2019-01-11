@@ -979,6 +979,7 @@ if($_POST['paso']==11){ // Emprendedores - Alta Necesidad de Crédito
 	$capa->ecn_dp_id = $_POST['dp_id'];
 	$capa->ecn_rubro = $_POST['nro_destino'];
 	$capa->ecn_rubro_cap = $_POST['nro_capacitacion'];
+	$capa->ecn_observaciones = $_POST['observaciones'];
 	$capa->save();
 
 	$histori = new Historial();
@@ -1038,8 +1039,10 @@ if($_POST['paso']==13){ // Alta Ingresos del Emprendimiento
 		$record2 = new EstadoAfip();
 		$record2->ea_dp_id = $dp_id;
 	}
+	if(isset($_POST['ea_vencimiento'])) {
+		$record2->ea_vencimiento = $_POST['ea_vencimiento'];
+	}
 	$record2->ea_tipo_relacion = $_POST['ea_tipo_relacion'];
-	$record2->ea_vencimiento = $_POST['ea_vencimiento'];
 	$record2->save();
 
 	$tipo_ingresos = TipoIngresos::all();

@@ -1,4 +1,30 @@
 <form id="parte1" action="add_registro.php" method="post" role="form">
+  <div class="row">
+    <div class="col-xs-12 col-md-12">
+      <div class="form-group">
+      <?php
+      $id_us_relevamiento = BuscaRegistro ("tb_datos_personales", "dp_id", $_GET['dp_id'], "dp_us_relevamiento") ;
+
+      echo '<label for="us_relevamiento">Relevado por:</label>';
+  		echo '<select class="form-control" name="us_relevamiento" id="us_relevamiento">';
+
+  		$txt_q = "select us_id, us_name from tb_usuarios order by us_apellido";
+  		$result = mysql_query ($txt_q);
+
+  		echo "<option></option>";
+  		while ($ddat = mysql_fetch_array ($result)){
+        $selected = "";
+        if ($id_us_relevamiento == $ddat['us_id']) {
+          $selected = "selected";
+        }
+   			echo '<option '.$selected.' value="'.$ddat['us_id'].'">'.$ddat['us_name'].'</option>';
+  		}
+      echo '</select>';
+      ?>
+      </div>
+    </div>
+  </div>
+  
 <div class="panel panel-info">
   <div class="panel-heading">
   <h3 class="panel-title">

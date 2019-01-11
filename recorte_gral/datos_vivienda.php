@@ -229,18 +229,6 @@ if (isset($ho_id)) {
 			?>
 		</div>
 	</div>
- 
-    <div id="aa1" style="display:none;"> 
-    <div class="col-xs-12 col-md-4">
-			<div class="form-group">
-				<label>Las paredes exteriores tienen revestimiento?</label>
-				<div class="radio">
-					<label><input name="hog_revestimiento_externo" type="radio" value="1" <?php if(BuscaRegistro ("tb_hogar_general", "hog_ho_id", $ho_id, "hog_revestimiento_externo")==1) echo 'checked'; ?>> Si | </label>
-					<label><input name="hog_revestimiento_externo" type="radio" value="0" <?php if(BuscaRegistro ("tb_hogar_general", "hog_ho_id", $ho_id, "hog_revestimiento_externo")==0) echo 'checked'; ?>> No </label>
-				</div>
-			</div>
-  	</div>
-  </div>
 
   <div class="col-xs-12 col-md-4">
 		<div id="aa2">
@@ -264,13 +252,13 @@ if (isset($ho_id)) {
 </div>
 
 <div class="row">
-  <div class="col-xs-12 col-md-6">
-  	<div class="form-group">
-			<label>Tiene Electricidad?</label>
-			<div class="radio">
-				<label><input name="hos_electricidad" type="radio" value="1" <?php if(BuscaRegistro ("tb_hogar_servicios", "hos_ho_id", $ho_id, "hos_electricidad")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="hos_electricidad" type="radio" value="0" <?php if(BuscaRegistro ("tb_hogar_servicios", "hos_ho_id", $ho_id, "hos_electricidad")==0) echo 'checked'; ?>> No </label>
-			</div>
+  <div class="col-xs-12 col-md-4">
+		<div class="form-group">
+			<?php
+				$prev = BuscaRegistro("tb_hogar_servicios", "hos_ho_id", $ho_id, "hos_electricidad");
+				echo SelectGeneralVal("hos_electricidad", "form-control", "idelectricidad", "Tiene Electricidad:","tb_electricidad", "ele_id", "ele_name",$prev);
+				unset($prev);
+			?>
 		</div>
 	</div>
 </div>
@@ -347,7 +335,8 @@ if (isset($ho_id)) {
 			<label>Tiene Heladera?</label>
 			<div class="radio">
 				<label><input name="eq_heladera" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_heladera")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="eq_heladera" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_heladera")==0) echo 'checked'; ?>> No </label>
+				<label><input name="eq_heladera" type="radio" value="2" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_heladera")==2) echo 'checked'; ?>> No | </label>
+				<label><input name="eq_heladera" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_heladera")==0) echo 'checked'; ?>> Ignorado </label>
 			</div>
 		</div>
 	</div>
@@ -356,7 +345,8 @@ if (isset($ho_id)) {
 			<label>Tiene Cocina?</label>
 			<div class="radio">
 				<label><input name="eq_cocina" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_cocina")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="eq_cocina" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_cocina")==0) echo 'checked'; ?>> No </label>
+				<label><input name="eq_cocina" type="radio" value="2" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_cocina")==2) echo 'checked'; ?>> No | </label>
+				<label><input name="eq_cocina" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_cocina")==0) echo 'checked'; ?>> Ignorado </label>
 			</div>
 		</div>
 	</div>
@@ -365,7 +355,8 @@ if (isset($ho_id)) {
 			<label>Tiene Salamandra / Tacho?</label>
 			<div class="radio">
 				<label><input name="eq_salamandra" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_salamandra")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="eq_salamandra" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_salamandra")==0) echo 'checked'; ?>> No </label>
+				<label><input name="eq_salamandra" type="radio" value="2" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_salamandra")==2) echo 'checked'; ?>> No | </label>
+				<label><input name="eq_salamandra" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_salamandra")==0) echo 'checked'; ?>> Ignorado </label>
 			</div>
 		</div>
 	</div>
@@ -374,7 +365,8 @@ if (isset($ho_id)) {
 			<label>Tiene Teléfono fijo?</label>
 			<div class="radio">
 				<label><input name="eq_telefono" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_telefono")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="eq_telefono" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_telefono")==0) echo 'checked'; ?>> No </label>
+				<label><input name="eq_telefono" type="radio" value="2" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_telefono")==2) echo 'checked'; ?>> No | </label>
+				<label><input name="eq_telefono" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_telefono")==0) echo 'checked'; ?>> Ignorado </label>
 			</div>
 		</div>
 	</div>
@@ -385,7 +377,8 @@ if (isset($ho_id)) {
 			<label>Tiene Celular?</label>
 			<div class="radio">
 				<label><input name="eq_celular" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_celular")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="eq_celular" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_celular")==0) echo 'checked'; ?>> No </label>
+				<label><input name="eq_celular" type="radio" value="2" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_celular")==2) echo 'checked'; ?>> No | </label>
+				<label><input name="eq_celular" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_celular")==0) echo 'checked'; ?>> Ignorado </label>
 			</div>
 		</div>
 	</div>
@@ -394,7 +387,8 @@ if (isset($ho_id)) {
 			<label>Tiene Computadora sola?</label>
 			<div class="radio">
 				<label><input name="eq_pc" type="radio" value="1" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==1) echo 'checked'; ?>> Si | </label>
-				<label><input name="eq_pc" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==0) echo 'checked'; ?>> No </label>
+				<label><input name="eq_pc" type="radio" value="2" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==2) echo 'checked'; ?>> No | </label>
+				<label><input name="eq_pc" type="radio" value="0" <?php if(BuscaRegistro ("tb_equipamiento_hogar", "eq_ho_id", $ho_id, "eq_dvd")==0) echo 'checked'; ?>> Ignorado </label>
 			</div>
 		</div>
 	</div>
@@ -440,8 +434,8 @@ if (isset($ho_id)) {
 			?>
 		</div>
 	</div>
-	
-	
+
+
 </div>
 	<!-- Fin contenido -->
 
@@ -504,7 +498,7 @@ if (isset($ho_id)) {
 
 <div id="mas_historial" style="display:none;">
 	<div class="row">
-		
+
 		<div class="col-xs-12 col-md-4">
   	<div class="form-group">
 			<?php
@@ -538,7 +532,7 @@ if (isset($ho_id)) {
 	</div>
 
 	<div class="row">
-		
+
 		<div class="col-xs-12 col-md-4">
   	<div class="form-group">
 			<?php
@@ -655,16 +649,6 @@ if (isset($ho_id)) {
 			 $("#envia1").click(function() {
 
 		   }); /* $("#envia1").click(function() */
-
-		   $("#idmparedes").change(function () {
-	       if ($(this).val()==1) {
-		       $("#aa1").show();
-		      
-		       } else {
-		       $("#aa1").hide();
-		       
-	       }
-       });
 
 			 $("#idmiembros").keypress(function(tecla) {
          if(tecla.charCode < 48 || tecla.charCode > 57) return false;

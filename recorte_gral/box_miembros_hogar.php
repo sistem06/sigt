@@ -13,6 +13,7 @@ echo '
         $n_parent = BuscaRegistro ("tb_datos_personales", "dp_id", $n_dp_id, "dp_parentesco");
       echo '<tr>';
       echo '<td><p>'.BuscaRegistro ("tb_datos_personales", "dp_id", $n_dp_id, "dp_name").'</p></td>';
+      echo '<td>'.BuscaRegistro ("tb_parentesco", "par_id", $n_parent, "par_name").'</td>';
       echo '<td><a href="detalle_persona.php?dp_id='.$n_dp_id.'"><button type="button" class="btn btn-light">Ver Detalle</button></a></td>';
       echo '</tr>';
     }

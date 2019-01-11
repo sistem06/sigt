@@ -1,3 +1,25 @@
+<div class="row">
+  <div class="col-xs-12 col-md-12">
+    <div class="form-group">
+    <?php
+
+    echo '<label for="us_relevamiento">Relevado por:</label>';
+		echo '<select class="form-control" name="us_relevamiento" id="us_relevamiento">';
+
+		$txt_q = "select us_id, us_name from tb_usuarios order by us_apellido";
+		$result = mysql_query ($txt_q);
+
+		echo "<option></option>";
+		while ($ddat = mysql_fetch_array ($result)){
+ 			echo '<option value="'.$ddat['us_id'].'">'.$ddat['us_name'].'</option>';
+		}
+    echo '</select>';
+    ?>
+    </div>
+  </div>
+</div>
+
+
 <div class="panel panel-info">
   <div class="panel-heading">
   <h3 class="panel-title">
@@ -17,7 +39,7 @@
     <input type="text" class="form-control" id="nrodni" name="dp_nro_doc"
            placeholder="escriba el nro de Documento" maxlength="8">
     <div class="requerido" id="falta_dni">Falta completar este campo o nro incorrecto</div>
-    
+
     </div>
    </div>
    </div>
@@ -36,7 +58,7 @@
 </div>
    </div>
    </div>
-   
+
 <div class="row">
   <div class="col-xs-12 col-md-6">
 <div class="form-group has-success">
@@ -45,7 +67,7 @@
   </div>
   </div>
   <div class="col-xs-12 col-md-6">
-      
+
       <div class="form-group has-success">
   <label class="control-label" for="has-success">Edad</label>
   <input type="text" class="form-control" id="muestra_edad" disabled="disabled">
@@ -67,20 +89,20 @@
 </div>
 <!-- Comienza Cuil -->
 
-    
+
   <div class="form-group has-success">
   <label for="nrocuil">Nro de CUIL:</label>
     <input type="text" class="form-control" id="nrocuil" name="dp_cuil"
            placeholder="escriba el nro de CUIL" maxlength="13">
     <div class="requerido" id="falta_cuil">Falta completar este campo o nro incorrecto</div>
     </div>
-    
+
     <div class="form-group">
  <a href="https://micuilonline.com.ar/averiguar-cuil-cuit" target="blank"><button type="button" class="btn btn-warning">Ver en ANSES</button></a>
      </div>
 <!-- Comienza Cuil -->
 <div class="row">
-  
+
   <div class="col-xs-12 col-md-4">
   <div class="form-group">
     <?php echo SelectGeneral("dp_nacionalidad", "form-control", "idnacionalidad", "Nacionalidad:","tb_tipo_nacionalidad", "tn_id", "tn_name"); ?>
@@ -92,7 +114,7 @@
   </div>
 </div>
 <div class="col-xs-12 col-md-4">
-  
+
 
 <div class="form-group">
    <?php echo InputGeneral("tel", "dp_anos_residencia", "form-control", "anos_residencia", "Años de residencia en el pais", "Años de Residencia:",""); ?>
